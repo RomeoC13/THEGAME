@@ -1,5 +1,5 @@
 # THEGAME
-Projet L3 UE Application web de Pauline THEOULE et Roméo CHATEL
+Projet L3 UE Application web de Pauline TEOULE et Roméo CHATEL
 
 "The Game" est un projet étudiant de L3 qui a pour but de créer une plateforme regroupant plusieurs petits jeux multijoueurs en ligne.
 
