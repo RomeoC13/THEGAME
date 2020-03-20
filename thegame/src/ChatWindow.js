@@ -21,6 +21,7 @@ class ChatWindow extends React.Component {
 
     submitMessage(text) {
         this.chat.sendMessage(text)
+        this.props.msg(text)
     }
 
     render() {
