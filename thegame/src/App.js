@@ -32,31 +32,7 @@ class InputField extends React.Component {
 
 
 class Canvas  extends React.Component {
-    /* constructor(props) {
-         super();
-     }
 
-     componentDidMount() {
-         const canvas = ReactDOM.findDOMNode(this.refs.myCanvas);
-         const ctx = canvas.getContext("2d")
-     }
-
-     clearCanvas(x1, y1, x2, y2) {
-         const canvas = document.getElementById('myCanvas');
-         //const g = canvas.getContext('2d');
-         //g.clearRect(x1,y1,x2,y2);
-
-     }
-
-     render() {
-         return (
-             <div>
-                 <canvas ref={canvas => this.canvas = canvas} id="myCanvas" width="500" height="500" />
-                 <button onClick="init()">Dessiner</button>
-                 <button onClick={this.clearCanvas(0, 0, 300, 300)}>Effacer</button>
-             </div>
-         )
-     }*/
     constructor(props) {
         super(props);
         this._resizeHandler = () => {
@@ -104,11 +80,14 @@ class Canvas  extends React.Component {
         }
     }
 
+    //Todo : Faire la fonction de dessin + la fonction de clear du canvas
     render() {
         return (
             <div>
-                <canvas ref={canvas => this.canvas = canvas} id="myCanvas" width="200" height="100" />
-                <button ref = {this.desinRef} onClick="init()">Dessiner</button>
+                <h1>Canvas</h1>
+                <canvas ref={canvas => this.canvas = canvas} id="myCanvas" width="500" height="200" />
+                <button ref = {this.dessinRef} onClick="TODO Fonction">Dessiner</button>
+                <button onClick="TODO Fonction">Clear</button>
             </div>
         )
     }
