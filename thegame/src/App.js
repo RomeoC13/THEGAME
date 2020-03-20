@@ -1,26 +1,32 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {MyForm} from './Myform.js'
+import {Pictionary} from './Pictionary.js'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+    constructor() {
+        super()
+        this.state = {name:"",current: "login"}
+
+        this.login= this.login.bind(this)
+        this.back= this.back.bind(this)
+    }
+
+    login(){
+        console.log("TEEEEEST");
+        this.setState({current: "logged"} )
+    }
+
+    back(){
+        this.setState({current:"login"})
+    }
+    render() {
+        if(this.state.current === "login")
+            return <MyForm login={this.login} />
+        else
+            return <Pictionary back={this.back}/>
+    }
 }
 
 export default App;
