@@ -1,22 +1,35 @@
 import React from "react";
+import {TimerClient} from "./TimerClient";
 
 class Timer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            minutes: 0,
-            seconds: 3
-        };
+        this.state = {countdown: 0};
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.updateTime = this.updateTime.bind(this);
+    }
+
+    updateTime(data) {
+        this.setState(data)
     }
 
     render() {
-        const { minutes, seconds } = this.state;
-        return (
-            <div>
-                <h1>{ minutes }:{ seconds } </h1>
-            </div>
-        )
+        let countdown = this.state.countdown;
+        const minutes = Math.floor(countdown / 60);
+        const seconds = countdown - (minutes * 60);
+        if (countdown > 0) {
+            return (
+                <div>
+                    <h1>{minutes} : {seconds}  </h1>
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <h1><strong>TEMPS ÉCOULÉ !</strong></h1>
+                </div>
+            )
+        }
     }
 
     componentWillUnmount() {
@@ -24,25 +37,8 @@ class Timer extends React.Component {
     }
 
     componentDidMount() {
-        this.myInterval = setInterval(() => {
-            const { seconds, minutes } = this.state;
-            if (seconds > 0) {
-                this.setState(({ seconds }) => ({
-                    seconds: seconds - 1
-                }))
-            }
-            if (seconds === 0) {
-                if (minutes === 0) {
-                    clearInterval(this.myInterval);
-                    alert('Temps écoulé');
-                } else {
-                    this.setState(({ minutes }) => ({
-                        minutes: minutes - 1,
-                        seconds: 59
-                    }))
-                }
-            }
-        }, 1000)
+        this.timer = new TimerClient(this.props.seconds);
+        this.timer.listenTimer(this.updateTime)
     }
 
 }

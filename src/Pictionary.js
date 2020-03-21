@@ -31,7 +31,7 @@ class Pictionary extends React.Component {
         return (
             <div>
                 <h1>{this.state.message}</h1>
-                <Timer/>
+                <Timer seconds={'20'}/>
                 <ChatWindow name={this.props.statename} onQuit={this.props.closeChat} msg={this.sendMsg}/>
                 <Canvas/>
             </div>
