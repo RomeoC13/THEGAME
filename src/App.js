@@ -8,7 +8,7 @@ import {LoginWindow} from "./LoginWindow.js";
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {name: "", current: "login"};
+        this.state = {current: "login"};
 
         this.closeChat = this.closeChat.bind(this);
         this.startChat = this.startChat.bind(this);
