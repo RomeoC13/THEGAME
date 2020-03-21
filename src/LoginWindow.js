@@ -1,6 +1,5 @@
 import React from "react";
 import {InputField} from "./InputField";
-import {ChatClient} from "./ChatClient";
 
 class LoginWindow extends React.Component {
     render() {
@@ -12,7 +11,6 @@ class LoginWindow extends React.Component {
         </div>
     }
 }
-
 
 
 export {LoginWindow}

@@ -4,17 +4,17 @@ const socket = openSocket('http://localhost:3000');
 
 class ChatClient {
 
-  constructor(username) {
-    socket.emit('set-name', username)
-  }
+    constructor(username) {
+        socket.emit('set-name', username)
+    }
 
-  onMessages(cb) {
-    socket.on('add-messages', (messages) => cb(messages))
-  }
+    onMessages(cb) {
+        socket.on('add-messages', (messages) => cb(messages))
+    }
 
-  sendMessage(message) {
-    socket.emit('post-message', message)
-  }
+    sendMessage(message) {
+        socket.emit('post-message', message)
+    }
 }
 
-export { ChatClient }
+export {ChatClient}
