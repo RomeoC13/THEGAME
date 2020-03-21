@@ -54,8 +54,9 @@ class Canvas  extends React.Component {
         return (
             <div>
                 <h1>Canvas</h1>
-                <canvas ref={canvas => this.canvas = canvas} id="myCanvas" width="500" height="200" />
-                <button ref = {this.dessinRef} onClick="TODO Fonction">Dessiner</button>
+                <canvas ref={canvas => this.canvas = canvas} id="myCanvas" width="500" height="200"/>
+                <p>&nbsp;</p>
+                <button ref={this.dessinRef} onClick="TODO Fonction">Dessiner</button>
                 <button onClick="TODO Fonction">Clear</button>
             </div>
         )
