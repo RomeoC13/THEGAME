@@ -2,47 +2,47 @@ import React from "react";
 
 class Timer extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
-            count: 1
-        }
-
+            minutes: 0,
+            seconds: 3
+        };
         this.componentDidMount = this.componentDidMount.bind(this);
     }
 
     render() {
-        const {count} = this.state
-        if (count > 0) {
-            return (
-                <div>
-                    <h2>Current Count: {count}</h2>
-                </div>
-            )
-        } else {
-            return (
-                <div>
-                    <h2><strong>Current Count: {count}</strong></h2>
-                </div>
-            );
-        }
-    }
-
-
-    componentDidMount() {
-        const time = this.props.startCount
-        this.setState({count: time})
-        this.myInterval = setInterval(() => {
-            if (this.state.count === 0) {
-                this.props.timeEnd()
-            }
-            this.setState(prevState => ({
-                count: prevState.count - 1
-            }))
-        }, 1000)
+        const { minutes, seconds } = this.state;
+        return (
+            <div>
+                <h1>{ minutes }:{ seconds } </h1>
+            </div>
+        )
     }
 
     componentWillUnmount() {
         clearInterval(this.myInterval)
+    }
+
+    componentDidMount() {
+        this.myInterval = setInterval(() => {
+            const { seconds, minutes } = this.state;
+            if (seconds > 0) {
+                this.setState(({ seconds }) => ({
+                    seconds: seconds - 1
+                }))
+            }
+            if (seconds === 0) {
+                if (minutes === 0) {
+                    clearInterval(this.myInterval);
+                    alert('Temps écoulé');
+                } else {
+                    this.setState(({ minutes }) => ({
+                        minutes: minutes - 1,
+                        seconds: 59
+                    }))
+                }
+            }
+        }, 1000)
     }
 
 }

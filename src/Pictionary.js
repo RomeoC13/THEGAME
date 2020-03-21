@@ -11,9 +11,7 @@ class Pictionary extends React.Component {
         this.addName(this.props.statename);
         this.addName = this.addName.bind(this);
         this.sendMsg = this.sendMsg.bind(this);
-        this.timeEnd = this.timeEnd.bind(this);
     }
-
 
     sendMsg(text) {
         this.setState({message: text})
@@ -25,16 +23,12 @@ class Pictionary extends React.Component {
         }))
     }
 
-    //TODO : Remplir la fonction quand le temps fini
-    timeEnd() {
-
-    }
 
     render() {
         return (
             <div>
                 <h1>{this.state.message}</h1>
-                <Timer startCount='10' timeEnd={this.timeEnd}/>
+                <Timer/>
                 <ChatWindow name={this.props.statename} onQuit={this.props.closeChat} msg={this.sendMsg}/>
                 <Canvas/>
             </div>

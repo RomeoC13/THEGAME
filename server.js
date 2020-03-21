@@ -15,6 +15,12 @@ io.on('connection', (client) => {
     messages.push(message);
     io.emit('add-messages', [message])
   });
+
+  client.on("drawing", (data) => {
+    client.emit("drawing", data);
+  });
+
+
 });
 
 const port = 3001;
