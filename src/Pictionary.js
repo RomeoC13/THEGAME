@@ -8,7 +8,6 @@ class Pictionary extends React.Component {
     constructor(props) {
         super(props);
         this.state = {message: "", names: []};
-        this.addName(this.props.statename);
         this.addName = this.addName.bind(this);
         this.sendMsg = this.sendMsg.bind(this);
         this.timeEnd = this.timeEnd.bind(this);
@@ -28,6 +27,10 @@ class Pictionary extends React.Component {
     //TODO : Remplir la fonction quand le temps fini
     timeEnd() {
 
+    }
+
+    componentDidMount() {
+        this.addName(this.props.statename);
     }
 
     render() {
