@@ -1,42 +1,45 @@
-.App {
+
+form {
+  margin: 0 auto;
+  width: 250px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  text-align: center;
+  font-size: xx-large;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+strong {
+  color: #ff0000;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+button {
+  border: none;
+  background-color: black;
   color: white;
+  font-size: 16px;
+  padding: 9px 15px;
+  text-decoration: none;
+  display: inline-block;
+  margin: 8px;
 }
 
-.App-link {
-  color: #61dafb;
+* {
+  font-family: Georgia, serif;
+  text-align: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#chat {
+  background-color: gray;
+  float: right;
+  border: black;
+}
+
+#topchat {
+  border-style: solid;
 }
 
 #myCanvas {
-  border:1px solid #000000;
+  border: 1px solid #000000;
 }

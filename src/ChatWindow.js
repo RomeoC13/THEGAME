@@ -27,13 +27,15 @@ class ChatWindow extends React.Component {
     render() {
         const messages = this.state.messages.map((m) => <li key={m.name + m.text}> {m.name}: {m.text} </li>);
         return (
-            <div>
-                <h1>Messages</h1>
-                Pseudo : {this.props.name}
-                <InputField label="Message" onSubmit={this.submitMessage} autoFocus/>
+            <div id="chat">
+                <div id="topchat">
+                    <p>Welcome to THECHAT, {this.props.name}</p>
+                </div>
                 <ul>
                     {messages}
                 </ul>
+
+                <InputField label="Message" onSubmit={this.submitMessage} autoFocus/>
                 <button onClick={this.props.onQuit}>Quitter</button>
             </div>
         );

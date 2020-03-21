@@ -1,5 +1,7 @@
 import {ChatWindow} from "./ChatWindow.js";
-import {Canvas} from "./Canvas.js"
+import {Canvas} from "./Canvas.js";
+import {Timer} from "./Timer.js";
+
 import React from "react";
 
 class Pictionary extends React.Component{
@@ -11,9 +13,8 @@ class Pictionary extends React.Component{
     }
 
 
-    sendMsg(text){
-        this.setState({message :text})
-        //console.log(this.state)
+    sendMsg(text) {
+        this.setState({message: text})
     }
 
     render() {
