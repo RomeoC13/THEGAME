@@ -6,6 +6,7 @@ class ChatWindow extends React.Component {
     constructor(props) {
         super(props);
         this.state = {messages: []};
+
         this.submitMessage = this.submitMessage.bind(this);
         this.addMessages = this.addMessages.bind(this);
 
@@ -22,6 +23,7 @@ class ChatWindow extends React.Component {
     submitMessage(text) {
         this.chat.sendMessage(text)
         this.props.msg(text)
+        //this.clearMessage()
     }
 
     render() {
