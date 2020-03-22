@@ -1,8 +1,6 @@
 import React from "react";
-import openSocket from 'socket.io-client';
 import ReactDOM from 'react-dom';
 
-const client = openSocket('http://localhost:3000');
 
 class Canvas extends React.Component {
     componentDidMount() {
