@@ -1,4 +1,9 @@
-const io = require('socket.io')();
+const express = require('express');
+const app = express();
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
+
+app.use(express.static('build'));
 
 const messages = [{name: 'bot', text: 'Bienvenue '}];
 var countdown = 10;
@@ -53,7 +58,6 @@ setInterval(function () {
         io.sockets.emit('timer', {countdown: countdown});
     }
 }, 1000);
-
 function getKeyByValue(object, value) {
     for (var prop in object) {
         if (object.hasOwnProperty(prop)) {
@@ -63,7 +67,7 @@ function getKeyByValue(object, value) {
     }
 }
 
-const port = 3001;
-io.listen(port);
-console.log('socket.io listening on port ', port);
+const port = process.env.PORT || 3000;
+//io.listen(port);
 
+http.listen(port, () => console.log("listening on port", port))
