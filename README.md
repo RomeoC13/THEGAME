@@ -1,5 +1,10 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## RUN LOCALLY
+Add "start": "concurrently \"npm run server\" \"npm run client\"", in script in package.json to be able to npm start
+
+
+
 ## Available Scripts
 
 In the project directory, you can run:
