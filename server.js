@@ -1,14 +1,21 @@
 const io = require('socket.io')();
 
-const messages = [{name: 'bot', text: 'Bienvenue.'}];
-//var timerState = [{minutes: 0, seconds: 300}];
-
+const messages = [{name: 'bot', text: 'Bienvenue '}];
+var countdown = 10;
+// All names of currently playing client are pushed in clientsNames
+var clientsNames = [];
+// Socket of a client named "Romeo" is stocked at sockets["Romeo"]
+var sockets = [];
 io.on('connection', (client) => {
-    client.on('set-name', (name) => {
-        console.log('set-name ', name);
-        client.username = name;
-        client.emit('add-messages', messages)
 
+    client.on('set-name', (name) => {
+        console.log('set-name aaa', name);
+        client.username = name;
+        clientsNames.push(name);
+        sockets[name] = client;
+        console.log('update-names', clientsNames);
+        io.emit('update-names', clientsNames);
+        client.emit('add-messages', messages)
     });
 
     client.on('post-message', (text) => {
@@ -18,8 +25,8 @@ io.on('connection', (client) => {
         io.emit('add-messages', [message])
     });
 
-    client.on('drawing', function(data) {
-        console.log('drawing',data);
+    client.on('drawing', function (data) {
+        console.log('drawing', data);
     });
 
 
@@ -28,9 +35,17 @@ io.on('connection', (client) => {
         io.sockets.emit('timer', {countdown: countdown});
     })
 
+    client.on('disconnect', function () {
+        var name = getKeyByValue(sockets, client);
+        delete sockets[name];
+        var i = clientsNames.indexOf(name);
+        clientsNames.splice(i, 1);
+        console.log('update-names', clientsNames);
+        io.emit('update-names', clientsNames)
+    })
+
 });
 
-var countdown = 1000;
 setInterval(function () {
     if (countdown > 0) {
         countdown--;
@@ -39,6 +54,14 @@ setInterval(function () {
     }
 }, 1000);
 
+function getKeyByValue(object, value) {
+    for (var prop in object) {
+        if (object.hasOwnProperty(prop)) {
+            if (object[prop] === value)
+                return prop;
+        }
+    }
+}
 
 const port = 3001;
 io.listen(port);
