@@ -7,9 +7,13 @@ import React from "react";
 class Pictionary extends React.Component {
     constructor(props) {
         super(props);
+
+
         this.state = {message: "", names: []};
         this.addName = this.addName.bind(this);
         this.sendMsg = this.sendMsg.bind(this);
+
+
     }
 
     sendMsg(text) {
@@ -28,9 +32,10 @@ class Pictionary extends React.Component {
     }
 
     render() {
+        //<h1>{this.state.message}</h1>
         return (
             <div>
-                <h1>{this.state.message}</h1>
+
                 <Timer seconds={'20'}/>
                 <ChatWindow name={this.props.statename} onQuit={this.props.closeChat} msg={this.sendMsg}/>
                 <Canvas/>

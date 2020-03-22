@@ -1,13 +1,14 @@
 const io = require('socket.io')();
 
 const messages = [{name: 'bot', text: 'Bienvenue.'}];
-var timerState = [{minutes: 0, seconds: 300}];
+//var timerState = [{minutes: 0, seconds: 300}];
 
 io.on('connection', (client) => {
     client.on('set-name', (name) => {
         console.log('set-name ', name);
         client.username = name;
         client.emit('add-messages', messages)
+
     });
 
     client.on('post-message', (text) => {
@@ -17,8 +18,8 @@ io.on('connection', (client) => {
         io.emit('add-messages', [message])
     });
 
-    client.on("drawing", (data) => {
-        client.emit("drawing", data);
+    client.on('drawing', function(data) {
+        console.log('drawing',data);
     });
 
 
@@ -28,7 +29,6 @@ io.on('connection', (client) => {
     })
 
 });
-
 
 var countdown = 1000;
 setInterval(function () {

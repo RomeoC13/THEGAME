@@ -1,65 +1,115 @@
 import React from "react";
+import openSocket from 'socket.io-client';
+import ReactDOM from 'react-dom';
 
-class Canvas  extends React.Component {
+const client = openSocket('http://localhost:3000');
 
-    constructor(props) {
-        super(props);
-        this._resizeHandler = () => {
-            this.canvas.width = this.canvas.clientWidth;
-            this.canvas.height = this.canvas.clientHeight;
-            this.clearAndDraw();
-        }
-    }
-
+class Canvas extends React.Component {
     componentDidMount() {
-        window.addEventListener('resize', this._resizeHandler);
-        this.canvas.width = this.canvas.clientWidth;
-        this.canvas.height = this.canvas.clientHeight;
-
+        const canvas = ReactDOM.findDOMNode(this);
+        canvas.style.width = '500px';
+        canvas.style.height = '500px';
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        const context = canvas.getContext('2d');
+        this.setState({
+            canvas,
+            context
+        });
     }
 
-    /*componentWillUnmount() {
-        window.removeEventListener('resize', this._resizeHandler);
-    }*/
-
-
-    componentDidUpdate(prevProps, prevState) {
-        /*if (this.props.secondRect !== prevProps.secondRect) {
-            this.clearAndDraw();
-            this.clearCanvas();
-        }*/
-    }
-
-    clearAndDraw() {
-        const ctx = this.canvas.getContext('2d');
-        if (ctx) {
-            ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            this.draw(ctx);
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.clear) {
+            this.resetCanvas();
         }
     }
 
+    handleOnTouchStart(e) {
+        const rect = this.state.canvas.getBoundingClientRect();
+        this.state.context.beginPath();
+        this.setState({
+            lastX: e.targetTouches[0].pageX - rect.left,
+            lastY: e.targetTouches[0].pageY - rect.top,
+            drawing: true
+        });
+    }
 
-    draw(ctx) {
-        ctx.fillStyle = 'rgb(200, 0, 0)';
-        ctx.fillRect(10, 10, 50, 50);
+    handleOnMouseDown(e) {
+        const rect = this.state.canvas.getBoundingClientRect();
+        this.state.context.beginPath();
 
-        if (this.props.secondRect) {
-            ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
-            ctx.fillRect(30, 30, 50, 50);
+        this.setState({
+            lastX: e.clientX - rect.left,
+            lastY: e.clientY - rect.top,
+            drawing: true
+        });
+    }
+
+    handleOnTouchMove(e) {
+        if (this.state.drawing) {
+            const rect = this.state.canvas.getBoundingClientRect();
+            const lastX = this.state.lastX;
+            const lastY = this.state.lastY;
+            let currentX = e.targetTouches[0].pageX - rect.left;
+            let currentY = e.targetTouches[0].pageY - rect.top;
+            this.draw(lastX, lastY, currentX, currentY);
+            this.setState({
+                lastX: currentX,
+                lastY: currentY
+            });
         }
     }
 
-    //Todo : Faire la fonction de dessin + la fonction de clear du canvas
+    handleOnMouseMove(e) {
+        if (this.state.drawing) {
+            const rect = this.state.canvas.getBoundingClientRect();
+            const lastX = this.state.lastX;
+            const lastY = this.state.lastY;
+            let currentX = e.clientX - rect.left;
+            let currentY = e.clientY - rect.top;
+
+            this.draw(lastX, lastY, currentX, currentY);
+            this.setState({
+                lastX: currentX,
+                lastY: currentY
+            });
+        }
+    }
+
+    handleOnMouseUp() {
+        this.setState({drawing: false});
+    }
+
+    draw(lX, lY, cX, cY) {
+        const newContext = this.state.context;
+        newContext.strokeStyle = this.props.brushColor;
+        newContext.lineWidth = this.props.lineWidth;
+        this.setState({
+            context: newContext
+        });
+        this.state.context.moveTo(lX, lY);
+        this.state.context.lineTo(cX, cY);
+        this.state.context.stroke();
+    }
+
+    resetCanvas() {
+        const width = this.state.context.canvas.width;
+        const height = this.state.context.canvas.height;
+        this.state.context.clearRect(0, 0, width, height);
+    }
+
     render() {
         return (
-            <div>
-                <h1>Canvas</h1>
-                <canvas ref={canvas => this.canvas = canvas} id="myCanvas" width="500" height="200"/>
-                <p>&nbsp;</p>
-                <button ref={this.dessinRef} onClick="TODO Fonction">Dessiner</button>
-                <button onClick="TODO Fonction">Clear</button>
-            </div>
-        )
+            <canvas id='canvas'
+                    onMouseDown={this.handleOnMouseDown.bind(this)}
+                    onTouchStart={this.handleOnTouchStart.bind(this)}
+                    onMouseMove={this.handleOnMouseMove.bind(this)}
+                    onTouchMove={this.handleOnTouchMove.bind(this)}
+                    onMouseUp={this.handleOnMouseUp.bind(this)}
+                    onTouchEnd={this.handleOnMouseUp.bind(this)}
+            >
+            </canvas>
+        );
     }
 }
 
