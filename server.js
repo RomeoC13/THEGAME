@@ -30,15 +30,11 @@ io.on('connection', (client) => {
         io.emit('add-messages', [message])
     });
 
-    client.on('drawing', function (data) {
-        console.log('drawing', data);
-    });
 
-
-    client.on('reset', function (data) {
+    client.on('reset', (data) => {
         countdown = data;
-        io.sockets.emit('timer', {countdown: countdown});
-    })
+        io.emit('timer', {countdown: countdown});
+    });
 
     client.on('disconnect', function () {
         var name = getKeyByValue(sockets, client);
@@ -58,6 +54,8 @@ setInterval(function () {
         io.sockets.emit('timer', {countdown: countdown});
     }
 }, 1000);
+
+
 function getKeyByValue(object, value) {
     for (var prop in object) {
         if (object.hasOwnProperty(prop)) {

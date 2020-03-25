@@ -12,10 +12,7 @@ class App extends React.Component {
         this.closeChat = this.closeChat.bind(this);
         this.startChat = this.startChat.bind(this);
         this.setName = this.setName.bind(this);
-
     }
-
-
 
     closeChat() {
         this.setState({current: "login"})
