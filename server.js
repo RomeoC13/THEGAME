@@ -12,6 +12,7 @@ var clientsNames = [];
 // Socket of a client named "Romeo" is stocked at sockets["Romeo"]
 var sockets = [];
 io.on('connection', (client) => {
+    console.log("New connection")
 
     client.on('set-name', (name) => {
         console.log('set-name aaa', name);
