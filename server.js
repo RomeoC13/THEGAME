@@ -70,10 +70,7 @@ io.on('connection', (client) => {
     });
 
 
-    client.on('reset', function (data) {
-        countdown = data;
-        io.sockets.emit('timer', {countdown: countdown});
-    });
+
 
 
 });
@@ -85,10 +82,6 @@ setInterval(function () {
         io.sockets.emit('timer', {countdown: countdown});
     }
 }, 1000);
-
-let now = 0;
-let timer = null;
-
 
 const path = require("path");
 app.get("*", (req, res) => {

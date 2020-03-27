@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e92c23d2-c196-40e5-bc67-5c74b3248f80" name="Default Changelist" comment="" />
+    <list default="true" id="e92c23d2-c196-40e5-bc67-5c74b3248f80" name="Default Changelist" comment="commit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,6 +61,7 @@
       <workItem from="1585230681969" duration="7490000" />
       <workItem from="1585240454641" duration="6321000" />
       <workItem from="1585334067090" duration="1407000" />
+      <workItem from="1585335627114" duration="1349000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor du Canvas avec socket">
       <created>1585246617826</created>
@@ -103,10 +106,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="223" y="72" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1585155501010" />
-    <state x="393" y="12" key="CommitChangelistDialog2" timestamp="1585334627543">
+    <state x="393" y="0" width="749" height="834" key="CommitChangelistDialog2" timestamp="1585337002442">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="393" y="12" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1585334627543" />
+    <state x="393" y="0" width="749" height="834" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1585337002442" />
     <state x="277" y="60" key="SettingsEditor" timestamp="1585240513639">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
