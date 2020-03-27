@@ -1,10 +1,12 @@
 import {ChatWindow} from "./ChatWindow.js";
 import {Canvas} from "./Canvas.js";
 import {Timer} from "./Timer.js";
+import {PictionaryClient} from "./PictionaryClient";
 
 import React from "react";
 
 class Pictionary extends React.Component {
+
     constructor(props) {
         super(props);
 
@@ -19,8 +21,30 @@ class Pictionary extends React.Component {
         this.setState({message: text})
     }
 
-    setNames(name) {
+    setNames = (name) => {
         this.setState({names: name})
+    }
+
+    componentDidMount() {
+        const pc = new PictionaryClient();
+        pc.updateUsers(this.setNames);
+        pc.emitUser(this.props.statename);
+        pc.print("print");
+        this.setupBeforeUnloadListener(pc);
+
+    }
+
+    componentWillUnmount() {
+        const pc = new PictionaryClient();
+        pc.userLeave(this.props.statename);
+    }
+
+    setupBeforeUnloadListener = (pc) => {
+        window.addEventListener("beforeunload", (ev) => {
+            ev.preventDefault();
+            pc.userLeave(this.props.statename);
+            return ev.returnValue = "test";
+        });
     }
 
     render() {
@@ -31,7 +55,6 @@ class Pictionary extends React.Component {
                 <Timer seconds={'20'}/>
                 <ChatWindow name={this.props.statename} onQuit={this.props.closeChat} msg={this.sendMsg}/>
                 <Canvas/>
-
                 <div id="players-list">
                     <h4>Joueurs en ligne </h4>
                     <p> {names} </p>
@@ -40,4 +63,6 @@ class Pictionary extends React.Component {
         )
     }
 }
-export { Pictionary }
+
+
+export {Pictionary}
