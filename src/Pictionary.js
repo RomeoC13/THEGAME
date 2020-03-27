@@ -10,7 +10,6 @@ class Pictionary extends React.Component {
         super(props);
 
         this.state = {message: "", names: []};
-        this.componentDidMount = this.componentDidMount.bind(this);
         this.setNames = this.setNames.bind(this);
         this.sendMsg = this.sendMsg.bind(this);
 
@@ -21,13 +20,25 @@ class Pictionary extends React.Component {
         this.setState({message: text})
     }
 
-    setNames(name) {
+    setNames = (name) => {
         this.setState({names: name})
     }
 
     componentDidMount() {
-        this.updateMan = new PictionaryClient(this.props);
-        this.updateMan.listenNames(this.setNames);
+        const pc = new PictionaryClient();
+        pc.updateUsers(this.setNames);
+        pc.emitUser(this.props.statename);
+        pc.print("print");
+        this.setupBeforeUnloadListener(pc);
+
+    }
+
+    setupBeforeUnloadListener = (pc) => {
+        window.addEventListener("beforeunload", (ev) => {
+            ev.preventDefault();
+            pc.userLeave(this.props.statename);
+            return ev.returnValue = "test";
+        });
     }
 
     render() {
@@ -46,4 +57,6 @@ class Pictionary extends React.Component {
         )
     }
 }
-export { Pictionary }
+
+
+export {Pictionary}

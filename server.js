@@ -1,48 +1,77 @@
-const io = require('socket.io')();
+const express = require('express');
+const app = express();
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
+const bodyParser = require("body-parser");
+app.use(express.static('build'));
+app.use(bodyParser.json());
+
+
+const port = process.env.PORT || 3001;
+//io.listen(port);
+
+http.listen(port, () => console.log("Listening on port :", port))
+
 
 const messages = [{name: 'bot', text: 'Bienvenue '}];
 var countdown = 10;
-// All names of currently playing client are pushed in clientsNames
-var clientsNames = [];
-// Socket of a client named "Romeo" is stocked at sockets["Romeo"]
-var sockets = [];
+
+
+let onlineCount = 0;
+
+let users = [];
+
 io.on('connection', (client) => {
+    console.log("New connection")
+    var nameUser;
+
+    client.on("join", (name) => {
+        console.log('Nouveau joueur  :' + name);
+        nameUser = name;
+        onlineCount++;
+        if (typeof name != "string") {
+            console.log(name + "has been disconnected");
+            client.disconnect();
+            return;
+        }
+        users.push(name);
+        updateNames();
+    });
+
+    function updateNames() {
+        console.log('update-names', users);
+        io.emit('update-names', users);
+    }
+
+    client.on('leave', (user) => {
+        users = user;
+        updateNames();
+    });
+
+    client.on('print', (msg) => {
+        console.log("printing : " + msg);
+    });
+
 
     client.on('set-name', (name) => {
-        console.log('set-name aaa', name);
+        console.log('set-name', name);
         client.username = name;
-        clientsNames.push(name);
-        sockets[name] = client;
-        console.log('update-names', clientsNames);
-        io.emit('update-names', clientsNames);
         client.emit('add-messages', messages)
     });
 
     client.on('post-message', (text) => {
         const message = {name: client.username, text: text};
-        console.log('post-message ', message);
+        console.log(message.name, message.text);
         messages.push(message);
         io.emit('add-messages', [message])
-    });
-
-    client.on('drawing', function (data) {
-        console.log('drawing', data);
     });
 
 
     client.on('reset', function (data) {
         countdown = data;
         io.sockets.emit('timer', {countdown: countdown});
-    })
+    });
 
-    client.on('disconnect', function () {
-        var name = getKeyByValue(sockets, client);
-        delete sockets[name];
-        var i = clientsNames.indexOf(name);
-        clientsNames.splice(i, 1);
-        console.log('update-names', clientsNames);
-        io.emit('update-names', clientsNames)
-    })
 
 });
 
@@ -54,16 +83,11 @@ setInterval(function () {
     }
 }, 1000);
 
-function getKeyByValue(object, value) {
-    for (var prop in object) {
-        if (object.hasOwnProperty(prop)) {
-            if (object[prop] === value)
-                return prop;
-        }
-    }
-}
+let now = 0;
+let timer = null;
 
-const port = 3001;
-io.listen(port);
-console.log('socket.io listening on port ', port);
 
+const path = require("path");
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../build/index.html"));
+});

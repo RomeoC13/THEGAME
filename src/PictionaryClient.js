@@ -4,11 +4,25 @@ const socket = openSocket('http://localhost:3000');
 
 class PictionaryClient {
 
-    listenNames(op) {
+    updateUsers(op) {
         socket.on('update-names', function (data) {
             op(data)
         });
     }
+
+    emitUser(user) {
+        socket.emit('join', user)
+    }
+
+    userLeave(user) {
+        socket.emit('leave', user)
+    }
+
+    print(msg) {
+        socket.emit('print', msg);
+    }
+
 }
+
 
 export {PictionaryClient}
