@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e92c23d2-c196-40e5-bc67-5c74b3248f80" name="Default Changelist" comment="commit">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Timer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Timer.js" afterDir="false" />
-    </list>
+    <list default="true" id="e92c23d2-c196-40e5-bc67-5c74b3248f80" name="Default Changelist" comment="commit" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -65,7 +59,7 @@
       <workItem from="1585230681969" duration="7490000" />
       <workItem from="1585240454641" duration="6321000" />
       <workItem from="1585334067090" duration="1407000" />
-      <workItem from="1585335627114" duration="1670000" />
+      <workItem from="1585335627114" duration="1911000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor du Canvas avec socket">
       <created>1585246617826</created>
