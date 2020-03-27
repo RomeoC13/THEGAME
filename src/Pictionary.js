@@ -1,7 +1,6 @@
 import {ChatWindow} from "./ChatWindow.js";
 import {Canvas} from "./Canvas.js";
-import {Timer} from "./Timer.js";
-import {PictionaryClient} from "./PictionaryClient";
+import {Timer} from "./Timer.js";import {PictionaryClient} from "./PictionaryClient";
 
 import React from "react";
 
@@ -39,7 +38,6 @@ class Pictionary extends React.Component {
         pc.userLeave(this.props.statename);
     }
 
-
     setupBeforeUnloadListener = (pc) => {
         window.addEventListener("beforeunload", (ev) => {
             ev.preventDefault();
@@ -47,6 +45,7 @@ class Pictionary extends React.Component {
             return ev.returnValue = "test";
         });
     }
+
 
     render() {
         //<h1>{this.state.message}</h1>
@@ -63,9 +62,8 @@ class Pictionary extends React.Component {
             </div>
         )
     }
+
 }
-
-
 
 export {Pictionary}
 

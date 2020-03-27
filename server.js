@@ -17,11 +17,14 @@ const messages = [{name: 'bot', text: 'Bienvenue '}];
 var countdown = 10;
 
 
+
+
 let onlineCount = 0;
 
 let users = [];
 
 io.on('connection', (client) => {
+
     console.log("New connection")
     var nameUser;
 
@@ -44,7 +47,6 @@ io.on('connection', (client) => {
     }
 
     client.on('leave', (user) => {
-
         console.log(user + " has left !")
         var i = users.indexOf(user);
         users.splice(i,1);
@@ -54,6 +56,7 @@ io.on('connection', (client) => {
     client.on('print', (msg) => {
         console.log("printing : " + msg);
     });
+
 
 
     client.on('set-name', (name) => {
@@ -83,6 +86,9 @@ setInterval(function () {
     }
 }, 1000);
 
+let now = 0;
+
+let timer = null;
 const path = require("path");
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "../build/index.html"));
