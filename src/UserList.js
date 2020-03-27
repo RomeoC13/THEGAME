@@ -11,4 +11,5 @@ export default class UserList extends Component {
         });
         return <div className="user-list">{userList}</div>;
     }
+
 }
