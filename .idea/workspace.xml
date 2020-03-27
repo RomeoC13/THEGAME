@@ -18,6 +18,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
     <option name="UPDATE_TYPE" value="MERGE" />
+    <option name="WARN_ABOUT_DETACHED_HEAD" value="false" />
   </component>
   <component name="IgnoredFileRootStore">
     <option name="generatedRoots">
@@ -103,10 +104,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="223" y="72" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1585155501010" />
-    <state x="393" y="12" key="CommitChangelistDialog2" timestamp="1585334627543">
+    <state x="393" y="12" width="1098" height="810" key="CommitChangelistDialog2" timestamp="1585341150593">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="393" y="12" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1585334627543" />
+    <state x="393" y="12" width="1098" height="810" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1585341150593" />
     <state x="277" y="60" key="SettingsEditor" timestamp="1585240513639">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
