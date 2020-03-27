@@ -1,9 +1,9 @@
 import React from "react";
 import socketIOClient from "socket.io-client";
 
-const socket = socketIOClient("localhost:3001"); //development;
+//const socket = socketIOClient("localhost:3001"); //development;
 
-//const socket = socketIOClient(); //production
+const socket = socketIOClient(); //production
 
 class Canvas extends React.Component {
     constructor(props) {
