@@ -17,7 +17,7 @@ let onlineCount = 0;
 let users = [];
 
 io.on('connection', (client) => {
-    console.log("New connection")
+
     var nameUser;
     console.log("New connection");
 
@@ -44,7 +44,6 @@ io.on('connection', (client) => {
         var i = users.indexOf(user);
         users.splice(i, 1);
         updateNames();
-
     });
 
     client.on("drawing", (data) => {
@@ -55,8 +54,6 @@ io.on('connection', (client) => {
     client.on('print', (msg) => {
         console.log("printing : " + msg);
     });
-
-
 
 
     client.on('set-name', (name) => {
