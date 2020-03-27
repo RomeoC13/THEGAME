@@ -1,8 +1,9 @@
 import React from "react";
 import socketIOClient from "socket.io-client";
-import UserList from "./UserList";
 
-const socket = socketIOClient('http://localhost:3000');
+//const socket = socketIOClient("localhost:3000"); //development;
+
+const socket = socketIOClient(); //production
 
 class Canvas extends React.Component {
     constructor(props) {
@@ -47,16 +48,18 @@ class Canvas extends React.Component {
         });
 
         socket.on("drawing", data => {
-            //let w = window.innerWidth;
-            //let h = window.innerHeight;
-            this.drawLine(
-                    data.x0 ,
-                    data.y0 ,
-                    data.x1,
-                    data.y1,
+            let w = window.innerWidth;
+            let h = window.innerHeight;
+
+            if (!isNaN(data.x0 / w) && !isNaN(data.y0)) {
+                this.drawLine(
+                    data.x0 * w,
+                    data.y0 * h,
+                    data.x1 * w,
+                    data.y1 * h,
                     data.color
                 );
-
+            }
         });
     }
 
@@ -73,6 +76,7 @@ class Canvas extends React.Component {
             false
         );
         this.whiteboard.current.addEventListener("mouseup", this.onMouseUp, false);
+        this.whiteboard.current.addEventListener("mouseout", this.onMouseUp, false);
         this.whiteboard.current.addEventListener(
             "mousemove",
             this.throttle(this.onMouseMove, 5),
@@ -103,9 +107,9 @@ class Canvas extends React.Component {
         context.lineTo(x1, y1);
         context.strokeStyle = color;
         context.lineWidth = 2;
-         if (force) {
-         	context.lineWidth = 1.75 * (force * (force + 3.75));
-         }
+        // if (force) {
+        // 	context.lineWidth = 1.75 * (force * (force + 3.75));
+        // }
         context.stroke();
         context.closePath();
 
@@ -115,7 +119,7 @@ class Canvas extends React.Component {
         var w = window.innerWidth;
         var h = window.innerHeight;
         this.setState(() => {
-
+            if (!isNaN(x0 / w)) {
                 socket.emit("drawing", {
                     x0: x0 / w,
                     y0: y0 / h,
@@ -129,7 +133,7 @@ class Canvas extends React.Component {
                 return {
                     cleared: false
                 };
-
+            }
         });
     };
 
@@ -147,8 +151,8 @@ class Canvas extends React.Component {
         this.setState(() => {
             return {
                 drawing: false,
-                currentX: e.clientX ,
-                currentY: e.clientY ,
+                currentX: e.clientX,
+                currentY: e.clientY
             };
         });
     };
@@ -161,7 +165,7 @@ class Canvas extends React.Component {
         this.setState(() => {
             return {
                 currentX: e.clientX,
-                currentY: e.clientY,
+                currentY: e.clientY
             };
         }, this.drawLine(this.state.currentX, this.state.currentY, e.clientX, e.clientY, this.state.currentColor, true));
     };
@@ -182,18 +186,12 @@ class Canvas extends React.Component {
                 e.touches[0].force
             );
             return {
-                currentX: e.touches[0].clientX ,
-                currentY: e.touches[0].clientY ,
+                currentX: e.touches[0].clientX,
+                currentY: e.touches[0].clientY
             };
         });
     };
 
-    onResize = () => {
-        this.setState({
-            windowWidth: window.innerWidth,
-            windowHeight: window.innerHeight
-        });
-    };
 
     throttle = (callback, delay) => {
         let previousCall = new Date().getTime();
@@ -225,25 +223,19 @@ class Canvas extends React.Component {
         socket.emit("clear", this.state.room);
     };
 
-    leave = () => {
-        socket.emit("leaveroom", { id: this.state.id, room: this.state.room });
-    };
-
     render() {
         return (
             <div>
                 <h1 className="room-name">{this.state.room}</h1>
-                <canvas id = "canvas"
+                <canvas
                     height={`${this.state.windowHeight}px`}
                     width={`${this.state.windowWidth}px`}
                     ref={this.whiteboard}
                     className="whiteboard"
                 />
-                <UserList userList={this.state.userList} />
 
             </div>
         );
     }
 }
-
 export {Canvas}

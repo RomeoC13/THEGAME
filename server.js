@@ -29,7 +29,7 @@ let onlineCount = 0;
 let users = [];
 
 io.on('connection', (client) => {
-    console.log("New connection")
+    console.log("New connection");
 
     let addedToList = false;
     let color;
@@ -60,7 +60,7 @@ io.on('connection', (client) => {
 
 
     client.on("drawing", (data) => {
-        client.in(data.room).emit("drawing", data);
+        client.broadcast.emit("drawing", data);
     });
 
     client.on("color-change", (data) => {
