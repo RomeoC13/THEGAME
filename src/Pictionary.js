@@ -1,7 +1,7 @@
 import {ChatWindow} from "./ChatWindow.js";
 import {Canvas} from "./Canvas.js";
-import {Timer} from "./Timer.js";import {PictionaryClient} from "./PictionaryClient";
-
+import {Timer} from "./Timer.js";
+import {PictionaryClient} from "./PictionaryClient";
 import React from "react";
 
 class Pictionary extends React.Component {
@@ -13,17 +13,16 @@ class Pictionary extends React.Component {
         this.setNames = this.setNames.bind(this);
         this.sendMsg = this.sendMsg.bind(this);
 
-
     }
 
     sendMsg(text) {
         this.setState({message: text})
     }
 
+
     setNames = (name) => {
         this.setState({names: name})
     }
-
     componentDidMount() {
         const pc = new PictionaryClient();
         pc.updateUsers(this.setNames);
@@ -47,6 +46,7 @@ class Pictionary extends React.Component {
     }
 
 
+
     render() {
         //<h1>{this.state.message}</h1>
         const names = this.state.names.map((m) => <font> {m} </font>);
@@ -62,8 +62,7 @@ class Pictionary extends React.Component {
             </div>
         )
     }
-
 }
 
-export {Pictionary}
 
+export {Pictionary}

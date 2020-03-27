@@ -6,25 +6,17 @@ const bodyParser = require("body-parser");
 app.use(express.static('build'));
 app.use(bodyParser.json());
 
-
 const port = process.env.PORT || 3001;
 //io.listen(port);
 
 http.listen(port, () => console.log("Listening on port :", port))
 
-
 const messages = [{name: 'bot', text: 'Bienvenue '}];
 var countdown = 10;
-
-
-
-
 let onlineCount = 0;
-
 let users = [];
 
 io.on('connection', (client) => {
-
     console.log("New connection")
     var nameUser;
 
@@ -59,6 +51,7 @@ io.on('connection', (client) => {
 
 
 
+
     client.on('set-name', (name) => {
         console.log('set-name', name);
         client.username = name;
@@ -73,7 +66,10 @@ io.on('connection', (client) => {
     });
 
 
-
+    client.on('reset', function (data) {
+        countdown = data;
+        io.sockets.emit('timer', {countdown: countdown});
+    });
 
 
 });
@@ -86,9 +82,10 @@ setInterval(function () {
     }
 }, 1000);
 
-let now = 0;
 
+let now = 0;
 let timer = null;
+
 const path = require("path");
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "../build/index.html"));
