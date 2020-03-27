@@ -6,6 +6,7 @@ import {PictionaryClient} from "./PictionaryClient";
 import React from "react";
 
 class Pictionary extends React.Component {
+
     constructor(props) {
         super(props);
 
@@ -33,6 +34,12 @@ class Pictionary extends React.Component {
 
     }
 
+    componentWillUnmount() {
+        const pc = new PictionaryClient();
+        pc.userLeave(this.props.statename);
+    }
+
+
     setupBeforeUnloadListener = (pc) => {
         window.addEventListener("beforeunload", (ev) => {
             ev.preventDefault();
@@ -59,4 +66,6 @@ class Pictionary extends React.Component {
 }
 
 
+
 export {Pictionary}
+

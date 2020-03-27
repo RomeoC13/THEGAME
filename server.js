@@ -44,7 +44,10 @@ io.on('connection', (client) => {
     }
 
     client.on('leave', (user) => {
-        users = user;
+
+        console.log(user + " has left !")
+        var i = users.indexOf(user);
+        users.splice(i,1);
         updateNames();
     });
 
