@@ -39,6 +39,7 @@ class Pictionary extends React.Component {
         pc.userLeave(this.props.statename);
     }
 
+
     setupBeforeUnloadListener = (pc) => {
         window.addEventListener("beforeunload", (ev) => {
             ev.preventDefault();
@@ -65,4 +66,6 @@ class Pictionary extends React.Component {
 }
 
 
+
 export {Pictionary}
+
