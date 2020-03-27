@@ -6,6 +6,8 @@ import socketIOClient from "socket.io-client";
 const socket = socketIOClient(); //production
 
 class Canvas extends React.Component {
+
+
     constructor(props) {
         super(props);
         this.state = {
