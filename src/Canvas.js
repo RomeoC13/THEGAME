@@ -1,9 +1,9 @@
 import React from "react";
 import socketIOClient from "socket.io-client";
 
-//const socket = socketIOClient("localhost:3000"); //development;
+const socket = socketIOClient("localhost:3001"); //development;
 
-const socket = socketIOClient(); //production
+//const socket = socketIOClient(); //production
 
 class Canvas extends React.Component {
     constructor(props) {
@@ -22,24 +22,6 @@ class Canvas extends React.Component {
 
         this.whiteboard = React.createRef();
 
-        socket.emit("join", {
-            username: this.props.username,
-            room: this.props.room
-        });
-
-        socket.on("joined", joined => {
-            this.setState({
-                id: joined.id,
-                username: joined.username,
-                room: joined.room
-            });
-        });
-
-        socket.on("users", users => {
-            this.setState({
-                userList: users
-            });
-        });
 
         socket.on("cleared", () => {
             this.state.whiteboard
@@ -205,19 +187,6 @@ class Canvas extends React.Component {
         };
     };
 
-    selectColor = color => {
-        this.setState(() => {
-            socket.emit("color-change", {
-                id: this.state.id,
-                username: this.state.username,
-                room: this.state.room,
-                color: color.hex
-            });
-            return {
-                currentColor: color.hex
-            };
-        });
-    };
 
     clearBoard = () => {
         socket.emit("clear", this.state.room);

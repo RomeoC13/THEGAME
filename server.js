@@ -19,7 +19,7 @@ let users = [];
 io.on('connection', (client) => {
 
     var nameUser;
-    console.log("New connection");
+    //console.log("New connection");
 
     client.on("join", (name) => {
         console.log('Nouveau joueur  :' + name);
@@ -34,21 +34,14 @@ io.on('connection', (client) => {
         updateNames();
     });
 
+    client.on("drawing", (data) => {
+        client.in(data.room).emit("drawing", data);
+    });
+
     function updateNames() {
         console.log('update-names', users);
         io.emit('update-names', users);
     }
-
-    client.on('leave', (user) => {
-        console.log(user + " has left !")
-        var i = users.indexOf(user);
-        users.splice(i, 1);
-        updateNames();
-    });
-
-    client.on("drawing", (data) => {
-        client.broadcast.emit("drawing", data);
-    });
 
 
     client.on('print', (msg) => {

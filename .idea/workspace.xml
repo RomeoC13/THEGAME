@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e92c23d2-c196-40e5-bc67-5c74b3248f80" name="Default Changelist" comment="" />
+    <list default="true" id="1181bf25-1fda-424a-8fab-a2f46bfbae05" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Canvas.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Canvas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pictionary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pictionary.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
