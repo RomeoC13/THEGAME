@@ -19,8 +19,9 @@ class Timer extends React.Component {
         const seconds = countdown - (minutes * 60);
         if (countdown > 0) {
             return (
-                <div>
+                <div id="counter">
                     <h1>{minutes} : {seconds}  </h1>
+                    <button id="reset">Reset!</button>
                 </div>
             )
         } else {

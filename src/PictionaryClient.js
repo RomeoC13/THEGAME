@@ -25,5 +25,4 @@ class PictionaryClient {
 }
 
 
-
 export {PictionaryClient}
