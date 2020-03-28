@@ -68,6 +68,12 @@ io.on('connection', (client) => {
         io.sockets.emit('timer', {countdown: countdown});
     });
 
+    client.on('leave',function (name) {
+        var indexName= users.indexOf(name);
+        users.splice(indexName,1);
+        updateNames()
+    })
+
 
 });
 
@@ -79,9 +85,6 @@ setInterval(function () {
     }
 }, 1000);
 
-
-let now = 0;
-let timer = null;
 
 const path = require("path");
 app.get("*", (req, res) => {
