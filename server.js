@@ -68,7 +68,6 @@ io.on('connection', (client) => {
         let room = data.room;
         const message = {name: client.username, text: text,room :room};
         messages.push(message);
-        console.log(messages);
         console.log(message);
         io.emit('add-messages', [message])
     });

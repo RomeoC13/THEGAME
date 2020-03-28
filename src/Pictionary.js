@@ -25,7 +25,6 @@ class Pictionary extends React.Component {
     };
 
     componentDidMount() {
-        console.log("LA ROOM EST : "+this.props.room)
         this.pc.updateUsers(this.setNames, this.props.room);
         this.pc.emitUser(this.props.statename, this.props.room);
         this.setupBeforeUnloadListener(this.pc);

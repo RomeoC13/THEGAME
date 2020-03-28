@@ -26,7 +26,6 @@ class ChatWindow extends React.Component {
     }
 
     render() {
-        console.log()
         const messages = this.state.messages.map((m) => <li> {m.name}: {m.text} </li>);
         return (
             <div id="chat">
