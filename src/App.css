@@ -40,8 +40,10 @@ button {
     border-style: solid;
 }
 
-#canvas {
-    border: 1px solid #000000;
+canvas {
+    border-style: groove;
+    height: 600px;
+    width: 600px;
 }
 
 #players-list {
