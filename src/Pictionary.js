@@ -49,7 +49,7 @@ class Pictionary extends React.Component {
 
     render() {
         //<h1>{this.state.message}</h1>
-        const names = this.state.names.map((m) => <font> {m} </font>);
+        const names = this.state.names.map((m) => <u key={m}> {m} </u>);
         return (
             <div>
                 <Timer seconds={'20'} room={this.props.room}/>
