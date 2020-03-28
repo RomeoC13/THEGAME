@@ -1,49 +1,54 @@
 
 form {
-  margin: 0 auto;
-  width: 250px;
-  text-align: center;
+    margin: 0 auto;
+    width: 250px;
+    text-align: center;
 }
 
 h1 {
-  text-align: center;
-  font-size: xx-large;
+    text-align: center;
+    font-size: xx-large;
 }
 
 strong {
-  color: #ff0000;
+    color: #ff0000;
 }
 
 button {
-  border: none;
-  background-color: black;
-  color: white;
-  font-size: 16px;
-  padding: 9px 15px;
-  text-decoration: none;
-  display: inline-block;
-  margin: 8px;
+    border: none;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    padding: 9px 15px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 8px;
 }
 
 * {
-  font-family: Georgia, serif;
-  text-align: center;
+    font-family: Georgia, serif;
+    text-align: center;
 }
 
 #chat {
-  background-color: gray;
-  float: right;
-  border: black;
+    background-color: gray;
+    float: right;
+    border: black;
 }
 
 #topchat {
-  border-style: solid;
+    border-style: solid;
 }
 
 #canvas {
-  border: 1px solid #000000;
+    border: 1px solid #000000;
 }
 
 #players-list {
+
+}
+
+#discret {
+    font-size: smaller;
 
 }
