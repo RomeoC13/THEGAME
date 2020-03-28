@@ -37,7 +37,7 @@ class ChatWindow extends React.Component {
                 </ul>
 
                 <InputField label="Message" onSubmit={this.submitMessage} autoFocus/>
-                <button onClick={this.props.onQuit}>Quitter</button>
+                <button onClick={this.props.onQuit}>Quit this room</button>
             </div>
         );
     }
