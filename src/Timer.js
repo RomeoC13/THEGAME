@@ -7,7 +7,6 @@ class Timer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {countdown: 0};
-        this.componentDidMount = this.componentDidMount.bind(this);
         this.updateTime = this.updateTime.bind(this);
         this.callReset= this.callReset.bind(this);
 
@@ -34,6 +33,7 @@ class Timer extends React.Component {
             return (
                 <div>
                     <h1><strong>TEMPS ÉCOULÉ !</strong></h1>
+                    <button id="reset" onClick={this.callReset}>Reset!</button>
                 </div>
             )
         }
@@ -42,10 +42,6 @@ class Timer extends React.Component {
     componentWillUnmount() {
         clearInterval(this.myInterval)
     }
-
-    componentDidMount() {
-    }
-
 
 
     callReset(){

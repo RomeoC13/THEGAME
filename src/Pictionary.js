@@ -44,6 +44,10 @@ class Pictionary extends React.Component {
         });
     };
 
+    startgame(){
+
+    }
+
 
 
     render() {
@@ -51,9 +55,10 @@ class Pictionary extends React.Component {
         const names = this.state.names.map((m) => <font> {m} </font>);
         return (
             <div>
-                <Timer seconds={'20'}/>
+                <Timer seconds={'10'}/>
                 <ChatWindow name={this.props.statename} onQuit={this.props.closeChat} msg={this.sendMsg}/>
                 <Canvas/>
+                <button onClick={this.startgame}>Start Game !</button>
                 <div id="players-list">
                     <h4>Joueurs en ligne </h4>
                     <p> {names} </p>
