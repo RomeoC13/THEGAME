@@ -1,12 +1,18 @@
 import React from "react";
 import {TimerClient} from "./TimerClient";
 
+
 class Timer extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {countdown: 0};
         this.componentDidMount = this.componentDidMount.bind(this);
         this.updateTime = this.updateTime.bind(this);
+        this.callReset= this.callReset.bind(this);
+
+        this.timer = new TimerClient(this.props.seconds);
+        this.timer.listenTimer(this.updateTime)
     }
 
     updateTime(data) {
@@ -21,7 +27,7 @@ class Timer extends React.Component {
             return (
                 <div id="counter">
                     <h1>{minutes} : {seconds}  </h1>
-                    <button id="reset">Reset!</button>
+                    <button id="reset" onClick={this.callReset}>Reset!</button>
                 </div>
             )
         } else {
@@ -38,8 +44,12 @@ class Timer extends React.Component {
     }
 
     componentDidMount() {
-        this.timer = new TimerClient(this.props.seconds);
-        this.timer.listenTimer(this.updateTime)
+    }
+
+
+
+    callReset(){
+        this.timer.callReset(this.props.seconds);
     }
 
 }
