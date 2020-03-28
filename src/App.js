@@ -7,11 +7,12 @@ import {LoginWindow} from "./LoginWindow.js";
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {current: "login"};
+        this.state = {current: "login",room : '0'};
 
         this.closeChat = this.closeChat.bind(this);
         this.startChat = this.startChat.bind(this);
         this.setName = this.setName.bind(this);
+        this.setRoom=this.setRoom.bind(this);
     }
 
     closeChat() {
@@ -26,13 +27,17 @@ class App extends React.Component {
         this.setState({name: name})
     }
 
+    setRoom(room){
+        this.setState({room : room.target.value})
+    }
+
     render() {
         if (this.state.current === "login")
             return <div>
-                <LoginWindow onNameChange={this.setName} onLogin={this.startChat}/>
+                <LoginWindow onNameChange={this.setName} onLogin={this.startChat} onRoomChange={this.setRoom}/>
                 </div>;
         else{
-            return <Pictionary statename={this.state.name} closeChat={this.closeChat}  />
+            return <Pictionary statename={this.state.name} closeChat={this.closeChat} room={this.state.room} />
         }
     }
 }

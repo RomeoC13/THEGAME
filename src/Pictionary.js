@@ -11,43 +11,41 @@ class Pictionary extends React.Component {
         this.state = {message: "", names: []};
         this.setNames = this.setNames.bind(this);
         this.sendMsg = this.sendMsg.bind(this);
-
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.componentWillUnmount = this.componentWillUnmount.bind(this);
+        this.pc = new PictionaryClient();
     }
 
     sendMsg(text) {
         this.setState({message: text})
     }
 
-    setNames =(name) =>{
+    setNames = (name) => {
         this.setState({names: name})
     };
 
     componentDidMount() {
-        const pc = new PictionaryClient();
-        pc.updateUsers(this.setNames);
-        pc.emitUser(this.props.statename);
-        pc.print("print");
-        this.setupBeforeUnloadListener(pc);
-
+        console.log("LA ROOM EST : "+this.props.room)
+        this.pc.updateUsers(this.setNames, this.props.room);
+        this.pc.emitUser(this.props.statename, this.props.room);
+        this.setupBeforeUnloadListener(this.pc);
     }
 
     componentWillUnmount() {
-        const pc = new PictionaryClient();
-        pc.userLeave(this.props.statename);
+        this.pc.userLeave(this.props.statename);
     }
 
     setupBeforeUnloadListener = (pc) => {
         window.addEventListener("beforeunload", (ev) => {
             ev.preventDefault();
-            pc.userLeave(this.props.statename);
+            pc.userLeave(this.props.statename, this.props.room);
             return ev.returnValue = "test";
         });
     };
 
-    startgame(){
+    startgame() {
 
     }
-
 
 
     render() {
@@ -55,12 +53,12 @@ class Pictionary extends React.Component {
         const names = this.state.names.map((m) => <font> {m} </font>);
         return (
             <div>
-                <Timer seconds={'10'}/>
-                <ChatWindow name={this.props.statename} onQuit={this.props.closeChat} msg={this.sendMsg}/>
+                <Timer seconds={'20'} room={this.props.room}/>
+                <ChatWindow name={this.props.statename} onQuit={this.props.closeChat} msg={this.sendMsg} room={this.props.room}/>
                 <Canvas/>
                 <button onClick={this.startgame}>Start Game !</button>
                 <div id="players-list">
-                    <h4>Joueurs en ligne </h4>
+                    <h4>Joueurs en ligne in room {this.props.room} </h4>
                     <p> {names} </p>
                 </div>
             </div>

@@ -8,12 +8,18 @@ class ChatClient {
         socket.emit('set-name', username)
     }
 
-    onMessages(cb) {
-        socket.on('add-messages', (messages) => cb(messages))
+    onMessages(cb, room) {
+        socket.on('add-messages', function (data) {
+            data.forEach((message)=> {
+                if (message.room === room) {
+                    cb(message)
+                }
+            })
+        })
     }
 
-    sendMessage(message) {
-        socket.emit('post-message', message)
+    sendMessage(message, room) {
+        socket.emit('post-message', {text: message, room: room})
     }
 }
 

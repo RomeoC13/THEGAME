@@ -10,12 +10,12 @@ class Timer extends React.Component {
         this.updateTime = this.updateTime.bind(this);
         this.callReset= this.callReset.bind(this);
 
-        this.timer = new TimerClient(this.props.seconds);
-        this.timer.listenTimer(this.updateTime)
+        this.timer = new TimerClient(this.props.seconds,this.props.room);
+        this.timer.listenTimer(this.updateTime,this.props.room)
     }
 
-    updateTime(data) {
-        this.setState(data)
+    updateTime = (data) => {
+        this.setState({countdown: data.countdown})
     }
 
     render() {
@@ -45,7 +45,7 @@ class Timer extends React.Component {
 
 
     callReset(){
-        this.timer.callReset(this.props.seconds);
+        this.timer.callReset(this.props.seconds,this.props.room);
     }
 
 }
