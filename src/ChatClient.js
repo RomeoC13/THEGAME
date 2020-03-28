@@ -11,7 +11,7 @@ class ChatClient {
     onMessages(cb, room) {
         socket.on('add-messages', function (data) {
             data.forEach((message)=> {
-                if (message.room === room) {
+                if (message.room === room || message.room ==="all") {
                     cb(message)
                 }
             })

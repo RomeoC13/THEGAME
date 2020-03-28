@@ -11,7 +11,7 @@ const port = process.env.PORT || 3001;
 
 http.listen(port, () => console.log("Listening on port :", port))
 
-const messages = [{name: 'bot', text: 'Bienvenue ', room : "0"}];
+const messages = [{name: 'bot', text: 'Bienvenue ', room : "all"}];
 var countdowns = [];
 let onlineCount = 0;
 let users = [];
