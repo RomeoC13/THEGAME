@@ -18,11 +18,12 @@ class ChatWindow extends React.Component {
         this.setState((state, props) => ({
             messages: state.messages.concat(messages)
         }))
+        this.props.msg(messages)
     }
 
     submitMessage(text) {
         this.chat.sendMessage(text,this.props.room)
-        this.props.msg(text)
+
     }
 
     render() {
