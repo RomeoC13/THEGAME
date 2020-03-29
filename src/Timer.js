@@ -1,16 +1,21 @@
 import React from "react";
 import {TimerClient} from "./TimerClient";
 
+
 class Timer extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {countdown: 0};
-        this.componentDidMount = this.componentDidMount.bind(this);
         this.updateTime = this.updateTime.bind(this);
+        this.callReset= this.callReset.bind(this);
+
+        this.timer = new TimerClient(this.props.seconds,this.props.room);
+        this.timer.listenTimer(this.updateTime,this.props.room)
     }
 
-    updateTime(data) {
-        this.setState(data)
+    updateTime = (data) => {
+        this.setState({countdown: data.countdown})
     }
 
     render() {
@@ -21,13 +26,14 @@ class Timer extends React.Component {
             return (
                 <div id="counter">
                     <h1>{minutes} : {seconds}  </h1>
-                    <button id="reset">Reset!</button>
+                    <button id="reset" onClick={this.callReset}>Reset!</button>
                 </div>
             )
         } else {
             return (
                 <div>
                     <h1><strong>TEMPS ÉCOULÉ !</strong></h1>
+                    <button id="reset" onClick={this.callReset}>Reset!</button>
                 </div>
             )
         }
@@ -37,9 +43,9 @@ class Timer extends React.Component {
         clearInterval(this.myInterval)
     }
 
-    componentDidMount() {
-        this.timer = new TimerClient(this.props.seconds);
-        this.timer.listenTimer(this.updateTime)
+
+    callReset(){
+        this.timer.callReset(this.props.seconds,this.props.room);
     }
 
 }

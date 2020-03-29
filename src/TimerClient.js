@@ -4,15 +4,21 @@ const socket = openSocket('http://localhost:3001');
 
 class TimerClient {
 
-    constructor(seconds) {
-        console.log('reset', seconds);
-        socket.emit('reset', seconds)
+    constructor(seconds,room) {
+        this.callReset(seconds,room)
     }
 
-    listenTimer(cb) {
+    listenTimer(cb,room) {
         socket.on('timer', function (data) {
-            cb(data);
+            if(data.room === room){
+                cb(data)
+            }
         })
+    }
+
+    callReset(seconds,room){
+        /*console.log('reset',{value :seconds,room : room});*/
+        socket.emit('reset',{value :seconds,room : room})
     }
 
 }
