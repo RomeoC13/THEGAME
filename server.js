@@ -90,7 +90,6 @@ io.on('connection', (client) => {
     });
 
     client.on("drawing", (data) => {
-        client.emit('drawing', data);
         io.emit("drawing", data);
     });
 
@@ -101,7 +100,7 @@ io.on('connection', (client) => {
     client.on('set-name', (name) => {
         console.log('set-name', name);
         client.username = name;
-        client.emit('add-messages', messages)
+        io.emit('add-messages', messages)
     });
 
     client.on('post-message', (data) => {
