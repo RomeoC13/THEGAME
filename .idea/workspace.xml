@@ -4,8 +4,6 @@
     <list default="true" id="1181bf25-1fda-424a-8fab-a2f46bfbae05" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pictionary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pictionary.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +64,7 @@
       <workItem from="1585240454641" duration="6321000" />
       <workItem from="1585334067090" duration="1407000" />
       <workItem from="1585483590647" duration="1636000" />
-      <workItem from="1585494539891" duration="5399000" />
+      <workItem from="1585494539891" duration="5654000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor du Canvas avec socket">
       <created>1585246617826</created>

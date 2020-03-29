@@ -90,6 +90,7 @@ io.on('connection', (client) => {
     });
 
     client.on("drawing", (data) => {
+        client.emit('drawing', data);
         io.emit("drawing", data);
     });
 
