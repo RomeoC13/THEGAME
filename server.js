@@ -22,9 +22,50 @@ let score= [];
 let onlineCount = 0;
 let users = [];
 
+var words = [
+    "storage",     "virus",       "restaurant",  "college",    "debt",
+    "passenger",   "leader",      "energy",      "tongue",     "lady",
+    "boyfriend",   "sister",      "recipe",      "speech",     "protection",
+    "newspaper",   "language",    "inspector",   "professor",  "advice",
+    "physics",     "collection",  "army",        "honey",      "letter",
+    "pen",         "police",      "people",      "sound",      "water",
+    "breakfast",   "place",       "man",         "woman",      "boy",
+    "girl",        "week",        "month",       "name",       "line",
+    "air",         "home",        "hand",        "house",      "picture",
+    "animal",      "mother",      "father",      "sister",     "world",
+    "head",        "page",        "country",     "question",   "school",
+    "plant",       "food",        "sun",         "state",      "eye",
+    "city",        "tree",        "farm",        "story",      "sea",
+    "night",       "day",         "life",        "child",      "paper",
+    "music",       "river",       "book",        "science",    "room",
+    "friend",      "idea",        "fish",        "mountain",   "horse",
+    "watch",       "color",       "face",        "wood",       "list",
+    "bird",        "song",        "door",        "forest",     "wind",
+    "ship",        "area",        "fire",        "airplane",   "top",
+    "bottom",      "king",        "space",       "whale",      "unicorn",
+    "furniture",   "sunset",      "sunburn",
+];
+
+function resetTimer(value,room){
+    countdowns[room] = value;
+    console.log('Reset : timer', {countdown: value,room : room});
+    io.emit('timer', {countdown: value,room : room});
+}
+
+function updateNames() {
+    console.log('update-names', rooms);
+    io.emit('update-names', rooms);
+}
+
+let wordcount;
+
+function newWord() {
+    wordcount = Math.floor(Math.random() * (words.length));
+    return words[wordcount];
+
+}
 
 io.on('connection', (client) => {
-
 
     console.log("New connection");
 
@@ -32,8 +73,8 @@ io.on('connection', (client) => {
         onlineCount++;
         var name = data.user;
         var room = data.room;
-
         if (!rooms.hasOwnProperty(room)) {
+
             rooms[room] = [];
         }
 
@@ -49,19 +90,12 @@ io.on('connection', (client) => {
     });
 
     client.on("drawing", (data) => {
-        client.in(data.room).emit("drawing", data);
+        io.emit("drawing", data);
     });
-
-    function updateNames() {
-        console.log('update-names', rooms);
-        io.emit('update-names', rooms);
-    }
-
 
     client.on('print', (msg) => {
         console.log("printing : " + msg);
     });
-
 
     client.on('set-name', (name) => {
         console.log('set-name', name);
@@ -78,18 +112,11 @@ io.on('connection', (client) => {
         io.emit('add-messages', [message])
     });
 
-
     client.on('reset', function (data) {
         var room = data.room;
         var value = data.value;
         resetTimer(value,room);
     });
-
-    function resetTimer(value,room){
-        countdowns[room] = value;
-        console.log('Reset : timer', {countdown: value,room : room});
-        io.emit('timer', {countdown: value,room : room});
-    }
 
     client.on('leave', function (data) {
         onlineCount--;
@@ -113,8 +140,9 @@ io.on('connection', (client) => {
             score[player]=0;
         });
         let firstplayer = Math.floor(Math.random()*players.length);
-        console.log('first-round',{player:players[firstplayer], word : "bateau", room:room});
-        io.emit('first-round',{player:players[firstplayer], word : "bateau", room:room})
+        let word = newWord();
+        console.log('first-round',{player:players[firstplayer], word : word, room:room});
+        io.emit('first-round',{player:players[firstplayer], word : word, room:room})
         resetTimer(10,room);
     });
 
@@ -124,9 +152,10 @@ io.on('connection', (client) => {
         let drawer = data.drawer;
         let room = data.room;
         let players = rooms[room];
+        let word = newWord();
         let indexOfNextDrawer= (players.indexOf(drawer)+1)%(players.length);
-        console.log('round-game',{players:players[indexOfNextDrawer],word :"soleil",room:room,scoreToUpdate : winner})
-        io.emit('round-game',{player:players[indexOfNextDrawer],word :"soleil",room:room,scoreToUpdate : winner});
+        console.log('round-game',{players:players[indexOfNextDrawer],word :word,room:room,scoreToUpdate : winner})
+        io.emit('round-game',{player:players[indexOfNextDrawer],word :word,room:room,scoreToUpdate : winner});
         resetTimer(10,room);
     });
 
@@ -135,9 +164,9 @@ io.on('connection', (client) => {
         let room = data.room;
         let players = rooms[room];
         let indexOfNextDrawer= (players.indexOf(drawer)+1)%(players.length);
-        let word = "soleil";
+        let word = newWord();
         console.log('round-game',{players:players[indexOfNextDrawer],word :word,room:room});
-        io.emit('round-game',{player:players[indexOfNextDrawer],word :"soleil",room:room});
+        io.emit('round-game',{player:players[indexOfNextDrawer],word :word,room:room});
         resetTimer(10,room);
     });
 
@@ -151,8 +180,9 @@ io.on('connection', (client) => {
         console.log("game-stopped",{player: playerWhoLeft,room :room});
         io.emit("game-stopped",{player: playerWhoLeft,room :room});
     })
-
 });
+
+
 
 setInterval(function () {
     for(let [room, roomCountdown] of Object.entries(countdowns)) {
@@ -164,7 +194,6 @@ setInterval(function () {
         }
     }
 }, 1000);
-
 
 const path = require("path");
 app.get("*", (req, res) => {
