@@ -12,10 +12,16 @@ const port = process.env.PORT || 3001;
 http.listen(port, () => console.log("Listening on port :", port))
 
 const messages = [{name: 'bot', text: 'Bienvenue ', room : "all"}];
+//Rooms Array is a 2D Array, a room with few players named "Romeo" ,"Pauline" and "Yash" in room "3" will be stored like this : rooms["3"]=["Romeo","Pauline","Yash"]
+let rooms = [];
+//Every rooms as his own countdown, for example room "3" if created as his countdown in countdowns["3"]
 var countdowns = [];
+
+let score= [];
+//Not used now, can be useful
 let onlineCount = 0;
 let users = [];
-let rooms = [];
+
 
 io.on('connection', (client) => {
 
@@ -76,10 +82,14 @@ io.on('connection', (client) => {
     client.on('reset', function (data) {
         var room = data.room;
         var value = data.value;
+        resetTimer(value,room);
+    });
+
+    function resetTimer(value,room){
         countdowns[room] = value;
         console.log('Reset : timer', {countdown: value,room : room});
         io.emit('timer', {countdown: value,room : room});
-    });
+    }
 
     client.on('leave', function (data) {
         onlineCount--;
@@ -96,6 +106,51 @@ io.on('connection', (client) => {
             updateNames()
         }
     });
+
+    client.on('start-game',function (room) {
+        let players= rooms[room];
+        players.forEach((player) => {
+            score[player]=0;
+        });
+        let firstplayer = Math.floor(Math.random()*players.length);
+        console.log('first-round',{player:players[firstplayer], word : "bateau", room:room});
+        io.emit('first-round',{player:players[firstplayer], word : "bateau", room:room})
+        resetTimer(10,room);
+    });
+
+    client.on('win',function (data) {
+        let winner = data.player;
+        score[winner]++;
+        let drawer = data.drawer;
+        let room = data.room;
+        let players = rooms[room];
+        let indexOfNextDrawer= (players.indexOf(drawer)+1)%(players.length);
+        console.log('round-game',{players:players[indexOfNextDrawer],word :"soleil",room:room,scoreToUpdate : winner})
+        io.emit('round-game',{player:players[indexOfNextDrawer],word :"soleil",room:room,scoreToUpdate : winner});
+        resetTimer(10,room);
+    });
+
+    client.on('loose',function(data){
+        let drawer = data.drawer;
+        let room = data.room;
+        let players = rooms[room];
+        let indexOfNextDrawer= (players.indexOf(drawer)+1)%(players.length);
+        let word = "soleil";
+        console.log('round-game',{players:players[indexOfNextDrawer],word :word,room:room});
+        io.emit('round-game',{player:players[indexOfNextDrawer],word :"soleil",room:room});
+        resetTimer(10,room);
+    });
+
+    client.on('end-game',function (data) {
+        let room = data.room;
+        let playerWhoLeft= data.player;
+        let players = rooms[room];
+        players.forEach((player)=>{
+            delete score[player];
+        });
+        console.log("game-stopped",{player: playerWhoLeft,room :room});
+        io.emit("game-stopped",{player: playerWhoLeft,room :room});
+    })
 
 });
 

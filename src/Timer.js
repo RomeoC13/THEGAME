@@ -6,48 +6,46 @@ class Timer extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {countdown: 0};
+        this.state = {countdown: 10,asFinished : true};
         this.updateTime = this.updateTime.bind(this);
-        this.callReset= this.callReset.bind(this);
+        this.callReset = this.callReset.bind(this);
 
-        this.timer = new TimerClient(this.props.seconds,this.props.room);
-        this.timer.listenTimer(this.updateTime,this.props.room)
+        this.timer = new TimerClient();
+        this.timer.listenTimer(this.updateTime, this.props.room)
     }
 
     updateTime = (data) => {
-        this.setState({countdown: data.countdown})
+        this.setState({countdown: data.countdown});
+        if(this.state.countdown === 0){
+            this.setState({asFinished : true})
+            this.props.timeIsUp();
+        }else{
+            this.setState({asFinished : false})
+        }
+    };
+
+    callReset() {
+        this.timer.callReset(this.props.seconds, this.props.room);
     }
 
     render() {
         let countdown = this.state.countdown;
         const minutes = Math.floor(countdown / 60);
         const seconds = countdown - (minutes * 60);
-        if (countdown > 0) {
+        if (!this.state.asFinished) {
             return (
                 <div id="counter">
                     <h1>{minutes} : {seconds}  </h1>
-                    <button id="reset" onClick={this.callReset}>Reset!</button>
                 </div>
             )
         } else {
             return (
                 <div>
-                    <h1><strong>TEMPS ÉCOULÉ !</strong></h1>
-                    <button id="reset" onClick={this.callReset}>Reset!</button>
+                    <h1><strong>TIME IS UP !</strong></h1>
                 </div>
             )
         }
     }
-
-    componentWillUnmount() {
-        clearInterval(this.myInterval)
-    }
-
-
-    callReset(){
-        this.timer.callReset(this.props.seconds,this.props.room);
-    }
-
 }
 
 export {Timer}
