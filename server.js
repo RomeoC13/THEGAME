@@ -100,7 +100,7 @@ io.on('connection', (client) => {
     client.on('set-name', (name) => {
         console.log('set-name', name);
         client.username = name;
-        io.emit('add-messages', messages)
+        client.emit('add-messages', messages)
     });
 
     client.on('post-message', (data) => {
