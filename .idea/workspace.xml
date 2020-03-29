@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1181bf25-1fda-424a-8fab-a2f46bfbae05" name="Default Changelist" comment="" />
+    <list default="true" id="1181bf25-1fda-424a-8fab-a2f46bfbae05" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pictionary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pictionary.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,7 +54,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e92c23d2-c196-40e5-bc67-5c74b3248f80" name="Default Changelist" comment="" />
+      <changelist id="1181bf25-1fda-424a-8fab-a2f46bfbae05" name="Default Changelist" comment="" />
       <created>1584906640834</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -60,6 +65,8 @@
       <workItem from="1585230681969" duration="7490000" />
       <workItem from="1585240454641" duration="6321000" />
       <workItem from="1585334067090" duration="1407000" />
+      <workItem from="1585483590647" duration="1636000" />
+      <workItem from="1585494539891" duration="5399000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor du Canvas avec socket">
       <created>1585246617826</created>
@@ -82,7 +89,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585344791856</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Génération random de mots + correction du canva pour online">
+      <created>1585500510459</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1585500511039</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -105,28 +119,31 @@
     <MESSAGE value="Refactor du Canvas avec socket" />
     <MESSAGE value="commit" />
     <MESSAGE value="Tout est refix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tout est refix" />
+    <MESSAGE value="Génération random de mots + correction du canva pour online" />
+    <option name="LAST_COMMIT_MESSAGE" value="Génération random de mots + correction du canva pour online" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="223" y="72" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585155501010">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="223" y="72" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1585155501010" />
-    <state x="393" y="12" width="1098" height="810" key="CommitChangelistDialog2" timestamp="1585344789043">
+    <state x="393" y="12" width="1098" height="810" key="CommitChangelistDialog2" timestamp="1585500492233">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="393" y="12" width="1098" height="810" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1585344789043" />
+    <state x="393" y="12" width="1098" height="810" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1585500492233" />
     <state x="277" y="60" key="SettingsEditor" timestamp="1585240513639">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="277" y="60" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1585240513639" />
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1585344800609">
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1585500535541">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1585344800609" />
-    <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585345842189">
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1585500535541" />
+    <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585494871529">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1585345842189" />
+    <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1585494871529" />
   </component>
 </project>
