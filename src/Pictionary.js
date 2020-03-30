@@ -131,7 +131,7 @@ class Pictionary extends React.Component {
                 <info>{this.state.info}</info>
                 <ChatWindow name={this.props.statename} onQuit={this.props.closeChat} msg={this.sendMsg}
                             room={this.props.room}/>
-                <Canvas/>
+                <Canvas room={this.props.room}/>
                 {this.button}
                 <div id="players-list">
                     <h4>Players online in room {this.props.room} </h4>

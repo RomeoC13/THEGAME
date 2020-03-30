@@ -9,10 +9,11 @@ app.use(bodyParser.json());
 const port = process.env.PORT || 3001;
 //io.listen(port);
 
-http.listen(port, () => console.log("Listening on port :", port))
+http.listen(port, () => console.log("Listening on port :", port));
 
 const messages = [{name: 'bot', text: 'Bienvenue ', room : "all"}];
-//Rooms Array is a 2D Array, a room with few players named "Romeo" ,"Pauline" and "Yash" in room "3" will be stored like this : rooms["3"]=["Romeo","Pauline","Yash"]
+//Rooms Array is a 2D Array, a room with few players named "Romeo" ,"Pauline" and "Yash" in room "3" will be stored like this :
+// rooms["3"]=["Romeo","Pauline","Yash"]
 let rooms = [];
 //Every rooms as his own countdown, for example room "3" if created as his countdown in countdowns["3"]
 var countdowns = [];
@@ -89,8 +90,16 @@ io.on('connection', (client) => {
         updateNames();
     });
 
-    client.on("drawing", (data) => {
-        io.emit("drawing", data);
+    client.on('drawing', (data) => {
+        console.log('drawing on client on server on room :', rooms);
+        var x0 = data.x0;
+        var x1 = data.x1;
+        var y0 = data.y0;
+        var y1 = data.y1;
+        var color = data.color;
+        var room =data.room;
+        io.emit('drawing', x0,x1,y0,y1,color,room);
+        console.log('drawing on emit server on room :', rooms);
     });
 
     client.on('print', (msg) => {
@@ -122,7 +131,7 @@ io.on('connection', (client) => {
         onlineCount--;
         var name = data.user;
         var room = data.room;
-        console.log("Joueur " + data.user + " a quitter " + data.room)
+        console.log("Joueur " + data.user + " a quitter " + data.room);
         if (rooms.hasOwnProperty(room)) {
             var indexName = rooms[room].indexOf(name);
             rooms[room].splice(indexName, 1);
@@ -142,7 +151,7 @@ io.on('connection', (client) => {
         let firstplayer = Math.floor(Math.random()*players.length);
         let word = newWord();
         console.log('first-round',{player:players[firstplayer], word : word, room:room});
-        io.emit('first-round',{player:players[firstplayer], word : word, room:room})
+        io.emit('first-round',{player:players[firstplayer], word : word, room:room});
         resetTimer(10,room);
     });
 

@@ -35,7 +35,6 @@ class Canvas extends React.Component {
             let w = window.innerWidth;
             let h = window.innerHeight;
 
-            if (!isNaN(data.x0 / w) && !isNaN(data.y0)) {
                 this.drawLine(
                     data.x0 * w,
                     data.y0 * h,
@@ -43,7 +42,7 @@ class Canvas extends React.Component {
                     data.y1 * h,
                     data.color
                 );
-            }
+
         });
     }
 
@@ -81,19 +80,16 @@ class Canvas extends React.Component {
 
         this.whiteboard.current.addEventListener("touchend", this.onMouseUp, false);
 
-        window.addEventListener("resize", this.onResize);
     }
 
-    drawLine = (x0, y0, x1, y1, color, emit, force) => {
+    drawLine = (x0, y0, x1, y1, color, emit, room) => {
         let context = this.state.whiteboard.getContext("2d");
         context.beginPath();
         context.moveTo(x0, y0);
         context.lineTo(x1, y1);
         context.strokeStyle = color;
         context.lineWidth = 2;
-        // if (force) {
-        // 	context.lineWidth = 1.75 * (force * (force + 3.75));
-        // }
+
         context.stroke();
         context.closePath();
 
@@ -103,21 +99,21 @@ class Canvas extends React.Component {
         var w = window.innerWidth;
         var h = window.innerHeight;
         this.setState(() => {
-            if (!isNaN(x0 / w)) {
+
+                console.log('drawing on emit socket canva on room :', this.props.room);
                 socket.emit("drawing", {
                     x0: x0 / w,
                     y0: y0 / h,
                     x1: x1 / w,
                     y1: y1 / h,
                     color: color,
-                    room: this.state.room,
-                    force: force
+                    room: room,
                 });
 
                 return {
                     cleared: false
                 };
-            }
+
         });
     };
 
@@ -151,7 +147,7 @@ class Canvas extends React.Component {
                 currentX: e.clientX,
                 currentY: e.clientY
             };
-        }, this.drawLine(this.state.currentX, this.state.currentY, e.clientX, e.clientY, this.state.currentColor, true));
+        }, this.drawLine(this.state.currentX, this.state.currentY, e.clientX, e.clientY, this.state.currentColor, true, this.room));
     };
 
     onTouchMove = e => {
@@ -167,7 +163,7 @@ class Canvas extends React.Component {
                 e.touches[0].clientY,
                 this.state.currentColor,
                 true,
-                e.touches[0].force
+                this.props.room
             );
             return {
                 currentX: e.touches[0].clientX,
@@ -190,14 +186,10 @@ class Canvas extends React.Component {
     };
 
 
-    clearBoard = () => {
-        socket.emit("clear", this.state.room);
-    };
-
     render() {
         return (
             <div>
-                <h1 className="room-name">{this.state.room}</h1>
+                <h1 className="room-name">{this.props.room}</h1>
                 <canvas
                     height={`${this.state.windowHeight}px`}
                     width={`${this.state.windowWidth}px`}
