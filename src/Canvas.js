@@ -36,13 +36,15 @@ class Canvas extends React.Component {
             let w = window.innerWidth;
             let h = window.innerHeight;
             //console.log("received data", data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h);
-            this.drawLine(
-                data.x0 * w,
-                data.y0 * h,
-                data.x1 * w,
-                data.y1 * h,
-                data.color
-            );
+            if(data.room=== this.props.room){
+                this.drawLine(
+                    data.x0 * w,
+                    data.y0 * h,
+                    data.x1 * w,
+                    data.y1 * h,
+                    data.color
+                );
+            }
         });
 
     }
