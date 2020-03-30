@@ -23,6 +23,8 @@ let score= [];
 let onlineCount = 0;
 let users = [];
 
+let lines =[];
+
 var words = [
     "storage",     "virus",       "restaurant",  "college",    "debt",
     "passenger",   "leader",      "energy",      "tongue",     "lady",
@@ -75,10 +77,11 @@ io.on('connection', (client) => {
         var name = data.user;
         var room = data.room;
         if (!rooms.hasOwnProperty(room)) {
-
             rooms[room] = [];
         }
-
+        if(!lines.hasOwnProperty(room)){
+            lines[room]= [];
+        }
         console.log('Nouveau joueur  : ' + name + " dans " + room);
         if (typeof name != "string") {
             console.log(name + "has been disconnected");
@@ -87,20 +90,30 @@ io.on('connection', (client) => {
         }
         rooms[room].push(name);
         users.push(name);
+        io.emit("cleared",room);
+        io.emit("update-lines",lines[room]);
         updateNames();
     });
 
-    client.on('drawing', (data) => {
-        console.log('drawing on client on server on room :', rooms);
+    client.on('user-drawing', (data) => {
         var x0 = data.x0;
         var x1 = data.x1;
         var y0 = data.y0;
         var y1 = data.y1;
         var color = data.color;
         var room =data.room;
-        io.emit('drawing', x0,x1,y0,y1,color,room);
-        console.log('drawing on emit server on room :', rooms);
+        var line = {x0:x0,x1:x1,y0:y0,y1:y1,color:color,room:room}
+        lines[room].push(line);
+        console.log('add-drawing', line);
+        io.emit('add-drawing', line);
+        console.log('drawing on emit server on room :', room);
     });
+
+    client.on('ask-clear',function (room) {
+        console.log("cleared",room);
+        lines[room]=[];
+        io.emit("cleared",room);
+    })
 
     client.on('print', (msg) => {
         console.log("printing : " + msg);

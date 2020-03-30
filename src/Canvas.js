@@ -11,42 +11,60 @@ class Canvas extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: null,
+            whiteboard: null,
             drawing: false,
             currentColor: "black",
             windowHeight: window.innerHeight,
             windowWidth: window.innerWidth,
             cleared: false,
-            username: null,
             room: null,
-            userList: []
+            userList: [],
+            currentX: 0,
+            currentY: 0
         };
-
         this.whiteboard = React.createRef();
 
-
-        socket.on("cleared", () => {
-            this.state.whiteboard
-                .getContext("2d")
-                .clearRect(0, 0, window.innerWidth, window.innerHeight);
+        socket.on("cleared", (room) => {
+            if (room === this.props.room) {
+                this.state.whiteboard
+                    .getContext("2d")
+                    .clearRect(0, 0, window.innerWidth, window.innerHeight);
+            }
         });
 
-        socket.on("drawing", data => {
+        socket.on("add-drawing", data => {
             let w = window.innerWidth;
             let h = window.innerHeight;
-
-                this.drawLine(
-                    data.x0 * w,
-                    data.y0 * h,
-                    data.x1 * w,
-                    data.y1 * h,
-                    data.color
-                );
-
+            //console.log("received data", data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h);
+            this.drawLine(
+                data.x0 * w,
+                data.y0 * h,
+                data.x1 * w,
+                data.y1 * h,
+                data.color
+            );
         });
+
+    }
+
+    receive(data) {
+        data.forEach((line) => {
+            //console.log("received data", data);
+            let w = window.innerWidth;
+            let h = window.innerHeight;
+            this.drawLine(
+                line.x0 * w,
+                line.y0 * h,
+                line.x1 * w,
+                line.y1 * h,
+                line.color
+            );
+        })
+
     }
 
     componentDidMount() {
+        socket.on("update-lines", (data) => this.receive(data));
         this.setState({
             whiteboard: this.whiteboard.current
         });
@@ -59,6 +77,7 @@ class Canvas extends React.Component {
             false
         );
         this.whiteboard.current.addEventListener("mouseup", this.onMouseUp, false);
+
         this.whiteboard.current.addEventListener("mouseout", this.onMouseUp, false);
         this.whiteboard.current.addEventListener(
             "mousemove",
@@ -66,23 +85,25 @@ class Canvas extends React.Component {
             false
         );
 
-        this.whiteboard.current.addEventListener(
-            "touchstart",
-            this.onMouseDown,
-            false
-        );
+        /*        this.whiteboard.current.addEventListener(
+                    "touchstart",
+                    this.onMouseDown,
+                    false
+                );
 
-        this.whiteboard.current.addEventListener(
-            "touchmove",
-            this.throttle(this.onTouchMove, 5),
-            false
-        );
+                this.whiteboard.current.addEventListener(
+                    "touchmove",
+                    this.throttle(this.onTouchMove, 5),
+                    false
+                );
 
-        this.whiteboard.current.addEventListener("touchend", this.onMouseUp, false);
+                this.whiteboard.current.addEventListener("touchend", this.onMouseUp, false);*/
 
     }
 
-    drawLine = (x0, y0, x1, y1, color, emit, room) => {
+    drawLine = (x0, y0, x1, y1, color, emit) => {
+
+
         let context = this.state.whiteboard.getContext("2d");
         context.beginPath();
         context.moveTo(x0, y0);
@@ -98,26 +119,20 @@ class Canvas extends React.Component {
         }
         var w = window.innerWidth;
         var h = window.innerHeight;
-        this.setState(() => {
-
-                console.log('drawing on emit socket canva on room :', this.props.room);
-                socket.emit("drawing", {
-                    x0: x0 / w,
-                    y0: y0 / h,
-                    x1: x1 / w,
-                    y1: y1 / h,
-                    color: color,
-                    room: room,
-                });
-
-                return {
-                    cleared: false
-                };
-
+        //console.log('drawing on emit socket canva on room :', this.props.room);
+        socket.emit("user-drawing", {
+            x0: x0 / w,
+            y0: y0 / h,
+            x1: x1 / w,
+            y1: y1 / h,
+            color: color,
+            room: this.props.room,
         });
+        this.setState({cleared: false});
     };
 
     onMouseDown = e => {
+        //console.log("REAL " + e.clientX, e.clientY);
         this.setState(() => {
             return {
                 currentX: e.clientX,
@@ -138,6 +153,7 @@ class Canvas extends React.Component {
     };
 
     onMouseMove = e => {
+        //console.log(e.clientX, e.clientY, this.whiteboard.current.offsetLeft, this.whiteboard.current.offsetTop);
         if (!this.state.drawing) {
             return;
         }
@@ -154,7 +170,7 @@ class Canvas extends React.Component {
         if (!this.state.drawing) {
             return;
         }
-        console.log();
+        //console.log();
         this.setState(() => {
             this.drawLine(
                 this.state.currentX,
@@ -172,10 +188,13 @@ class Canvas extends React.Component {
         });
     };
 
+    clean = () => {
+        socket.emit("ask-clear", this.props.room)
+    };
 
     throttle = (callback, delay) => {
         let previousCall = new Date().getTime();
-        return function() {
+        return function () {
             let time = new Date().getTime();
 
             if (time - previousCall >= delay) {
@@ -184,7 +203,6 @@ class Canvas extends React.Component {
             }
         };
     };
-
 
     render() {
         return (
@@ -196,9 +214,11 @@ class Canvas extends React.Component {
                     ref={this.whiteboard}
                     className="whiteboard"
                 />
+                <button onClick={this.clean}>Clean</button>
 
             </div>
         );
     }
 }
+
 export {Canvas}
