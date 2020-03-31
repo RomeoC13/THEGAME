@@ -20,6 +20,7 @@ class Pictionary extends React.Component {
         this.nextRound = this.nextRound.bind(this);
         this.timeIsUp = this.timeIsUp.bind(this);
         this.endGame = this.endGame.bind(this);
+        this.leave = this.leave.bind(this);
 
         this.pc = new PictionaryClient();
         this.game = new GameClient();
@@ -28,9 +29,9 @@ class Pictionary extends React.Component {
 
     sendMsg(message) {
         if (this.state.currentWord === message.text && this.state.currentDrawer !== message.name) {
-            this.setState({info : "Good job, "+ message.name +" ! The word was "+ this.state.currentWord})
+            this.setState({info: "Good job, " + message.name + " ! The word was " + this.state.currentWord})
             if (this.props.statename === this.state.currentDrawer) {
-                setTimeout(()=>this.game.asWin(message.name, this.state.currentDrawer, this.props.room),2000);
+                setTimeout(() => this.game.asWin(message.name, this.state.currentDrawer, this.props.room), 2000);
             }
         }
     }
@@ -45,7 +46,7 @@ class Pictionary extends React.Component {
         this.setupBeforeUnloadListener(this.pc);
         this.game.listenFirstRound(this.firstround, this.props.room);
         this.game.listenRound(this.nextRound, this.props.room);
-        this.game.listenEndGame(this.endGame,this.props.room);
+        this.game.listenEndGame(this.endGame, this.props.room);
     }
 
     componentWillUnmount() {
@@ -56,8 +57,8 @@ class Pictionary extends React.Component {
         window.addEventListener("beforeunload", (ev) => {
             ev.preventDefault();
             pc.userLeave(this.props.statename, this.props.room);
-            if(this.state.gameRunning){
-                this.game.stopGame(this.props.statename,this.props.room);
+            if (this.state.gameRunning) {
+                this.game.stopGame(this.props.statename, this.props.room);
             }
             return ev.returnValue = "test";
         });
@@ -72,9 +73,9 @@ class Pictionary extends React.Component {
         }
     }
 
-    endGame(player){
+    endGame(player) {
         this.setState({gameRunning: false})
-        this.setState({info : player+ " as left ! The party is over"})
+        this.setState({info: player + " as left ! The party is over"})
     }
 
     firstround(data) {
@@ -113,6 +114,14 @@ class Pictionary extends React.Component {
         }
     }
 
+    leave() {
+        this.props.closeChat();
+        this.pc.userLeave(this.props.statename, this.props.room);
+        if (this.state.gameRunning) {
+            this.game.stopGame(this.props.statename, this.props.room);
+        }
+    }
+
     render() {
         //<h1>{this.state.message}</h1>
         var names;
@@ -126,18 +135,20 @@ class Pictionary extends React.Component {
             names = this.state.names.map((m) => <player key={m}> {m} score {this.state.scores[m]} </player>);
         }
         return (
-            <div>
-                {this.timer}
-                <info>{this.state.info}</info>
-                <ChatWindow name={this.props.statename} onQuit={this.props.closeChat} msg={this.sendMsg}
+            <>
+                <ChatWindow name={this.props.statename} onQuit={this.leave} msg={this.sendMsg}
                             room={this.props.room}/>
-                <Canvas room={this.props.room}/>
-                {this.button}
-                <div id="players-list">
-                    <h4>Players online in room {this.props.room} </h4>
-                    <p> {names} </p>
+                <div id="nochat">
+                    {this.timer}
+                    <info>{this.state.info}</info>
+                    <Canvas room={this.props.room}/>
+                    {this.button}
+                    <div id="players-list">
+                        <h4>Players online in room {this.props.room} </h4>
+                        <p> {names} </p>
+                    </div>
                 </div>
-            </div>
+            </>
         )
     }
 }

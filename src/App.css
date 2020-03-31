@@ -42,8 +42,6 @@ button {
 
 canvas {
     border-style: groove;
-    height: 600px;
-    width: 600px;
 }
 
 #players-list {
@@ -52,5 +50,8 @@ canvas {
 
 discret {
     font-size: smaller;
+}
 
+#nochat{
+    margin-right: 250px;
 }
