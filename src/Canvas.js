@@ -111,7 +111,6 @@ class Canvas extends React.Component {
         var rect = e.target.getBoundingClientRect();
         var x = e.clientX - rect.left;
         var y = e.clientY - rect.top;
-        console.log("DOWN " + x, y);
         this.setState(() => {
             return {
                 currentX: x,

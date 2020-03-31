@@ -123,7 +123,6 @@ class Pictionary extends React.Component {
     }
 
     render() {
-        //<h1>{this.state.message}</h1>
         var names;
         if (!this.state.gameRunning) {
             names = this.state.names.map((m) => <player key={m}> {m} </player>);
