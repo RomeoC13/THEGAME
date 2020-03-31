@@ -1,7 +1,7 @@
 import React from "react";
-import socketIOClient from "socket.io-client";
+import openSocket from 'socket.io-client';
 
-const socket = socketIOClient("localhost:3001"); //development;
+const socket = openSocket();
 
 //const socket = socketIOClient(); //production
 
@@ -141,7 +141,7 @@ class Canvas extends React.Component {
             return;
         }
 
-        this.drawLine(x, y, this.state.currentX, this.state.currentY, this.state.currentColor, true)
+        this.drawLine(x, y, this.state.currentX, this.state.currentY, this.state.currentColor, true);
         this.setState({currentX: x, currentY: y});
     };
 
@@ -164,7 +164,7 @@ class Canvas extends React.Component {
 
     setColor = (color) => {
         this.setState({currentColor: color})
-    }
+    };
 
     render() {
         return (
@@ -177,12 +177,10 @@ class Canvas extends React.Component {
                 />
                 <br/>
                 <button onClick={this.clean}>Clean</button>
-                <button onClick={() => this.setColor("black")}>Black</button>
-                <button onClick={() => this.setColor("red")}>Red</button>
-                <button onClick={() => this.setColor("blue")}>Blue</button>
-                <button onClick={() => this.setColor("green")}>Green</button>
-
-
+                <button id="blackButton" onClick={() => this.setColor("black")}>Black</button>
+                <button id="redButton" onClick={() => this.setColor("red")}>Red</button>
+                <button id="blueButton" onClick={() => this.setColor("blue")}>Blue</button>
+                <button id="greenButton" onClick={() => this.setColor("green")}>Green</button>
             </div>
         );
     }

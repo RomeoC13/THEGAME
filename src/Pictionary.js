@@ -28,8 +28,8 @@ class Pictionary extends React.Component {
     }
 
     sendMsg(message) {
-        if (this.state.currentWord === message.text && this.state.currentDrawer !== message.name) {
-            this.setState({info: "Good job, " + message.name + " ! The word was " + this.state.currentWord})
+        if (this.state.currentWord === message.text && this.state.currentDrawer !== message.name && this.gameRunning === true) {
+            this.setState({info: "Good job, " + message.name + " ! The word was " + this.state.currentWord});
             if (this.props.statename === this.state.currentDrawer) {
                 setTimeout(() => this.game.asWin(message.name, this.state.currentDrawer, this.props.room), 2000);
             }
@@ -74,7 +74,7 @@ class Pictionary extends React.Component {
     }
 
     endGame(player) {
-        this.setState({gameRunning: false})
+        this.setState({gameRunning: false});
         this.setState({info: player + " as left ! The party is over"})
     }
 
@@ -84,7 +84,7 @@ class Pictionary extends React.Component {
             score[name] = 0;
         });
         this.setState({scores: score});
-        this.setState({gameRunning: true})
+        this.setState({gameRunning: true});
         this.nextRound(data);
     }
 

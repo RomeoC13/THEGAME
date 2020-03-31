@@ -10,7 +10,7 @@ h1 {
     font-size: xx-large;
 }
 
-strong {
+#name {
     color: #ff0000;
 }
 
@@ -21,8 +21,18 @@ button {
     font-size: 16px;
     padding: 9px 15px;
     text-decoration: none;
-    display: inline-block;
+
     margin: 8px;
+}
+
+#greenButton{
+    background-color: green;
+}
+#redButton{
+    background-color: red;
+}
+#blueButton{
+    background-color: blue;
 }
 
 * {

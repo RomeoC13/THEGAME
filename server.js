@@ -113,7 +113,7 @@ io.on('connection', (client) => {
         console.log("cleared",room);
         lines[room]=[];
         io.emit("cleared",room);
-    })
+    });
 
     client.on('print', (msg) => {
         console.log("printing : " + msg);
@@ -201,7 +201,7 @@ io.on('connection', (client) => {
         });
         console.log("game-stopped",{player: playerWhoLeft,room :room});
         io.emit("game-stopped",{player: playerWhoLeft,room :room});
-    })
+    });
 });
 
 
