@@ -12,6 +12,7 @@ class ChatWindow extends React.Component {
 
         this.chat = new ChatClient(this.props.name);
         this.chat.onMessages(this.addMessages, this.props.room)
+        this.scroll = '';
     }
 
     addMessages(messages) {
@@ -22,20 +23,27 @@ class ChatWindow extends React.Component {
     }
 
     submitMessage(text) {
-        this.chat.sendMessage(text,this.props.room)
+        this.chat.sendMessage(text, this.props.room)
+    }
 
+    componentDidMount = () => {
+        document.querySelector("#messages").scrollTop=document.querySelector("#messages").scrollHeight;
+    };
+
+    componentDidUpdate = () => {
+        document.querySelector("#messages").scrollTop=document.querySelector("#messages").scrollHeight;
     }
 
     render() {
-        const messages = this.state.messages.map((m) => <p key={m.name+m.text}> {m.name}: {m.text} </p>);
+        const messages = this.state.messages.map((m) => <p key={this.state.messages.indexOf(m)}> {m.name}: {m.text} </p>);
         return (
             <div id="chat">
                 <div id="topchat">
                     <p>Welcome to THECHAT, {this.props.name}</p>
                 </div>
-                <ul>
+                <div id="messages" ref={(ref) => (this.scroll = ref)}>
                     {messages}
-                </ul>
+                </div>
 
                 <InputField label="Message" onSubmit={this.submitMessage} autoFocus/>
                 <button onClick={this.props.onQuit}>Quit this room</button>
