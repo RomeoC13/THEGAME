@@ -59,26 +59,28 @@ class App extends React.Component {
     }
 
     render() {
-        var rooms = this.state.roomList.map((room) => <Room joinRoom={this.joinRoom}
+        let rooms = this.state.roomList.map((room) => <Room joinRoom={this.joinRoom}
                                                             roomName={this.state.roomList.indexOf(room)}
                                                             userList={room}/>);
+        let orJoinaRoom ="";
+        if(this.state.roomList.length!==0){
+            orJoinaRoom= <h4>or join a room</h4>;
+        }
         if (this.state.current === "login")
             return <div>
 
                 <h4>Currently playing : {this.state.userCount} players</h4>
                 <LoginWindow warning={""} onNameChange={this.setName} onLogin={this.startChat}
                              onRoomChange={this.setRoom} onGameChange={this.setGame}/>
-                <h4>or join a room</h4>
+                {orJoinaRoom}
                 {rooms}
-                             onRoomChange={this.setRoom} onGameChange={this.setGame} />
             </div>;
         else if (this.state.current === "error") {
             return <div>
                 <LoginWindow warning={"Please enter a valid name"} onNameChange={this.setName} onLogin={this.startChat}
                              onRoomChange={this.setRoom}/>
-                             <h4>or join a room</h4>
+                {orJoinaRoom}
                 {rooms}
-                             onRoomChange={this.setRoom} onGameChange={this.setGame}/>
             </div>;
         }
         else if(this.state.game === "0")
