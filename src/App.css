@@ -55,9 +55,18 @@ button {
     border-style: solid;
 }
 
+#Room{
+    border-style: solid;
+    border-width: thin;
+    height: fit-content;
+    width: fit-content;
+    margin: 0 auto;
+}
+
 canvas {
     border-style: groove;
 }
+
 
 #players-list {
 

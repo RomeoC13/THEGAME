@@ -3,17 +3,30 @@ import './App.css';
 import {Pictionary} from "./Pictionary.js";
 import {LoginWindow} from "./LoginWindow.js";
 import {PetitBac} from "./PetitBac";
+import {Room} from "./Room";
+import {AppClient} from "./Clients";
 
 
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {current: "login", room: '0', game : '0'};
+        this.state = {current: "login", room: '0', game : '0',userCount: 0, roomList: []};
         this.closeChat = this.closeChat.bind(this);
         this.startChat = this.startChat.bind(this);
         this.setName = this.setName.bind(this);
         this.setGame = this.setGame.bind(this);
         this.setRoom = this.setRoom.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.joinRoom = this.joinRoom.bind(this);
+
+        this.ac= new AppClient();
+    }
+
+    componentDidMount() {
+        this.ac.updatePlayerCount(this);
+        this.ac.updateRooms(this);
+        this.ac.askUpdateCount();
+        this.ac.askUpdateRooms();
     }
 
     closeChat() {
@@ -40,15 +53,31 @@ class App extends React.Component {
         this.setState({game : game.target.value})
     }
 
+    joinRoom(room) {
+        this.setState({room: room});
+        this.startChat();
+    }
+
     render() {
+        var rooms = this.state.roomList.map((room) => <Room joinRoom={this.joinRoom}
+                                                            roomName={this.state.roomList.indexOf(room)}
+                                                            userList={room}/>);
         if (this.state.current === "login")
             return <div>
+
+                <h4>Currently playing : {this.state.userCount} players</h4>
                 <LoginWindow warning={""} onNameChange={this.setName} onLogin={this.startChat}
+                             onRoomChange={this.setRoom} onGameChange={this.setGame}/>
+                <h4>or join a room</h4>
+                {rooms}
                              onRoomChange={this.setRoom} onGameChange={this.setGame} />
             </div>;
         else if (this.state.current === "error") {
             return <div>
                 <LoginWindow warning={"Please enter a valid name"} onNameChange={this.setName} onLogin={this.startChat}
+                             onRoomChange={this.setRoom}/>
+                             <h4>or join a room</h4>
+                {rooms}
                              onRoomChange={this.setRoom} onGameChange={this.setGame}/>
             </div>;
         }

@@ -1,8 +1,8 @@
 import {ChatWindow} from "./ChatWindow.js";
 import {Canvas} from "./Canvas.js";
 import {Timer} from "./Timer.js";
-import {PictionaryClient} from "./PictionaryClient";
-import {GameClient} from "./GameClient";
+import {PictionaryClient} from "./Clients";
+import {GameClient} from "./Clients";
 import React from "react";
 
 class Pictionary extends React.Component {

@@ -65,17 +65,23 @@ let wordcount;
 function newWord() {
     wordcount = Math.floor(Math.random() * (words.length));
     return words[wordcount];
-
 }
 
 io.on('connection', (client) => {
 
-    console.log("New connection");
+    //console.log("New connection");
 
     client.on("join", (data) => {
-        onlineCount++;
+
         var name = data.user;
         var room = data.room;
+        if (typeof name != "string" || room === undefined) {
+            client.disconnect();
+            return;
+        }
+        onlineCount++;
+        console.log('update-playercount',onlineCount);
+        io.emit('update-playercount',onlineCount);
         if (!rooms.hasOwnProperty(room)) {
             rooms[room] = [];
         }
@@ -83,17 +89,15 @@ io.on('connection', (client) => {
             lines[room]= [];
         }
         console.log('Nouveau joueur  : ' + name + " dans " + room);
-        if (typeof name != "string") {
-            console.log(name + "has been disconnected");
-            client.disconnect();
-            return;
-        }
         rooms[room].push(name);
         users.push(name);
         io.emit("cleared",room);
         io.emit("update-lines",lines[room]);
         updateNames();
     });
+
+    client.on("ask-update-playercount",()=>{io.emit('update-playercount',onlineCount);});
+    client.on('ask-update-roomlist',()=>{io.emit('update-roomlist',rooms)});
 
     client.on('user-drawing', (data) => {
         var x0 = data.x0;
