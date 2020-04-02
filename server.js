@@ -49,6 +49,11 @@ var words = [
     "furniture",   "sunset",      "sunburn",
 ];
 
+var letters =[
+    "A", "B", "C", "D" ,"E" ,"F", "G", "H" ,"I", "J" ,"K", "L", "M" ,"N" ,"O", "P" ,"Q", "R", "S" ,"T" ,"U", "V", "W" ,"X", "Y", "Z",
+
+];
+
 function resetTimer(value,room){
     countdowns[room] = value;
     console.log('Reset : timer', {countdown: value,room : room});
@@ -65,6 +70,12 @@ let wordcount;
 function newWord() {
     wordcount = Math.floor(Math.random() * (words.length));
     return words[wordcount];
+}
+
+
+function newLetter(){
+    wordcount = Math.floor(Math.random() * (letters.length));
+    return letters[wordcount];
 }
 
 io.on('connection', (client) => {
@@ -106,7 +117,7 @@ io.on('connection', (client) => {
         var y1 = data.y1;
         var color = data.color;
         var room =data.room;
-        var line = {x0:x0,x1:x1,y0:y0,y1:y1,color:color,room:room}
+        var line = {x0:x0,x1:x1,y0:y0,y1:y1,color:color,room:room};
         lines[room].push(line);
         console.log('add-drawing', line);
         io.emit('add-drawing', line);

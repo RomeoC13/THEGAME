@@ -47,6 +47,30 @@ class PictionaryClient {
 
 }
 
+
+
+class PetitBacClient {
+
+    updateUsers(op,room) {
+        socket.on('update-names', function (data) {
+            op(data[room])
+        });
+    }
+
+    emitUser(user,room) {
+        socket.emit('join', {user : user, room : room})
+    }
+
+    userLeave(user,room) {
+        socket.emit('leave', {user: user,room: room})
+    }
+
+    print(msg) {
+        socket.emit('print', msg);
+    }
+
+}
+
 class ChatClient {
 
     constructor(username) {
@@ -127,4 +151,4 @@ class GameClient {
     }
 }
 
-export {AppClient,PictionaryClient,ChatClient,TimerClient,GameClient}
+export {AppClient,PictionaryClient,ChatClient,TimerClient,GameClient, PetitBacClient}

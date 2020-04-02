@@ -1,8 +1,7 @@
 import {ChatWindow} from "./ChatWindow.js";
 import {Canvas} from "./Canvas.js";
 import {Timer} from "./Timer.js";
-import {PictionaryClient} from "./Clients";
-import {GameClient} from "./Clients";
+import {GameClient, PictionaryClient} from "./Clients";
 import React from "react";
 
 class Pictionary extends React.Component {
@@ -97,15 +96,15 @@ class Pictionary extends React.Component {
         this.setState({currentDrawer: data.player});
         this.setState({currentWord: data.word});
         if (this.props.statename === data.player) {
-            this.setState({info: "Your turn ! you have to draw : " + data.word})
+            this.setState({info: "Your turn ! You have to draw : " + data.word})
         } else {
-            this.setState({info: "turn of " + data.player})
+            this.setState({info: "Drawer is " + data.player})
         }
     }
 
     timeIsUp() {
         if (this.state.gameRunning) {
-            this.setState({info: "No one has guess the correct word ! It was " + this.state.currentWord});
+            this.setState({info: "No one has guess the correct answer ! The word was " + this.state.currentWord});
             if (this.props.statename === this.state.currentDrawer) {
                 setTimeout(() => {
                     this.game.loose(this.state.currentDrawer, this.props.room)
@@ -139,7 +138,7 @@ class Pictionary extends React.Component {
                             room={this.props.room}/>
                 <div id="nochat">
                     {this.timer}
-                    <info>{this.state.info}</info>
+                    <info> <strong>{this.state.info}</strong></info>
                     <Canvas room={this.props.room}/>
                     {this.button}
                     <div id="players-list">
