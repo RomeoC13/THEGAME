@@ -28,7 +28,11 @@ class Pictionary extends React.Component {
     }
 
     sendMsg(message) {
-        if (this.state.currentWord === message.text && this.state.currentDrawer !== message.name && this.gameRunning === true) {
+        //console.log(this.state.currentWord === message.text);
+        //console.log(this.state.currentDrawer !== message.name);
+        //console.log(this.state.gameRunning);
+        if (this.state.currentWord === message.text && this.state.currentDrawer !== message.name && this.state.gameRunning) {
+            console.log("good  job");
             this.setState({info: "Good job, " + message.name + " ! The word was " + this.state.currentWord});
             if (this.props.statename === this.state.currentDrawer) {
                 setTimeout(() => this.game.asWin(message.name, this.state.currentDrawer, this.props.room), 2000);
@@ -79,6 +83,7 @@ class Pictionary extends React.Component {
     }
 
     firstround(data) {
+        //console.log("firstround");
         var score = [];
         this.state.names.forEach((name) => {
             score[name] = 0;
@@ -99,7 +104,7 @@ class Pictionary extends React.Component {
         if (this.props.statename === data.player) {
             this.setState({info: "Your turn ! you have to draw : " + data.word})
         } else {
-            this.setState({info: "turn of " + data.player})
+            this.setState({info: "Drawer is " + data.player})
         }
     }
 
@@ -118,6 +123,7 @@ class Pictionary extends React.Component {
         this.props.closeChat();
         this.pc.userLeave(this.props.statename, this.props.room);
         if (this.state.gameRunning) {
+            //console.log("LEAVING");
             this.game.stopGame(this.props.statename, this.props.room);
         }
     }
