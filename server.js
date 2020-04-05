@@ -205,9 +205,11 @@ io.on('connection', (client) => {
         let room = data.room;
         let playerWhoLeft= data.player;
         let players = rooms[room];
-        players.forEach((player)=>{
-            delete score[player];
-        });
+        if(players !== undefined) {
+            players.forEach((player) => {
+                delete score[player];
+            });
+        }
         console.log("game-stopped",{player: playerWhoLeft,room :room});
         io.emit("game-stopped",{player: playerWhoLeft,room :room});
     });
