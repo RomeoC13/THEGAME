@@ -146,7 +146,7 @@ class Pictionary extends React.Component {
                 <div id="nochat">
                     {this.timer}
                     <info>{this.state.info}</info>
-                    <Canvas room={this.props.room}/>
+                    <Canvas room={this.props.room} drawer={this.state.currentDrawer} name={this.props.statename}/>
                     {this.button}
                     <div id="players-list">
                         <h4>Players online in room {this.props.room} </h4>

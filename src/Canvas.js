@@ -141,9 +141,10 @@ class Canvas extends React.Component {
         if (!this.state.drawing) {
             return;
         }
-
-        this.drawLine(x, y, this.state.currentX, this.state.currentY, this.state.currentColor, true);
-        this.setState({currentX: x, currentY: y});
+        if(this.props.name === this.props.drawer || this.props.drawer === ""){
+            this.drawLine(x, y, this.state.currentX, this.state.currentY, this.state.currentColor, true);
+            this.setState({currentX: x, currentY: y});
+        }
     };
 
 
@@ -168,6 +169,16 @@ class Canvas extends React.Component {
     };
 
     render() {
+        let buttons = "";
+        if (this.props.name === this.props.drawer || this.props.drawer === "") {
+            buttons = <>
+                <button onClick={this.clean}>Clean</button>
+                <button id="blackButton" onClick={() => this.setColor("black")}>Black</button>
+                <button id="redButton" onClick={() => this.setColor("red")}>Red</button>
+                <button id="blueButton" onClick={() => this.setColor("blue")}>Blue</button>
+                <button id="greenButton" onClick={() => this.setColor("green")}>Green</button>
+            </>
+        }
         return (
             <div>
                 <canvas
@@ -177,11 +188,7 @@ class Canvas extends React.Component {
                     className="whiteboard"
                 />
                 <br/>
-                <button onClick={this.clean}>Clean</button>
-                <button id="blackButton" onClick={() => this.setColor("black")}>Black</button>
-                <button id="redButton" onClick={() => this.setColor("red")}>Red</button>
-                <button id="blueButton" onClick={() => this.setColor("blue")}>Blue</button>
-                <button id="greenButton" onClick={() => this.setColor("green")}>Green</button>
+                {buttons}
             </div>
         );
     }
