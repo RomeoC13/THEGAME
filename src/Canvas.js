@@ -131,6 +131,7 @@ class Canvas extends React.Component {
                 currentY: y
             };
         });
+
     };
 
     onMouseMove = e => {
