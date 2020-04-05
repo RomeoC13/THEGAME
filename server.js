@@ -12,8 +12,8 @@ const port = process.env.PORT || 3001;
 http.listen(port, () => console.log("Listening on port :", port));
 
 const messages = [{name: 'bot', text: 'Bienvenue ', room : "all"}];
-//Rooms Array is a 2D Array, a room with few players named "Romeo" ,"Pauline" and "Yash" in room "3" will be stored like this :
-// rooms["3"]=["Romeo","Pauline","Yash"]
+//Rooms Array is a 2D Array, a room of Pictionnary with few players named "Romeo" ,"Pauline" and "Yash" in room "3" will be stored like this :
+// rooms["3"]=[{game:"0",list:"Romeo","Pauline","Yash"}]
 let rooms = [];
 //Every rooms as his own countdown, for example room "3" if created as his countdown in countdowns["3"]
 var countdowns = [];
@@ -49,11 +49,6 @@ var words = [
     "furniture",   "sunset",      "sunburn",
 ];
 
-var letters =[
-    "A", "B", "C", "D" ,"E" ,"F", "G", "H" ,"I", "J" ,"K", "L", "M" ,"N" ,"O", "P" ,"Q", "R", "S" ,"T" ,"U", "V", "W" ,"X", "Y", "Z",
-
-];
-
 function resetTimer(value,room){
     countdowns[room] = value;
     console.log('Reset : timer', {countdown: value,room : room});
@@ -72,18 +67,11 @@ function newWord() {
     return words[wordcount];
 }
 
-
-function newLetter(){
-    wordcount = Math.floor(Math.random() * (letters.length));
-    return letters[wordcount];
-}
-
 io.on('connection', (client) => {
 
     //console.log("New connection");
 
     client.on("join", (data) => {
-
         var name = data.user;
         var room = data.room;
         if (typeof name != "string" || room === undefined) {
@@ -107,8 +95,13 @@ io.on('connection', (client) => {
         updateNames();
     });
 
-    client.on("ask-update-playercount",()=>{io.emit('update-playercount',onlineCount);});
-    client.on('ask-update-roomlist',()=>{io.emit('update-roomlist',rooms)});
+    client.on("ask-update-playercount",()=>{
+        console.log('update-playercount',onlineCount);
+        io.emit('update-playercount',onlineCount);});
+
+    client.on('ask-update-roomlist',()=>{
+        console.log('update-roomlist');
+        io.emit('update-roomlist',rooms)});
 
     client.on('user-drawing', (data) => {
         var x0 = data.x0;
@@ -117,7 +110,7 @@ io.on('connection', (client) => {
         var y1 = data.y1;
         var color = data.color;
         var room =data.room;
-        var line = {x0:x0,x1:x1,y0:y0,y1:y1,color:color,room:room};
+        var line = {x0:x0,x1:x1,y0:y0,y1:y1,color:color,room:room}
         lines[room].push(line);
         console.log('add-drawing', line);
         io.emit('add-drawing', line);
@@ -156,10 +149,10 @@ io.on('connection', (client) => {
     });
 
     client.on('leave', function (data) {
-        onlineCount--;
         var name = data.user;
         var room = data.room;
         console.log("Joueur " + data.user + " a quitter " + data.room);
+
         if (rooms.hasOwnProperty(room)) {
             var indexName = rooms[room].indexOf(name);
             rooms[room].splice(indexName, 1);
@@ -167,7 +160,8 @@ io.on('connection', (client) => {
                 var i = rooms.indexOf(room);
                 rooms.splice(i, 1);
             }
-            updateNames()
+            updateNames();
+            onlineCount--;
         }
     });
 

@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1181bf25-1fda-424a-8fab-a2f46bfbae05" name="Default Changelist" comment="" />
+    <list default="true" id="1181bf25-1fda-424a-8fab-a2f46bfbae05" name="Default Changelist" comment="adding a useless for now button 'startgame'&#10;fixed a bug where StartGame button was not showed when time is up">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Clients.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Clients.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LoginWindow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/LoginWindow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Room.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Room.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,8 +68,14 @@
       <workItem from="1585230681969" duration="7490000" />
       <workItem from="1585240454641" duration="6321000" />
       <workItem from="1585334067090" duration="1407000" />
-      <workItem from="1585483590647" duration="1636000" />
-      <workItem from="1585494539891" duration="6287000" />
+      <workItem from="1585395152384" duration="32099000" />
+      <workItem from="1585500820664" duration="1551000" />
+      <workItem from="1585575125095" duration="8217000" />
+      <workItem from="1585654230515" duration="16874000" />
+      <workItem from="1585762584498" duration="2353000" />
+      <workItem from="1585767931985" duration="1587000" />
+      <workItem from="1585828172763" duration="7137000" />
+      <workItem from="1586102479164" duration="800000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor du Canvas avec socket">
       <created>1585246617826</created>
@@ -77,21 +91,168 @@
       <option name="project" value="LOCAL" />
       <updated>1585334628272</updated>
     </task>
-    <task id="LOCAL-00003" summary="Tout est refix">
-      <created>1585344791856</created>
+    <task id="LOCAL-00003" summary="repair list of players">
+      <created>1585395484942</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1585344791856</updated>
+      <updated>1585395484942</updated>
     </task>
-    <task id="LOCAL-00004" summary="Génération random de mots + correction du canva pour online">
-      <created>1585500510459</created>
+    <task id="LOCAL-00004" summary="making reset button working">
+      <created>1585396630149</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1585500511039</updated>
+      <updated>1585396630149</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="adding a useless for now button 'startgame'&#10;fixed a bug where StartGame button was not showed when time is up">
+      <created>1585396968563</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1585396968563</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Room system for chat, timer and playerlist">
+      <created>1585412013278</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1585412013278</updated>
+    </task>
+    <task id="LOCAL-00007" summary="cleaning">
+      <created>1585412244615</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1585412244615</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Welcome message is now general for all room">
+      <created>1585412666587</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1585412666587</updated>
+    </task>
+    <task id="LOCAL-00009" summary="cleaning">
+      <created>1585413357838</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1585413357838</updated>
+    </task>
+    <task id="LOCAL-00010" summary="suppressing warning">
+      <created>1585413619555</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1585413619555</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Small improvement for the login page">
+      <created>1585414858398</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1585414858398</updated>
+    </task>
+    <task id="LOCAL-00012" summary="fixing font of &lt;discret&gt;">
+      <created>1585414913321</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1585414913321</updated>
+    </task>
+    <task id="LOCAL-00013" summary="english is now the only language of THEGAME">
+      <created>1585415134560</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1585415134560</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fixing canvas propreties">
+      <created>1585415397778</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1585415397778</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Implementing all Pictionnaries functionnality except canvas">
+      <created>1585494009528</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1585494009528</updated>
+    </task>
+    <task id="LOCAL-00016" summary="sync Canvas">
+      <created>1585589699703</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1585589699703</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fixing">
+      <created>1585590508390</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1585590508390</updated>
+    </task>
+    <task id="LOCAL-00018" summary="fixing visual issues,&#10;adding color button to canvas,&#10;adjusting visual rendering">
+      <created>1585659117039</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1585659117039</updated>
+    </task>
+    <task id="LOCAL-00019" summary="cleaning">
+      <created>1585659884230</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1585659884230</updated>
+    </task>
+    <task id="LOCAL-00020" summary="chat is now scrollable">
+      <created>1585662025066</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1585662025066</updated>
+    </task>
+    <task id="LOCAL-00021" summary="cleaning">
+      <created>1585665547841</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1585665547841</updated>
+    </task>
+    <task id="LOCAL-00022" summary="adding room selection">
+      <created>1585765602789</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1585765602789</updated>
+    </task>
+    <task id="LOCAL-00023" summary="all client socket is now in Clients.js">
+      <created>1585765741019</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1585765741019</updated>
+    </task>
+    <task id="LOCAL-00024" summary="minor visual fixes">
+      <created>1585766129558</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1585766129558</updated>
+    </task>
+    <task id="LOCAL-00025" summary="minor visual fix">
+      <created>1585766185535</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1585766185535</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -113,32 +274,79 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactor du Canvas avec socket" />
     <MESSAGE value="commit" />
-    <MESSAGE value="Tout est refix" />
-    <MESSAGE value="Génération random de mots + correction du canva pour online" />
-    <option name="LAST_COMMIT_MESSAGE" value="Génération random de mots + correction du canva pour online" />
-    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
-    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+    <MESSAGE value="repair list of players" />
+    <MESSAGE value="making reset button working" />
+    <MESSAGE value="adding a useless for now button 'startgame'&#10;fixed a bug where StartGame button was not showed when time is up" />
+    <MESSAGE value="Room system for chat, timer and playerlist" />
+    <MESSAGE value="Welcome message is now general for all room" />
+    <MESSAGE value="suppressing warning" />
+    <MESSAGE value="Small improvement for the login page" />
+    <MESSAGE value="fixing font of &lt;discret&gt;" />
+    <MESSAGE value="english is now the only language of THEGAME" />
+    <MESSAGE value="fixing canvas propreties" />
+    <MESSAGE value="Implementing all Pictionnaries functionnality except canvas" />
+    <MESSAGE value="sync Canvas" />
+    <MESSAGE value="fixing" />
+    <MESSAGE value="fixing visual issues,&#10;adding color button to canvas,&#10;adjusting visual rendering" />
+    <MESSAGE value="chat is now scrollable" />
+    <MESSAGE value="cleaning" />
+    <MESSAGE value="adding room selection" />
+    <MESSAGE value="all client socket is now in Clients.js" />
+    <MESSAGE value="minor visual fixes" />
+    <MESSAGE value="minor visual fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor visual fix" />
   </component>
   <component name="WindowStateProjectService">
     <state x="223" y="72" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585155501010">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="223" y="72" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1585155501010" />
-    <state x="393" y="12" width="1098" height="810" key="CommitChangelistDialog2" timestamp="1585500492233">
-      <screen x="0" y="0" width="1536" height="834" />
+    <state x="729" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585666283722">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="393" y="12" width="1098" height="810" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1585500492233" />
+    <state x="729" y="323" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1585666283722" />
+    <state x="491" y="15" width="1098" height="810" key="CommitChangelistDialog2" timestamp="1585766185013">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="393" y="12" width="1098" height="810" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1585341150593" />
+    <state x="491" y="15" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1585766185013" />
+    <state x="184" y="86" key="MergeDialog" timestamp="1585765414929">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="184" y="86" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585765414929" />
+    <state x="672" y="236" key="MultipleFileMergeDialog" timestamp="1585765414934">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="672" y="236" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585765414934" />
+    <state x="750" y="231" key="RollbackChangesDialog" timestamp="1585575139815">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="750" y="231" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585575139815" />
     <state x="277" y="60" key="SettingsEditor" timestamp="1585240513639">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="277" y="60" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1585240513639" />
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1585500535541">
-      <screen x="0" y="0" width="1536" height="834" />
+    <state x="451" y="187" key="Vcs.Push.Dialog.v2" timestamp="1585766188304">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1585500535541" />
-    <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585494871529">
-      <screen x="0" y="0" width="1536" height="834" />
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1585334630783" />
+    <state x="451" y="187" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1585766188304" />
+    <state x="723" y="416" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586103299050">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1585494871529" />
+    <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1585335732867" />
+    <state x="723" y="416" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1586103299050" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1585658780785">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1585658780785" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1585666462630">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1585666462630" />
+    <state x="682" y="432" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1585413222566">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="682" y="432" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585413222566" />
   </component>
 </project>

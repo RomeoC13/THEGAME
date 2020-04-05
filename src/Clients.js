@@ -3,10 +3,8 @@ import openSocket from 'socket.io-client';
 const socket = openSocket();
 
 class AppClient {
-    updatePlayerCount(state) {
-        socket.on('update-playercount', (data) => {
-            state.setState({userCount: data})
-        });
+    updatePlayerCount(op) {
+        socket.on('update-playercount', (data) => op(data))
     }
 
     askUpdateCount() {
@@ -17,39 +15,12 @@ class AppClient {
         socket.emit('ask-update-roomlist');
     }
 
-    updateRooms(state) {
-        socket.on('update-roomlist', (data) => {
-            state.setState({roomList: data});
-            state.forceUpdate();
-        })
+    updateRooms(op) {
+        socket.on('update-roomlist', (data) => op(data))
     }
 }
 
 class PictionaryClient {
-
-    updateUsers(op,room) {
-        socket.on('update-names', function (data) {
-            op(data[room])
-        });
-    }
-
-    emitUser(user,room) {
-        socket.emit('join', {user : user, room : room})
-    }
-
-    userLeave(user,room) {
-        socket.emit('leave', {user: user,room: room})
-    }
-
-    print(msg) {
-        socket.emit('print', msg);
-    }
-
-}
-
-
-
-class PetitBacClient {
 
     updateUsers(op,room) {
         socket.on('update-names', function (data) {
@@ -151,4 +122,4 @@ class GameClient {
     }
 }
 
-export {AppClient,PictionaryClient,ChatClient,TimerClient,GameClient, PetitBacClient}
+export {AppClient,PictionaryClient,ChatClient,TimerClient,GameClient}

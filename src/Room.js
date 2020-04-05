@@ -10,7 +10,7 @@ class Room extends React.Component {
     };
 
     render() {
-        var players = this.state.userList.map((player)=><>{player}</>);
+        var players = this.state.userList.map((player)=><i key={this.state.roomName+player}>{player}</i>);
         return <div id="Room">
             <u>Room {this.state.roomName} </u> <br/>
             {players} <br/>
