@@ -165,7 +165,10 @@ io.on('connection', (client) => {
         }
     });
 
+
     client.on('start-game',function (room) {
+        lines[room]=[];
+        io.emit("cleared",room);
         let players= rooms[room];
         players.forEach((player) => {
             score[player]=0;
@@ -184,6 +187,8 @@ io.on('connection', (client) => {
         let room = data.room;
         let players = rooms[room];
         let word = newWord();
+        lines[room]=[];
+        io.emit("cleared",room);
         let indexOfNextDrawer= (players.indexOf(drawer)+1)%(players.length);
         console.log('round-game',{players:players[indexOfNextDrawer],word :word,room:room,scoreToUpdate : winner})
         io.emit('round-game',{player:players[indexOfNextDrawer],word :word,room:room,scoreToUpdate : winner});
@@ -194,6 +199,8 @@ io.on('connection', (client) => {
         let drawer = data.drawer;
         let room = data.room;
         let players = rooms[room];
+        lines[room]=[];
+        io.emit("cleared",room);
         let indexOfNextDrawer= (players.indexOf(drawer)+1)%(players.length);
         let word = newWord();
         console.log('round-game',{players:players[indexOfNextDrawer],word :word,room:room});
