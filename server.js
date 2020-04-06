@@ -11,20 +11,17 @@ const port = process.env.PORT || 3001;
 
 http.listen(port, () => console.log("Listening on port :", port));
 
+
+//PICTIONNARY USAGE :
 const messages = [{name: 'bot', text: 'Bienvenue ', room : "all"}];
 //Rooms Array is a 2D Array, a room of Pictionnary with few players named "Romeo" ,"Pauline" and "Yash" in room "3" will be stored like this :
-// rooms["3"]=[{game:"0",list:"Romeo","Pauline","Yash"}]
-let rooms = [];
-//Every rooms as his own countdown, for example room "3" if created as his countdown in countdowns["3"]
+// pcRooms["3"]=["Romeo","Pauline","Yash"}]
+let pcRooms = [];
+//Every pcRooms as his own countdown, for example room "3" if created as his countdown in countdowns["3"]
 var countdowns = [];
-
-let score= [];
-//Not used now, can be useful
-let onlineCount = 0;
-let users = [];
-
+//Every pcRooms as his own lines storage, for example room "3" line's if created are stored in lines["3"]
 let lines =[];
-
+let score= [];
 var words = [
     "storage",     "virus",       "restaurant",  "college",    "debt",
     "passenger",   "leader",      "energy",      "tongue",     "lady",
@@ -49,6 +46,18 @@ var words = [
     "furniture",   "sunset",      "sunburn",
 ];
 
+//GENERAL APP USAGE :
+let onlineCount = 0;
+let users = [];
+
+//DEMINEUR USAGE :
+
+
+
+//PETIT BAC USAGE :
+
+
+
 function resetTimer(value,room){
     countdowns[room] = value;
     console.log('Reset : timer', {countdown: value,room : room});
@@ -56,8 +65,8 @@ function resetTimer(value,room){
 }
 
 function updateNames() {
-    console.log('update-names', rooms);
-    io.emit('update-names', rooms);
+    console.log('update-names', pcRooms);
+    io.emit('update-names', pcRooms);
 }
 
 let wordcount;
@@ -81,14 +90,14 @@ io.on('connection', (client) => {
         onlineCount++;
         console.log('update-playercount',onlineCount);
         io.emit('update-playercount',onlineCount);
-        if (!rooms.hasOwnProperty(room)) {
-            rooms[room] = [];
+        if (!pcRooms.hasOwnProperty(room)) {
+            pcRooms[room] = [];
         }
         if(!lines.hasOwnProperty(room)){
             lines[room]= [];
         }
         console.log('Nouveau joueur  : ' + name + " dans " + room);
-        rooms[room].push(name);
+        pcRooms[room].push(name);
         users.push(name);
         io.emit("cleared",room);
         io.emit("update-lines",lines[room]);
@@ -101,7 +110,7 @@ io.on('connection', (client) => {
 
     client.on('ask-update-roomlist',()=>{
         console.log('update-roomlist');
-        io.emit('update-roomlist',rooms)});
+        io.emit('update-roomlist',pcRooms)});
 
     client.on('user-drawing', (data) => {
         var x0 = data.x0;
@@ -153,12 +162,12 @@ io.on('connection', (client) => {
         var room = data.room;
         console.log("Joueur " + data.user + " a quitter " + data.room);
 
-        if (rooms.hasOwnProperty(room)) {
-            var indexName = rooms[room].indexOf(name);
-            rooms[room].splice(indexName, 1);
-            if (rooms[room].length === 0) {
-                var i = rooms.indexOf(room);
-                rooms.splice(i, 1);
+        if (pcRooms.hasOwnProperty(room)) {
+            var indexName = pcRooms[room].indexOf(name);
+            pcRooms[room].splice(indexName, 1);
+            if (pcRooms[room].length === 0) {
+                var i = pcRooms.indexOf(room);
+                pcRooms.splice(i, 1);
             }
             updateNames();
             onlineCount--;
@@ -169,7 +178,7 @@ io.on('connection', (client) => {
     client.on('start-game',function (room) {
         lines[room]=[];
         io.emit("cleared",room);
-        let players= rooms[room];
+        let players= pcRooms[room];
         players.forEach((player) => {
             score[player]=0;
         });
@@ -185,7 +194,7 @@ io.on('connection', (client) => {
         score[winner]++;
         let drawer = data.drawer;
         let room = data.room;
-        let players = rooms[room];
+        let players = pcRooms[room];
         let word = newWord();
         lines[room]=[];
         io.emit("cleared",room);
@@ -198,7 +207,7 @@ io.on('connection', (client) => {
     client.on('loose',function(data){
         let drawer = data.drawer;
         let room = data.room;
-        let players = rooms[room];
+        let players = pcRooms[room];
         lines[room]=[];
         io.emit("cleared",room);
         let indexOfNextDrawer= (players.indexOf(drawer)+1)%(players.length);
@@ -211,7 +220,7 @@ io.on('connection', (client) => {
     client.on('end-game',function (data) {
         let room = data.room;
         let playerWhoLeft= data.player;
-        let players = rooms[room];
+        let players = pcRooms[room];
         if(players !== undefined) {
             players.forEach((player) => {
                 delete score[player];
