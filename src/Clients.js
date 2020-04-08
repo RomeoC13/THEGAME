@@ -29,7 +29,7 @@ class PictionaryClient {
     }
 
     emitUser(user,room) {
-        socket.emit('join', {user : user, room : room})
+        socket.emit('join', {user : user, room : room,type : "Pictionary"})
     }
 
     userLeave(user,room) {
@@ -122,4 +122,8 @@ class GameClient {
     }
 }
 
-export {AppClient,PictionaryClient,ChatClient,TimerClient,GameClient}
+class PetitBacClient{
+
+}
+
+export {AppClient,PictionaryClient,ChatClient,TimerClient,GameClient,PetitBacClient}

@@ -10,7 +10,7 @@ import {AppClient} from "./Clients";
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {current: "login", room: '0', game: '0', userCount: 0, roomList: [], };
+        this.state = {current: "login", room: '0', game: '0', userCount: 0, roomList: [], roomTypes: []};
         this.closeChat = this.closeChat.bind(this);
         this.startChat = this.startChat.bind(this);
         this.setName = this.setName.bind(this);
@@ -38,8 +38,8 @@ class App extends React.Component {
         this.forceUpdate();
     };
 
-    updateRooms = (rooms) => {
-        this.setState({roomList: rooms});
+    updateRooms = (data) => {
+        this.setState({roomList: data.rooms, roomType: data.roomsType});
         this.forceUpdate();
     };
 
@@ -51,7 +51,7 @@ class App extends React.Component {
     }
 
     startChat() {
-        console.log("NAMEALREADYTOKEN",this.nameAlreadyToken(this.state.name));
+        console.log("NAMEALREADYTOKEN", this.nameAlreadyToken(this.state.name));
         if (this.state.name === undefined || this.state.name === "") {
             this.warningMessage = "Please enter a valid name";
             this.forceUpdate();
@@ -75,7 +75,7 @@ class App extends React.Component {
 
     nameAlreadyToken(name) {
         this.state.roomList.forEach((room) => {
-            if(room.indexOf(name) === -1){
+            if (room.indexOf(name) === -1) {
                 return true;
             }
         });
@@ -92,8 +92,10 @@ class App extends React.Component {
     }
 
     render() {
-        let rooms = this.state.roomList.map((room) => <Room key={this.state.roomList.indexOf(room)} joinRoom={this.joinRoom}
+        let rooms = this.state.roomList.map((room) => <Room key={this.state.roomList.indexOf(room)}
+                                                            joinRoom={this.joinRoom}
                                                             roomName={this.state.roomList.indexOf(room)}
+                                                            type={this.state.roomType[this.state.roomList.indexOf(room)]}
                                                             userList={room}/>);
         let orJoinaRoom = "";
         if (this.state.roomList.length !== 0) {
@@ -108,8 +110,7 @@ class App extends React.Component {
                 {orJoinaRoom}
                 {rooms}
             </div>;
-        }
-        else if(this.state.game === "0")
+        } else if (this.state.game === "0")
             return <Pictionary statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
         else
             return <PetitBac statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
