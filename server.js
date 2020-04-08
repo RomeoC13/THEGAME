@@ -14,10 +14,6 @@ http.listen(port, () => console.log("Listening on port :", port));
 
 //PICTIONNARY USAGE :
 const messages = [{name: 'bot', text: 'Bienvenue ', room: "all"}];
-//Rooms Array is a 2D Array, a room of Pictionnary with few players named "Romeo" ,"Pauline" and "Yash" in room "3" will be stored like this :
-// rooms["3"]=["Romeo","Pauline","Yash"}] and roomsType["3"]=Pictionnary
-let rooms = [];
-let roomsType = [];
 //Every rooms as his own countdown, for example room "3" if created as his countdown in countdowns["3"]
 var countdowns = [];
 //Every rooms as his own lines storage, for example room "3" line's if created are stored in lines["3"]
@@ -47,14 +43,22 @@ var words = [
     "furniture", "sunset", "sunburn",
 ];
 
-//GENERAL APP USAGE :
-let onlineCount = 0;
-let users = [];
-
 //DEMINEUR USAGE :
 
 
 //PETIT BAC USAGE :
+
+
+//GENERAL APP USAGE :
+let onlineCount = 0;
+let users = [];
+//Rooms Array is a 2D Array,
+// for example a room of Pictionnary with few players named "Romeo" ,"Pauline" and "Yash" in room "3" will be stored like this :
+// rooms["3"]=["Romeo","Pauline","Yash"}] and roomsType["3"]=Pictionnary
+let rooms = [];
+let roomsType = [];
+
+
 
 
 function resetTimer(value, room) {
