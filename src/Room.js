@@ -13,7 +13,7 @@ class Room extends React.Component {
     render() {
         var players = this.state.userList.map((player) => <i key={this.state.roomName + player}>{player} </i>);
         return <div id="Room">
-            <u>Room {this.state.roomName} Game of {this.state.roomType} </u> <br/>
+            <u>Room {this.state.roomName} <br/> Game of {this.state.roomType} </u> <br/>
             {players} <br/>
             <button onClick={() => this.props.joinRoom(this.state.roomName)}>Join them</button>
         </div>;
