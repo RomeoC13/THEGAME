@@ -11,7 +11,7 @@ class Room extends React.Component {
     };
 
     render() {
-        var players = this.state.userList.map((player) => <i key={this.state.roomName + player}>{player}</i>);
+        var players = this.state.userList.map((player) => <i key={this.state.roomName + player}>{player} </i>);
         return <div id="Room">
             <u>Room {this.state.roomName} Game of {this.state.roomType} </u> <br/>
             {players} <br/>
