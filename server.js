@@ -179,6 +179,10 @@ io.on('connection', (client) => {
             }
             updateNames();
             onlineCount--;
+            console.log('update-roomlist');
+            io.emit('update-roomlist', {rooms: rooms, roomsType: roomsType});
+            console.log('update-playercount', onlineCount);
+            io.emit('update-playercount', onlineCount);
         }
     });
 

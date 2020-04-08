@@ -1,7 +1,84 @@
 import React from "react";
-import {InputField} from "./InputField";
+import {Timer} from "./Timer";
+import {PetitBacClient} from "./Clients";
 
 class PetitBac extends React.Component {
+
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            names: [], info: "", currentLetter: "", scores: [], gameRunning: false,
+            Names: [], City: [], Country: [], Animal: [], Food: [], Object: [], Job: [], Movie: [], Song: []
+        };
+        this.setNames = this.setNames.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.componentWillUnmount = this.componentWillUnmount.bind(this);
+        this.leave = this.leave.bind(this);
+
+        this.client = new PetitBacClient();
+        /*this.setNames = this.setNames().bind(this);
+        this.setCity = this.setCity().bind(this);
+        this.setCountry = this.setCountry().bind(this);
+        this.setAnimal = this.setAnimal().bind(this);
+        this.setFood = this.setFood().bind(this);
+        this.setObject = this.setObject().bind(this);
+        this.setJob = this.setJob().bind(this);
+        this.setMovie = this.setMovie().bind(this);
+        this.setSong = this.setSong().bind(this);*/
+    }
+
+
+    componentDidMount() {
+        this.client.updateUsers(this.setNames, this.props.room);
+        this.client.emitUser(this.props.statename, this.props.room);
+    }
+
+    leave() {
+        this.props.closeChat();
+        this.client.userLeave(this.props.statename, this.props.room);
+
+    }
+
+    componentWillUnmount() {
+        this.client.userLeave(this.props.statename);
+    }
+
+    setNames = (name) => {
+        this.setState({names: name})
+    };
+
+
+    /*setNames(names) {
+        this.setState({Names: names.target.value})
+    }
+    setCity(city) {
+        this.setState({City: city.target.value})
+    }
+    setCountry(country) {
+        this.setState({Country: country.target.value})
+    }
+    setAnimal(animal) {
+        this.setState({Animal: animal.target.value})
+    }
+    setFood(food) {
+        this.setState({Food: food.target.value})
+    }
+    setObject(object) {
+        this.setState({Object: object.target.value})
+    }
+    setJob(job) {
+        this.setState({Job: job.target.value})
+    }
+    setMovie(movie) {
+        this.setState({Movie: movie.target.value})
+    }
+    setSong(song) {
+        this.setState({Song: song.target.value})
+    }*/
+
+
     render() {
         var names;
         if (!this.state.endGame) {

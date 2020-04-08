@@ -19,12 +19,13 @@ class App extends React.Component {
         this.componentDidMount = this.componentDidMount.bind(this);
         this.joinRoom = this.joinRoom.bind(this);
         this.nameAlreadyToken = this.nameAlreadyToken.bind(this);
-
         this.ac = new AppClient();
         this.warningMessage = "";
     }
 
+    componentWillUnmount() {
 
+    }
 
     componentDidMount() {
         this.ac.updatePlayerCount(this.updatePlayerCount);
@@ -35,7 +36,7 @@ class App extends React.Component {
 
     updatePlayerCount = (count) => {
         this.setState({userCount: count});
-        this.forceUpdate();
+        /*this.forceUpdate();*/
     };
 
     updateRooms = (data) => {
@@ -45,9 +46,14 @@ class App extends React.Component {
 
 
     closeChat() {
-        this.ac.askUpdateCount();
-        this.ac.askUpdateRooms();
+        console.log("CLOSE FUCKIT")
         this.setState({current: "login"});
+        setTimeout(() => {
+            this.ac.askUpdateCount();
+            this.ac.askUpdateRooms();
+            this.forceUpdate();
+        }, 50)
+
     }
 
     startChat() {
