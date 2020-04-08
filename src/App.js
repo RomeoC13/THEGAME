@@ -40,13 +40,15 @@ class App extends React.Component {
     };
 
     updateRooms = (data) => {
-        this.setState({roomList: data.rooms, roomType: data.roomsType});
+        var roomListWithNoNull=data.rooms.filter(function (el){
+            return el!=null;
+        });
+        this.setState({roomList: roomListWithNoNull, roomType: data.roomsType});
         this.forceUpdate();
     };
 
 
     closeChat() {
-        console.log("CLOSE FUCKIT")
         this.setState({current: "login"});
         setTimeout(() => {
             this.ac.askUpdateCount();
@@ -61,7 +63,7 @@ class App extends React.Component {
         if (this.state.name === undefined || this.state.name === "") {
             this.warningMessage = "Please enter a valid name";
             this.forceUpdate();
-        } else if (this.nameAlreadyToken(this.state.name) === true) {
+        } else if (this.nameAlreadyToken(this.state.name)) {
             console.log("THIS NAME IS REALDZQDQZ");
             this.warningMessage = "This name is already token choose another";
             this.forceUpdate();
@@ -80,11 +82,12 @@ class App extends React.Component {
     }
 
     nameAlreadyToken(name) {
-        this.state.roomList.forEach((room) => {
-            if (room.indexOf(name) === -1) {
+        for(let index=0;index<this.state.roomList.length;index++){
+            let room = this.state.roomList[index];
+            if (room.indexOf(name) !== -1) {
                 return true;
             }
-        });
+        }
         return false;
     }
 
