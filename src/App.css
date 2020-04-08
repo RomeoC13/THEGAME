@@ -21,17 +21,18 @@ button {
     font-size: 16px;
     padding: 9px 15px;
     text-decoration: none;
-
     margin: 8px;
 }
 
-#greenButton{
+#greenButton {
     background-color: green;
 }
-#redButton{
+
+#redButton {
     background-color: red;
 }
-#blueButton{
+
+#blueButton {
     background-color: blue;
 }
 
@@ -46,7 +47,8 @@ button {
     border: black;
 
 }
-#messages{
+
+#messages {
     height: 200px;
     overflow-y: scroll;
 }
@@ -55,7 +57,7 @@ button {
     border-style: solid;
 }
 
-#Room{
+#Room {
     border-style: solid;
     border-width: thin;
     height: fit-content;
@@ -79,6 +81,10 @@ discret {
     font-size: smaller;
 }
 
-#nochat{
+#nochat {
     margin-right: 250px;
+}
+
+info{
+
 }
