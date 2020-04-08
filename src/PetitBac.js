@@ -1,23 +1,25 @@
 import React from "react";
 import {Timer} from "./Timer";
-import {PetitBacClient} from "./Clients";
+import {GameClient, PetitBacClient, } from "./Clients";
+import {PetitBacStart} from "./PetitBacStart";
 
 class PetitBac extends React.Component {
-
 
     constructor(props) {
         super(props);
 
         this.state = {
-            names: [], info: "", currentLetter: "", scores: [], gameRunning: false,
+            names: [], info: "", currentLetter : "" ,scores: [], gameRunning: false,
             Names: [], City: [], Country: [], Animal: [], Food: [], Object: [], Job: [], Movie: [], Song: []
         };
+
         this.setNames = this.setNames.bind(this);
+        this.sendMsg = this.sendMsg.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
-        this.leave = this.leave.bind(this);
 
         this.client = new PetitBacClient();
+        this.game = new GameClient();
         /*this.setNames = this.setNames().bind(this);
         this.setCity = this.setCity().bind(this);
         this.setCountry = this.setCountry().bind(this);
@@ -29,16 +31,23 @@ class PetitBac extends React.Component {
         this.setSong = this.setSong().bind(this);*/
     }
 
-
-    componentDidMount() {
-        this.client.updateUsers(this.setNames, this.props.room);
-        this.client.emitUser(this.props.statename, this.props.room);
+    sendMsg(message) {
+        if (this.state.currentWord === message.text && this.state.currentDrawer !== message.name && this.state.gameRunning) {
+            console.log("good  job");
+            this.setState({info: "Good job, " + message.name + " ! The word was " + this.state.currentWord});
+            if (this.props.statename === this.state.currentDrawer) {
+                setTimeout(() => this.game.asWin(message.name, this.state.currentDrawer, this.props.room), 2000);
+            }
+        }
     }
 
-    leave() {
-        this.props.closeChat();
-        this.client.userLeave(this.props.statename, this.props.room);
-
+    componentDidMount() {
+        //this.client.updateUsers(this.setNames, this.props.room);
+       // this.client.emitUser(this.props.statename, this.props.room);
+        this.setupBeforeUnloadListener(this.pc);
+        this.game.listenFirstRound(this.firstround, this.props.room);
+        this.game.listenRound(this.nextRound, this.props.room);
+        this.game.listenEndGame(this.endGame, this.props.room);
     }
 
     componentWillUnmount() {
@@ -47,6 +56,17 @@ class PetitBac extends React.Component {
 
     setNames = (name) => {
         this.setState({names: name})
+    };
+
+    setupBeforeUnloadListener = (pc) => {
+        window.addEventListener("beforeunload", (ev) => {
+            ev.preventDefault();
+            pc.userLeave(this.props.statename, this.props.room);
+            if (this.state.gameRunning) {
+                this.game.stopGame(this.props.statename, this.props.room);
+            }
+            return ev.returnValue = "test";
+        });
     };
 
 
@@ -91,9 +111,6 @@ class PetitBac extends React.Component {
             names = this.state.names.map((m) => <player key={m}> {m} score {this.state.scores[m]} </player>);
         }
         return <div>
-            <div>
-                LETTER : {this.props.letter}
-            </div>
 
             <label>Name </label> <br/>
             <input onChange={this.props.onPBNameChange}/><br/>
