@@ -74,7 +74,7 @@ let roomsType = [];
 
 
 function newLetter() {
-    wordcount = Math.floor(Math.random() * (words.length));
+    wordcount = Math.floor(Math.random() * (letters.length));
     return letters[wordcount];
 }
 
