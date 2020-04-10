@@ -4,11 +4,10 @@
     <list default="true" id="1181bf25-1fda-424a-8fab-a2f46bfbae05" name="Default Changelist" comment="adding a useless for now button 'startgame'&#10;fixed a bug where StartGame button was not showed when time is up">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Clients.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Clients.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LoginWindow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/LoginWindow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Room.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Room.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PetitBac.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/PetitBac.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PetitBacStart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/PetitBacStart.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,18 +27,10 @@
     <option name="UPDATE_TYPE" value="MERGE" />
     <option name="WARN_ABOUT_DETACHED_HEAD" value="false" />
   </component>
-  <component name="IgnoredFileRootStore">
-    <option name="generatedRoots">
-      <set>
-        <option value="C:\Users\pateo\Documents\L3\Web\pictionnary\.idea" />
-      </set>
-    </option>
-  </component>
   <component name="ProjectId" id="1ZUvlsb1dVr84UI1Ul7Qr1aMcls" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -50,7 +41,7 @@
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -76,6 +67,9 @@
       <workItem from="1585767931985" duration="1587000" />
       <workItem from="1585828172763" duration="7137000" />
       <workItem from="1586102479164" duration="800000" />
+      <workItem from="1586435064934" duration="2104000" />
+      <workItem from="1586438708655" duration="2929000" />
+      <workItem from="1586519223572" duration="4343000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor du Canvas avec socket">
       <created>1585246617826</created>
@@ -252,24 +246,30 @@
       <option name="project" value="LOCAL" />
       <updated>1585766185535</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Add some render (start of PB) but randomLetter and room aren't working yet. Need to implement server and function to catch this.">
+      <created>1586365928461</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1586365928461</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactor du Canvas avec socket" />
@@ -294,7 +294,8 @@
     <MESSAGE value="all client socket is now in Clients.js" />
     <MESSAGE value="minor visual fixes" />
     <MESSAGE value="minor visual fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor visual fix" />
+    <MESSAGE value="Add some render (start of PB) but randomLetter and room aren't working yet. Need to implement server and function to catch this." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add some render (start of PB) but randomLetter and room aren't working yet. Need to implement server and function to catch this." />
   </component>
   <component name="WindowStateProjectService">
     <state x="223" y="72" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585155501010">
@@ -305,10 +306,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="729" y="323" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1585666283722" />
-    <state x="491" y="15" width="1098" height="810" key="CommitChangelistDialog2" timestamp="1585766185013">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="393" y="12" width="1098" height="810" key="CommitChangelistDialog2" timestamp="1586365926171">
+      <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="393" y="12" width="1098" height="810" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1585341150593" />
+    <state x="393" y="12" width="1098" height="810" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1586365926171" />
     <state x="491" y="15" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1585766185013" />
     <state x="184" y="86" key="MergeDialog" timestamp="1585765414929">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -322,19 +323,19 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="750" y="231" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585575139815" />
-    <state x="277" y="60" key="SettingsEditor" timestamp="1585240513639">
+    <state x="277" y="60" key="SettingsEditor" timestamp="1586438925625">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="277" y="60" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1585240513639" />
-    <state x="451" y="187" key="Vcs.Push.Dialog.v2" timestamp="1585766188304">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="277" y="60" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1586438925625" />
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1586365940051">
+      <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1585334630783" />
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1586365940051" />
     <state x="451" y="187" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1585766188304" />
-    <state x="723" y="416" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586103299050">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586525672216">
+      <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1585335732867" />
+    <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1586525672216" />
     <state x="723" y="416" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1586103299050" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1585658780785">
       <screen x="0" y="0" width="1920" height="1040" />

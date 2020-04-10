@@ -86,6 +86,18 @@ class GameClient {
         socket.emit("start-game",room)
     }
 
+    startPetitBac(room){
+        socket.emit("start-game-pb",room)
+    }
+
+    listenPetitBacLetter(op,room){
+        socket.on('start-PetitBac',function (data) {
+            if(data.room === room){
+                op(data);
+            }
+        })
+    }
+
     listenFirstRound(op,room){
         socket.on('first-round',function (data) {
             if(data.room === room){
@@ -126,6 +138,21 @@ class PetitBacClient{
     emitUser(user,room) {
         socket.emit('join', {user : user, room : room,type : "Petit Bac"})
     }
+
+    updateUsers(op,room) {
+        socket.on('update-names', function (data) {
+            op(data[room])
+        });
+    }
+
+    userLeave(user,room) {
+        socket.emit('leave', {user: user,room: room})
+    }
+
+    print(msg) {
+        socket.emit('print', msg);
+    }
+
 
 }
 

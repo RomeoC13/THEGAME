@@ -1,34 +1,94 @@
 import React from "react";
 import {Timer} from "./Timer";
 import {PetitBac} from "./PetitBac";
+import {GameClient, PetitBacClient} from "./Clients";
 
 class PetitBacStart extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            letter: this.randomLetter(),
             names: [],
             info: "",
-            currentLetter: "",
             scores: [],
             gameRunning: false,
-            Names: [], City: [], Country: [], Animal: [], Food: [], Object: [], Job: [], Movie: [], Song: []
         };
-        this.handleClick = this.handleClick.bind(this);
+
+
+        this.setNames = this.setNames.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.componentWillUnmount = this.componentWillUnmount.bind(this);
+        this.startGame = this.startGame.bind(this);
+        this.endGame = this.endGame.bind(this);
+        this.leave = this.leave.bind(this);
+        this.letterSet = this.letterSet.bind(this);
+
+        this.pbc = new PetitBacClient();
+        this.game = new GameClient();
+
+
     }
 
-    randomLetter() {
-        var letters = [
-            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-        ];
-        var wordcount = Math.floor(Math.random() * (letters.length));
-        return letters[wordcount];
+    setNames = (name) => {
+        this.setState({names: name})
+    };
+
+    letterSet (){
+        alert('test');
     }
 
-    handleClick(){
-        //alert('Appeler PETITBAC');
-        this.setState({gameRunning : true})
+
+    componentDidMount() {
+        this.pbc.updateUsers(this.setNames, this.props.room);
+        this.pbc.emitUser(this.props.statename, this.props.room);
+        this.setupBeforeUnloadListener(this.pbc);
+        this.game.listenEndGame(this.endGame, this.props.room);
+        this.game.listenPetitBacLetter(this.letterSet, this.props.room);
+    }
+
+
+    componentWillUnmount() {
+        this.pbc.userLeave(this.props.statename);
+    }
+
+
+    setupBeforeUnloadListener = (pbc) => {
+        window.addEventListener("beforeunload", (ev) => {
+            ev.preventDefault();
+            pbc.userLeave(this.props.statename, this.props.room);
+            if (this.state.gameRunning) {
+                this.game.stopGame(this.props.statename, this.props.room);
+            }
+            return ev.returnValue = "test";
+        });
+    };
+
+
+    startGame() {
+        if (this.state.names.length < 2) {
+            // eslint-disable-next-line no-useless-escape
+            alert("You can't play Petit Bac game alone ¯\\_(ツ)_/¯, you must at least be 2 !");
+        } else {
+            console.log("STARTGAME")
+            this.setState({gameRunning: true})
+            this.game.startPetitBac(this.props.room)
+
+        }
+    }
+
+
+    endGame(player) {
+        this.setState({gameRunning: false});
+        this.setState({info: player + " as left ! The party is over"})
+    }
+
+
+    leave() {
+        this.props.closeChat();
+        this.pbc.userLeave(this.props.statename, this.props.room);
+        if (this.state.gameRunning) {
+            this.game.stopGame(this.props.statename, this.props.room);
+        }
     }
 
     render() {
@@ -43,17 +103,18 @@ class PetitBacStart extends React.Component {
             names = this.state.names.map((m) => <player key={m}> {m} score {this.state.scores[m]} </player>);
         }
 
-        if(this.state.gameRunning === true){
+        if (this.state.gameRunning === true) {
             return <PetitBac/>
         }
         return <div>
-            THE LETTER IS : {this.state.letter}
-            <button onClick={this.handleClick}>Start Playing !</button>
+
 
             <div id="players-list">
                 <h4>Players online in room {this.props.room} </h4>
                 <p> {names} </p>
             </div>
+
+            <button onClick={this.startGame}>Start Playing !</button>
         </div>
     }
 }

@@ -206,7 +206,6 @@ io.on('connection', (client) => {
         }
     });
 
-
     client.on('start-game', function (room) {
         lines[room] = [];
         io.emit("cleared", room);
@@ -221,15 +220,17 @@ io.on('connection', (client) => {
         resetTimer(10, room);
     });
 
-    client.on('startPetitBac', function (room){
+
+    client.on("start-game-pb", function (room) {
         let players = rooms[room];
         players.forEach((player) => {
             score[player] = 0;
         });
         let letter = newLetter();
-        console.log('startPetitBac', {letter: letter, room : room});
-        io.emit('startPetitBac', {letter: letter, room : room});
+        console.log('start-PetitBac', {letter: letter, room : room});
+        io.emit('start-PetitBac', {letter: letter, room : room});
     });
+
 
     client.on('win', function (data) {
         let winner = data.player;
