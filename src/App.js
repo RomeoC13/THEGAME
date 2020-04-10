@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import {Pictionary} from "./Pictionary.js";
 import {LoginWindow} from "./LoginWindow.js";
-import {PetitBac} from "./PetitBac";
+import {PetitBacStart} from "./PetitBacStart";
 import {Room} from "./Room";
 import {AppClient} from "./Clients";
 
@@ -122,7 +122,7 @@ class App extends React.Component {
         } else if (this.state.game === "0")
             return <Pictionary statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
         else
-            return <PetitBac statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
+            return <PetitBacStart statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
     }
 
 }

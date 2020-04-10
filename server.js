@@ -49,6 +49,26 @@ var words = [
 //PETIT BAC USAGE :
 
 
+function newWord() {
+    wordcount = Math.floor(Math.random() * (words.length));
+    return words[wordcount];
+}
+
+
+//DEMINEUR USAGE :
+
+
+//PETIT BAC USAGE :
+//POTENTIELLEMENT CHANGER
+var letters =[
+    "A", "B", "C", "D" ,"E" ,"F", "G", "H" ,"I", "J" ,"K", "L", "M" ,"N" ,"O", "P" ,"Q", "R", "S" ,"T" ,"U", "V", "W" ,"X", "Y", "Z",
+];
+
+function newLetter() {
+    wordcount = Math.floor(Math.random() * (words.length));
+    return letters[wordcount];
+}
+
 //GENERAL APP USAGE :
 let onlineCount = 0;
 let users = [];
@@ -60,6 +80,7 @@ let roomsType = [];
 
 
 
+let wordcount;
 
 function resetTimer(value, room) {
     countdowns[room] = value;
@@ -72,15 +93,7 @@ function updateNames() {
     io.emit('update-names', rooms);
 }
 
-let wordcount;
-
-function newWord() {
-    wordcount = Math.floor(Math.random() * (words.length));
-    return words[wordcount];
-}
-
 io.on('connection', (client) => {
-
     //console.log("New connection");
 
     client.on("join", (data) => {
@@ -203,6 +216,16 @@ io.on('connection', (client) => {
         console.log('first-round', {player: players[firstplayer], word: word, room: room});
         io.emit('first-round', {player: players[firstplayer], word: word, room: room});
         resetTimer(10, room);
+    });
+
+    client.on('startPetitBac', function (room){
+        let players = rooms[room];
+        players.forEach((player) => {
+            score[player] = 0;
+        });
+        let letter = newLetter();
+        console.log('startPetitBac', {letter: letter, room : room});
+        io.emit('startPetitBac', {letter: letter, room : room});
     });
 
     client.on('win', function (data) {
