@@ -18,6 +18,7 @@ class AppClient {
     updateRooms(op) {
         socket.on('update-roomlist', (data) => op(data))
     }
+
 }
 
 class PictionaryClient {
@@ -74,7 +75,6 @@ class TimerClient {
     }
 
     callReset(seconds,room){
-        /*console.log('reset',{value :seconds,room : room});*/
         socket.emit('reset',{value :seconds,room : room})
     }
 
@@ -149,9 +149,6 @@ class PetitBacClient{
         socket.emit('leave', {user: user,room: room})
     }
 
-    print(msg) {
-        socket.emit('print', msg);
-    }
 
 
 }
