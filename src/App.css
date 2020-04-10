@@ -63,6 +63,7 @@ button {
     height: fit-content;
     width: fit-content;
     margin: 20px auto 0;
+    padding: 10px;
 }
 
 canvas {

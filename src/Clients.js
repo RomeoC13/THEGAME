@@ -123,6 +123,9 @@ class GameClient {
 }
 
 class PetitBacClient{
+    emitUser(user,room) {
+        socket.emit('join', {user : user, room : room,type : "Petit Bac"})
+    }
 
 }
 

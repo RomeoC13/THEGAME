@@ -47,27 +47,20 @@ var words = [
 
 
 //PETIT BAC USAGE :
+//POTENTIELLEMENT CHANGER
+var letters =[
+    "A", "B", "C", "D" ,"E" ,"F", "G", "H" ,"I", "J" ,"K", "L", "M" ,"N" ,"O", "P" ,"Q", "R", "S" ,"T" ,"U", "V", "W" ,"X", "Y", "Z",
+];
+let wordcount;
 
 
-function newWord() {
-    wordcount = Math.floor(Math.random() * (words.length));
-    return words[wordcount];
-}
 
 
 //DEMINEUR USAGE :
 
 
 //PETIT BAC USAGE :
-//POTENTIELLEMENT CHANGER
-var letters =[
-    "A", "B", "C", "D" ,"E" ,"F", "G", "H" ,"I", "J" ,"K", "L", "M" ,"N" ,"O", "P" ,"Q", "R", "S" ,"T" ,"U", "V", "W" ,"X", "Y", "Z",
-];
 
-function newLetter() {
-    wordcount = Math.floor(Math.random() * (words.length));
-    return letters[wordcount];
-}
 
 //GENERAL APP USAGE :
 let onlineCount = 0;
@@ -80,7 +73,17 @@ let roomsType = [];
 
 
 
-let wordcount;
+
+
+function newLetter() {
+    wordcount = Math.floor(Math.random() * (words.length));
+    return letters[wordcount];
+}
+
+function newWord() {
+    wordcount = Math.floor(Math.random() * (words.length));
+    return words[wordcount];
+}
 
 function resetTimer(value, room) {
     countdowns[room] = value;

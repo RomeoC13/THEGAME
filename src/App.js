@@ -10,7 +10,7 @@ import {AppClient} from "./Clients";
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {current: "login", room: '0', game: '0', userCount: 0, roomList: [], roomTypes: []};
+        this.state = {current: "login", room: '0', game: 'Pictionary', userCount: 0, roomList: [], roomTypes: []};
         this.closeChat = this.closeChat.bind(this);
         this.startChat = this.startChat.bind(this);
         this.setName = this.setName.bind(this);
@@ -19,6 +19,7 @@ class App extends React.Component {
         this.componentDidMount = this.componentDidMount.bind(this);
         this.joinRoom = this.joinRoom.bind(this);
         this.nameAlreadyToken = this.nameAlreadyToken.bind(this);
+        this.roomAlreadyToken = this.roomAlreadyToken.bind(this);
         this.ac = new AppClient();
         this.warningMessage = "";
     }
@@ -40,13 +41,20 @@ class App extends React.Component {
     };
 
     updateRooms = (data) => {
-        var roomListWithNoNull=data.rooms.filter(function (el){
-            return el!=null;
-        });
-        this.setState({roomList: roomListWithNoNull, roomType: data.roomsType});
+        this.clean(data.rooms);
+        this.setState({roomList: data.rooms, roomType: data.roomsType});
         this.forceUpdate();
     };
 
+    clean = (obj) => {
+        var propNames = Object.getOwnPropertyNames(obj);
+        for (var i = 0; i < propNames.length; i++) {
+            var propName = propNames[i];
+            if (obj[propName] === null || obj[propName] === undefined) {
+                delete obj[propName];
+            }
+        }
+    };
 
     closeChat() {
         this.setState({current: "login"});
@@ -59,13 +67,14 @@ class App extends React.Component {
     }
 
     startChat() {
-        console.log("NAMEALREADYTOKEN", this.nameAlreadyToken(this.state.name));
         if (this.state.name === undefined || this.state.name === "") {
             this.warningMessage = "Please enter a valid name";
             this.forceUpdate();
         } else if (this.nameAlreadyToken(this.state.name)) {
-            console.log("THIS NAME IS REALDZQDQZ");
             this.warningMessage = "This name is already token choose another";
+            this.forceUpdate();
+        } else if (this.roomAlreadyToken(this.state.room) && this.state.roomType[this.state.room]!==this.state.game) {
+            this.warningMessage = "This room is busy with an other game please choose another ";
             this.forceUpdate();
         } else {
             this.setState({current: "game"})
@@ -81,17 +90,28 @@ class App extends React.Component {
         this.setState({room: room.target.value})
     }
 
-    nameAlreadyToken(name) {
-        for(let index=0;index<this.state.roomList.length;index++){
-            let room = this.state.roomList[index];
-            if (room.indexOf(name) !== -1) {
+    roomAlreadyToken(room) {
+        var roomNames = this.state.roomList.keys();
+        for(const value of roomNames){
+            if(value.toString() === room)
                 return true;
+        }
+        return false;
+    }
+
+    nameAlreadyToken(name) {
+        var names = this.state.roomList.values();
+        for (const value of names) {
+            for (let i = 0; i < value.length; i++) {
+                if (value[i] === name)
+                    return true;
             }
         }
         return false;
     }
 
     setGame(game) {
+        console.log(game.target.value);
         this.setState({game: game.target.value})
     }
 
@@ -119,7 +139,7 @@ class App extends React.Component {
                 {orJoinaRoom}
                 {rooms}
             </div>;
-        } else if (this.state.game === "0")
+        } else if (this.state.game === "Pictionary")
             return <Pictionary statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
         else
             return <PetitBacStart statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
