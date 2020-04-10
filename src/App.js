@@ -5,6 +5,7 @@ import {LoginWindow} from "./LoginWindow.js";
 import {PetitBacStart} from "./PetitBacStart";
 import {Room} from "./Room";
 import {AppClient} from "./Clients";
+import {Helmet} from 'react-helmet';
 
 
 class App extends React.Component {
@@ -73,7 +74,7 @@ class App extends React.Component {
         } else if (this.nameAlreadyToken(this.state.name)) {
             this.warningMessage = "This name is already token choose another";
             this.forceUpdate();
-        } else if (this.roomAlreadyToken(this.state.room) && this.state.roomType[this.state.room]!==this.state.game) {
+        } else if (this.roomAlreadyToken(this.state.room) && this.state.roomType[this.state.room] !== this.state.game) {
             this.warningMessage = "This room is busy with an other game please choose another ";
             this.forceUpdate();
         } else {
@@ -92,8 +93,8 @@ class App extends React.Component {
 
     roomAlreadyToken(room) {
         var roomNames = this.state.roomList.keys();
-        for(const value of roomNames){
-            if(value.toString() === room)
+        for (const value of roomNames) {
+            if (value.toString() === room)
                 return true;
         }
         return false;
@@ -121,28 +122,40 @@ class App extends React.Component {
     }
 
     render() {
-        let rooms = this.state.roomList.map((room) => <Room key={this.state.roomList.indexOf(room)}
-                                                            joinRoom={this.joinRoom}
-                                                            roomName={this.state.roomList.indexOf(room)}
-                                                            type={this.state.roomType[this.state.roomList.indexOf(room)]}
-                                                            userList={room}/>);
-        let orJoinaRoom = "";
-        if (this.state.roomList.length !== 0) {
-            orJoinaRoom = <h4>or join a room</h4>;
-        }
-
+        let content = "";
+        let title ="";
         if (this.state.current === "login") {
-            return <div>
+            title='Welcome to THEGAME';
+            let rooms = this.state.roomList.map((room) => <Room key={this.state.roomList.indexOf(room)}
+                                                                joinRoom={this.joinRoom}
+                                                                roomName={this.state.roomList.indexOf(room)}
+                                                                type={this.state.roomType[this.state.roomList.indexOf(room)]}
+                                                                userList={room}/>);
+            let orJoinaRoom = "";
+            if (this.state.roomList.length !== 0) {
+                orJoinaRoom = <h4>or join a room</h4>;
+            }
+            content = <div>
                 <h4>Currently playing : {this.state.userCount} players</h4>
                 <LoginWindow warning={this.warningMessage} onNameChange={this.setName} onLogin={this.startChat}
                              onRoomChange={this.setRoom} onGameChange={this.setGame}/>
                 {orJoinaRoom}
                 {rooms}
             </div>;
-        } else if (this.state.game === "Pictionary")
-            return <Pictionary statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
-        else
-            return <PetitBacStart statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
+        } else if (this.state.game === "Pictionary") {
+            title ="Room "+this.state.room+": Pictionary";
+            content = <Pictionary statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
+        }
+        else {
+            title ="Room "+ this.state.room +": Petit Bac ";
+            content = <PetitBacStart statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
+        }
+        return <>
+            <Helmet>
+                <title>{title}</title>
+            </Helmet>
+            {content}
+        </>
     }
 
 }
