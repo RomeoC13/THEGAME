@@ -48,9 +48,9 @@ class App extends React.Component {
     };
 
     clean = (obj) => {
-        var propNames = Object.getOwnPropertyNames(obj);
-        for (var i = 0; i < propNames.length; i++) {
-            var propName = propNames[i];
+        let propNames = Object.getOwnPropertyNames(obj);
+        for (let i = 0; i < propNames.length; i++) {
+            let propName = propNames[i];
             if (obj[propName] === null || obj[propName] === undefined) {
                 delete obj[propName];
             }
@@ -92,7 +92,7 @@ class App extends React.Component {
     }
 
     roomAlreadyToken(room) {
-        var roomNames = this.state.roomList.keys();
+        let roomNames = this.state.roomList.keys();
         for (const value of roomNames) {
             if (value.toString() === room)
                 return true;
@@ -101,7 +101,7 @@ class App extends React.Component {
     }
 
     nameAlreadyToken(name) {
-        var names = this.state.roomList.values();
+        let names = this.state.roomList.values();
         for (const value of names) {
             for (let i = 0; i < value.length; i++) {
                 if (value[i] === name)
@@ -122,8 +122,8 @@ class App extends React.Component {
     }
 
     render() {
-        let content = "";
-        let title ="";
+        let content;
+        let title;
         if (this.state.current === "login") {
             title='Welcome to THEGAME';
             let rooms = this.state.roomList.map((room) => <Room key={this.state.roomList.indexOf(room)}
