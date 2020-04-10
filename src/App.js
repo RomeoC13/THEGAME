@@ -118,6 +118,7 @@ class App extends React.Component {
 
     joinRoom(room) {
         this.setState({room: room});
+        this.setState({game : this.state.roomType[room]});
         this.startChat();
     }
 
