@@ -25,15 +25,15 @@ button {
 }
 
 #greenButton {
-    background-color: green;
+    background-color: green!important;
 }
 
 #redButton {
-    background-color: red;
+    background-color: red !important;
 }
 
 #blueButton {
-    background-color: blue;
+    background-color: blue !important;
 }
 
 * {
@@ -67,12 +67,13 @@ button {
 }
 
 canvas {
+    background: white !important;
     border-style: groove;
 }
 
 player {
 
-}
+ }
 
 #players-list {
 
@@ -86,6 +87,18 @@ discret {
     margin-right: 250px;
 }
 
-info{
+info {
 
+}
+
+body.dark {
+    font-family: Georgia, serif;
+    text-align: center;
+    background: black;
+    color: white;
+}
+
+.dark button{
+    background-color:white;
+    color: black;
 }

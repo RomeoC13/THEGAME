@@ -11,7 +11,7 @@ import {Helmet} from 'react-helmet';
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {current: "login", room: '0', game: 'Pictionary', userCount: 0, roomList: [], roomTypes: []};
+        this.state = {current: "login", room: '0', game: 'Pictionary', userCount: 0, roomList: [], roomTypes: [],darkMode:false};
         this.closeChat = this.closeChat.bind(this);
         this.startChat = this.startChat.bind(this);
         this.setName = this.setName.bind(this);
@@ -121,9 +121,14 @@ class App extends React.Component {
         this.startChat();
     }
 
+    darkWhite=()=>{
+        this.setState({darkMode:!this.state.darkMode})
+    }
+
     render() {
         let content;
         let title;
+        let body;
         if (this.state.current === "login") {
             title='Welcome to THEGAME';
             let rooms = this.state.roomList.map((room) => <Room key={this.state.roomList.indexOf(room)}
@@ -150,10 +155,18 @@ class App extends React.Component {
             title ="Room "+ this.state.room +": Petit Bac ";
             content = <PetitBacStart statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
         }
+        if(!this.state.darkMode){
+            body=<body/>;
+        }
+        else {
+            body=<body class="dark"/>
+        }
         return <>
             <Helmet>
                 <title>{title}</title>
+                {body}
             </Helmet>
+            <button onClick={this.darkWhite}/>
             {content}
         </>
     }
