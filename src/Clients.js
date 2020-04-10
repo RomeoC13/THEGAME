@@ -18,6 +18,7 @@ class AppClient {
     updateRooms(op) {
         socket.on('update-roomlist', (data) => op(data))
     }
+
 }
 
 class PictionaryClient {
@@ -74,7 +75,6 @@ class TimerClient {
     }
 
     callReset(seconds,room){
-        /*console.log('reset',{value :seconds,room : room});*/
         socket.emit('reset',{value :seconds,room : room})
     }
 
@@ -84,6 +84,18 @@ class GameClient {
 
     startGame(room){
         socket.emit("start-game",room)
+    }
+
+    startPetitBac(room){
+        socket.emit("start-game-pb",room)
+    }
+
+    listenPetitBacLetter(op,room){
+        socket.on('start-PetitBac',function (data) {
+            if(data.room === room){
+                op(data);
+            }
+        })
     }
 
     listenFirstRound(op,room){
@@ -126,6 +138,18 @@ class PetitBacClient{
     emitUser(user,room) {
         socket.emit('join', {user : user, room : room,type : "Petit Bac"})
     }
+
+    updateUsers(op,room) {
+        socket.on('update-names', function (data) {
+            op(data[room])
+        });
+    }
+
+    userLeave(user,room) {
+        socket.emit('leave', {user: user,room: room})
+    }
+
+
 
 }
 

@@ -14,6 +14,7 @@ http.listen(port, () => console.log("Listening on port :", port));
 
 //PICTIONNARY USAGE :
 const messages = [{name: 'bot', text: 'Bienvenue ', room: "all"}];
+
 //Every rooms as his own countdown, for example room "3" if created as his countdown in countdowns["3"]
 var countdowns = [];
 //Every rooms as his own lines storage, for example room "3" line's if created are stored in lines["3"]
@@ -47,6 +48,7 @@ var words = [
 
 
 //PETIT BAC USAGE :
+const letterss = [{letter :'', room : "all"}];
 //POTENTIELLEMENT CHANGER
 var letters =[
     "A", "B", "C", "D" ,"E" ,"F", "G", "H" ,"I", "J" ,"K", "L", "M" ,"N" ,"O", "P" ,"Q", "R", "S" ,"T" ,"U", "V", "W" ,"X", "Y", "Z",
@@ -59,7 +61,6 @@ let wordcount;
 //DEMINEUR USAGE :
 
 
-//PETIT BAC USAGE :
 
 
 //GENERAL APP USAGE :
@@ -70,9 +71,6 @@ let users = [];
 // rooms["3"]=["Romeo","Pauline","Yash"}] and roomsType["3"]=Pictionnary
 let rooms = [];
 let roomsType = [];
-
-
-
 
 
 function newLetter() {
@@ -184,6 +182,7 @@ io.on('connection', (client) => {
         resetTimer(value, room);
     });
 
+
     client.on('leave', function (data) {
         var name = data.user;
         var room = data.room;
@@ -206,7 +205,6 @@ io.on('connection', (client) => {
         }
     });
 
-
     client.on('start-game', function (room) {
         lines[room] = [];
         io.emit("cleared", room);
@@ -221,15 +219,18 @@ io.on('connection', (client) => {
         resetTimer(10, room);
     });
 
-    client.on('startPetitBac', function (room){
+
+    client.on("start-game-pb", function (room) {
         let players = rooms[room];
         players.forEach((player) => {
             score[player] = 0;
         });
         let letter = newLetter();
-        console.log('startPetitBac', {letter: letter, room : room});
-        io.emit('startPetitBac', {letter: letter, room : room});
+        let firstplayer = Math.floor(Math.random() * players.length);
+        console.log('start-PetitBac', {player: players[firstplayer], letter: letter, room : room});
+        io.emit('start-PetitBac', {player: players[firstplayer],letter: letter, room : room});
     });
+
 
     client.on('win', function (data) {
         let winner = data.player;
@@ -271,6 +272,7 @@ io.on('connection', (client) => {
         console.log("game-stopped", {player: playerWhoLeft, room: room});
         io.emit("game-stopped", {player: playerWhoLeft, room: room});
     });
+
 });
 
 
