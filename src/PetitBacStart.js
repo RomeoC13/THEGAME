@@ -134,7 +134,7 @@ class PetitBacStart extends React.Component {
             </div>
 
         }
-        else return <div>
+        else return <div class="game in" id="petitbac">
             <div id="players-list">
                 <h4>Players online in room {this.props.room} </h4>
                 <p> {names} </p>
