@@ -58,11 +58,6 @@ let wordcount;
 
 
 
-//DEMINEUR USAGE :
-
-
-
-
 //GENERAL APP USAGE :
 let onlineCount = 0;
 let users = [];
