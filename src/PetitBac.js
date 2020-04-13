@@ -11,7 +11,7 @@ class PetitBac extends React.Component {
             names: [], info: "", scores: [],
             currentState : "",
             Names: [], City: [], Country: [],
-            Animal: [], Food: [], Object: [],
+            Animal: [], Food: [], Objects: [],
             Job: [], Movie: [], Song: [],
             name :'', city :'', country:'',
             animal:'', food :'', object: '',
@@ -44,95 +44,197 @@ class PetitBac extends React.Component {
         this.SongAlreadyToken = this.SongAlreadyToken.bind(this);
     }
 
-
     start() {
-        alert(this.state.city)
+        //TODO : AJOUTER LES BONS MOTS DANS LES TABLEAUX AVANT DE CHECK POUR LES AUTRES CLIENTS
+        this.checkIfNameIsValid();
+        this.checkIfCityIsValid();
+        this.checkIfCountryIsValid();
+        this.checkIfAnimalIsValid();
+        this.checkIfFoodIsValid();
+        this.checkIfObjectIsValid();
+        this.checkIfMovieIsValid();
+        this.checkIfSongIsValid();
+        this.checkIfJobIsValid();
+    }
+
+    checkIfInputStartsWithTheCorrectLetter(input){
+        return input.startsWith(this.props.letter);
     }
 
 
+    checkIfNameIsValid(){
+        let score =0;
+        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.name)){
+            if(this.NamesAlreadyToken() === false){
+                score++;
+            }
+        }
+        return score;
+    }
 
-    NamesAlreadyToken(name) {
+
+    checkIfCityIsValid(){
+        let score =0;
+        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.city)){
+            if(this.CityAlreadyToken() === false){
+                score++;
+            }
+        }
+        return score;
+    }
+
+    checkIfCountryIsValid(){
+        let score =0;
+        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.country)){
+            if(this.CountryAlreadyToken() === false){
+                score++;
+            }
+        }
+        return score;
+    }
+
+    checkIfAnimalIsValid(){
+        let score =0;
+        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.animal)){
+            if(this.AnimalAlreadyToken() === false){
+                score++;
+            }
+        }
+        return score;
+    }
+
+    checkIfFoodIsValid(){
+        let score =0;
+        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.food)){
+            if(this.FoodAlreadyToken() === false){
+                score++;
+            }
+        }
+        return score;
+    }
+
+    checkIfObjectIsValid(){
+        let score =0;
+        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.object)){
+            if(this.ObjectAlreadyToken() === false){
+                score++;
+            }
+        }
+        return score;
+    }
+
+    checkIfMovieIsValid(){
+        let score =0;
+        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.movie)){
+            if(this.MovieAlreadyToken() === false){
+                score++;
+            }
+        }
+        return score;
+    }
+
+    checkIfSongIsValid(){
+        let score =0;
+        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.song)){
+            if(this.SongAlreadyToken() === false){
+                score++;
+            }
+        }
+        return score;
+    }
+
+    checkIfJobIsValid(){
+        let score =0;
+        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.job)){
+            if(this.JobAlreadyToken() === false){
+                score++;
+            }
+        }
+        return score;
+    }
+
+    NamesAlreadyToken() {
         let Names = this.state.Names.values();
         for (const value of Names) {
-            if (value.toString() === name)
+            if (value.toString() === this.state.name)
                 return true;
         }
         return false;
     }
 
-    CityAlreadyToken(city) {
+    CityAlreadyToken() {
         let City = this.state.City.values();
         for (const value of City) {
             for (let i = 0; i < value.length; i++) {
-                if (value[i] === city)
+                if (value[i] === this.state.city)
                     return true;
             }
         }
         return false;
     }
 
-    CountryAlreadyToken(country) {
+    CountryAlreadyToken() {
         let Country = this.state.Country.values();
         for (const value of Country) {
-            if (value.toString() === country)
+            if (value.toString() === this.state.country)
                 return true;
         }
         return false;
     }
 
-    AnimalAlreadyToken(animal) {
+    AnimalAlreadyToken() {
         let Animal = this.state.Animal.values();
         for (const value of Animal) {
             for (let i = 0; i < value.length; i++) {
-                if (value[i] === animal)
+                if (value[i] === this.state.animal)
                     return true;
             }
         }
         return false;
     }
 
-    FoodAlreadyToken(food) {
+    FoodAlreadyToken() {
         let Food = this.state.Food.values();
         for (const value of Food) {
-            if (value.toString() === food)
+            if (value.toString() === this.state.food)
                 return true;
         }
         return false;
     }
 
-    ObjectAlreadyToken(object) {
-        let Object = this.state.Object.values();
+    ObjectAlreadyToken() {
+        let Object = this.state.Objects.values();
         for (const value of Object) {
             for (let i = 0; i < value.length; i++) {
-                if (value[i] === object)
+                if (value[i] === this.state.object)
                     return true;
             }
         }
         return false;
     }
 
-    JobAlreadyToken(job) {
+    JobAlreadyToken() {
         let Job = this.state.Job.values();
         for (const value of Job) {
-            if (value.toString() === job)
+            if (value.toString() === this.state.job)
                 return true;
         }
         return false;
     }
 
-    MovieAlreadyToken(movie) {
+    MovieAlreadyToken() {
         let Movie = this.state.Movie.values();
         for (const value of Movie) {
-            if (value.toString() === movie)
+            if (value.toString() === this.state.movie)
                 return true;
         }
         return false;
     }
 
-    SongAlreadyToken(song) {
+    SongAlreadyToken() {
         let Song = this.state.Song.values();
         for (const value of Song) {
-            if (value.toString() === song)
+            if (value.toString() === this.state.song)
                 return true;
         }
         return false;
@@ -167,7 +269,6 @@ class PetitBac extends React.Component {
     setSong(song) {
         this.setState({song: song})
     }
-
 
     render() {
         return <div>

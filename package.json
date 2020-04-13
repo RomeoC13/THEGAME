@@ -22,6 +22,7 @@
     "node": "12.16.1"
   },
   "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node server.js",
     "client": "react-scripts start",
     "build": "react-scripts build",

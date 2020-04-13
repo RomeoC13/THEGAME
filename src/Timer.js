@@ -15,7 +15,6 @@ class Timer extends React.Component {
     }
 
     updateTime = (data) => {
-        console.log("TEEEST");
         this.setState({countdown: data.countdown});
         if(this.state.countdown === +this.props.seconds){
             let timeleft=document.getElementById("time-left");
