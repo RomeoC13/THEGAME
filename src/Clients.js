@@ -34,7 +34,7 @@ class PictionaryClient {
     }
 
     userLeave(user,room) {
-        socket.emit('leave', {user: user,room: room})
+        socket.emit('leave', {user: user,room: room,type : "Pictionary"})
     }
 
     print(msg) {
@@ -146,11 +146,42 @@ class PetitBacClient{
     }
 
     userLeave(user,room) {
-        socket.emit('leave', {user: user,room: room})
+        socket.emit('leave', {user: user,room: room,type : "Petit Bac"})
     }
-
-
 
 }
 
-export {AppClient,PictionaryClient,ChatClient,TimerClient,GameClient,PetitBacClient}
+class DemineurClient {
+    emitUser(user,room){
+        socket.emit('join',{user:user,room:room,type:"Demineur"})
+    }
+
+
+    updateUsers(op,room) {
+        socket.on('update-names', function (data) {
+            op(data[room])
+        });
+    }
+
+    userLeave(user,room) {
+        socket.emit('leave', {user: user,room: room,type:"Demineur"})
+    }
+
+    syncGrid(op,room){
+        socket.on('sync-grid',function(data){
+            console.log("SYNC-GRID")
+            console.log(data);
+            op(data[room])
+        })
+    }
+
+    emitGrid(grid,room){
+        socket.emit('update-grid',{grid : grid,room :room})
+    }
+
+    createGrid(grid,room){
+        socket.emit('create-grid',{grid: grid,room: room});
+    }
+}
+
+export {AppClient,PictionaryClient,ChatClient,TimerClient,GameClient,PetitBacClient,DemineurClient}

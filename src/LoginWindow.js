@@ -14,6 +14,7 @@ class LoginWindow extends React.Component {
             <select id="game-select" onChange={this.props.onGameChange}>
                 <option value="Pictionary">Pictionary</option>
                 <option value="Petit Bac">Petit Bac</option>
+                <option value="Demineur">Demieur</option>
             </select> <br/>
             <button onClick={this.props.onLogin}>Enter</button>
         </div>

@@ -222,6 +222,25 @@ body.white {
     color: var(--mycolor1);
 }
 
+.demineurGrid {
+    margin: 0 auto;
+}
+
+.DemineurButton{
+    margin: 2px !important;
+    height: 40px !important;
+    width: 40px !important;
+}
+
+.DemineurButton.showed{
+    background: var(--mycolor4) !important;
+}
+
+.DemineurButton.notShowed{
+    background: var(--mycolor2) !important;
+}
+
+
 body.dark {
     font-family: Muli, serif;
     text-align: center;

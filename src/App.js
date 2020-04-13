@@ -6,6 +6,7 @@ import {PetitBacStart} from "./PetitBacStart";
 import {Room} from "./Room";
 import {AppClient} from "./Clients";
 import {Helmet} from 'react-helmet';
+import {Demineur} from "./Demineur";
 
 
 class App extends React.Component {
@@ -77,6 +78,8 @@ class App extends React.Component {
     }
 
     startChat() {
+        console.log(this.state.game);
+        console.log(this.state.room);
         if (this.state.name === undefined || this.state.name === "") {
             this.warningMessage = "Please enter a valid name";
             this.forceUpdate();
@@ -133,7 +136,7 @@ class App extends React.Component {
     joinRoom(room) {
         this.setState({room: room});
         this.setState({game: this.state.roomType[room]});
-        this.startChat();
+        setTimeout(()=>this.startChat());
     }
 
     darkWhite = () => {
@@ -170,7 +173,9 @@ class App extends React.Component {
             title = "Room " + this.state.room + ": " + this.state.game;
             if (this.state.game === "Pictionary") {
                 content = <Pictionary statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
-            } else {
+            } else if(this.state.game === "Demineur") {
+                content= <Demineur height="5" width="5" bombs="4" close={this.closeChat} room={this.state.room} statename={this.state.name}/>
+            }else{
                 content =
                     <PetitBacStart statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
             }
