@@ -146,13 +146,13 @@ class App extends React.Component {
         let body;
         let size;
         if (this.state.current === "login") {
-            size="big";
+            size = "big";
             title = 'Welcome G@MES';
             let rooms = this.state.roomList.map((room) => <Room key={this.state.roomList.indexOf(room)}
                                                                 joinRoom={this.joinRoom}
                                                                 roomName={this.state.roomList.indexOf(room)}
                                                                 type={this.state.roomType[this.state.roomList.indexOf(room)]}
-                                                                userList={room}/>);
+                                                                userList={room} />);
             let orJoinaRoom = "";
             if (this.state.roomList.length !== 0) {
                 orJoinaRoom = <h4>or join a room</h4>;
@@ -165,7 +165,7 @@ class App extends React.Component {
                 {rooms}
             </div>;
         } else {
-            size="little";
+            size = "little";
             this.setGame({logoSize: "big"})
             title = "Room " + this.state.room + ": " + this.state.game;
             if (this.state.game === "Pictionary") {
@@ -183,6 +183,7 @@ class App extends React.Component {
         return <>
             <Helmet>
                 <title>{title}</title>
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli"/>
                 {body}
             </Helmet>
             <button onClick={this.darkWhite}/>

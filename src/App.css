@@ -80,15 +80,6 @@ button {
     }
 }
 
-.moving {
-
-}
-
-* {
-    font-family: Georgia, serif;
-    text-align: center;
-}
-
 #chat {
     color: var(--mycolor1) !important;
     background-color: var(--mycolor4);
@@ -226,13 +217,13 @@ discret {
 
 body.white {
     background: var(--mycolor7);
-    font-family: Georgia, serif;
+    font-family: Muli, serif;
     text-align: center;
     color: var(--mycolor1);
 }
 
 body.dark {
-    font-family: Georgia, serif;
+    font-family: Muli, serif;
     text-align: center;
     background: var(--mycolor1);
     color: var(--mycolor7);
@@ -245,7 +236,7 @@ body.dark {
 
 h1 {
     /*font-size: 72px;*/
-    background: linear-gradient(to left, var(--mycolor1),var(--mycolor3),var(--mycolor4), var(--mycolor7));
+    background: linear-gradient(to left, var(--mycolor1), var(--mycolor3), var(--mycolor4), var(--mycolor7));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -268,11 +259,12 @@ h1 {
     }
 }
 
-h1.little{
+h1.little {
     animation: getLittle 0.5s;
     font-size: 2em;
 }
-h1.big{
+
+h1.big {
     animation: getBig 0.5s;
     font-size: 5em;
 }
