@@ -11,7 +11,16 @@ import {Helmet} from 'react-helmet';
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {current: "login", room: '0', game: 'Pictionary', userCount: 0, roomList: [], roomTypes: [],darkMode:false};
+        this.state = {
+            current: "login",
+            room: '0',
+            game: 'Pictionary',
+            userCount: 0,
+            roomList: [],
+            roomTypes: [],
+            darkMode: false,
+            logoSize: "big"
+        };
         this.closeChat = this.closeChat.bind(this);
         this.startChat = this.startChat.bind(this);
         this.setName = this.setName.bind(this);
@@ -26,7 +35,6 @@ class App extends React.Component {
     }
 
     componentWillUnmount() {
-
     }
 
     componentDidMount() {
@@ -59,6 +67,7 @@ class App extends React.Component {
 
     closeChat() {
         this.setState({current: "login"});
+        document.getElementById("welcomepage").classList.add("in");
         setTimeout(() => {
             this.ac.askUpdateCount();
             this.ac.askUpdateRooms();
@@ -78,7 +87,11 @@ class App extends React.Component {
             this.warningMessage = "This room is busy with an other game please choose another ";
             this.forceUpdate();
         } else {
-            this.setState({current: "game"})
+            document.getElementById("welcomepage").classList.add("out");
+            setTimeout(() => {
+                this.setState({logoSize: "little"})
+                this.setState({current: "game"})
+            }, 400)
         }
 
     }
@@ -112,26 +125,29 @@ class App extends React.Component {
     }
 
     setGame(game) {
-        console.log(game.target.value);
-        this.setState({game: game.target.value})
+        if (game.target !== undefined) {
+            this.setState({game: game.target.value})
+        }
     }
 
     joinRoom(room) {
         this.setState({room: room});
-        this.setState({game : this.state.roomType[room]});
+        this.setState({game: this.state.roomType[room]});
         this.startChat();
     }
 
-    darkWhite=()=>{
-        this.setState({darkMode:!this.state.darkMode})
+    darkWhite = () => {
+        this.setState({darkMode: !this.state.darkMode})
     }
 
     render() {
         let content;
         let title;
         let body;
+        let size;
         if (this.state.current === "login") {
-            title='Welcome to THEGAME';
+            size="big";
+            title = 'Welcome G@MES';
             let rooms = this.state.roomList.map((room) => <Room key={this.state.roomList.indexOf(room)}
                                                                 joinRoom={this.joinRoom}
                                                                 roomName={this.state.roomList.indexOf(room)}
@@ -141,26 +157,28 @@ class App extends React.Component {
             if (this.state.roomList.length !== 0) {
                 orJoinaRoom = <h4>or join a room</h4>;
             }
-            content = <div>
+            content = <div id="welcomepage" class="main">
                 <h4>Currently playing : {this.state.userCount} players</h4>
                 <LoginWindow warning={this.warningMessage} onNameChange={this.setName} onLogin={this.startChat}
                              onRoomChange={this.setRoom} onGameChange={this.setGame}/>
                 {orJoinaRoom}
                 {rooms}
             </div>;
-        } else if (this.state.game === "Pictionary") {
-            title ="Room "+this.state.room+": Pictionary";
-            content = <Pictionary statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
+        } else {
+            size="little";
+            this.setGame({logoSize: "big"})
+            title = "Room " + this.state.room + ": " + this.state.game;
+            if (this.state.game === "Pictionary") {
+                content = <Pictionary statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
+            } else {
+                content =
+                    <PetitBacStart statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
+            }
         }
-        else {
-            title ="Room "+ this.state.room +": Petit Bac ";
-            content = <PetitBacStart statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
-        }
-        if(!this.state.darkMode){
-            body=<body/>;
-        }
-        else {
-            body=<body class="dark"/>
+        if (!this.state.darkMode) {
+            body = <body class="white"/>;
+        } else {
+            body = <body class="dark"/>
         }
         return <>
             <Helmet>
@@ -168,6 +186,7 @@ class App extends React.Component {
                 {body}
             </Helmet>
             <button onClick={this.darkWhite}/>
+            <h1 class={size}>G@mes</h1>
             {content}
         </>
     }

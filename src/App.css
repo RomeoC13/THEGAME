@@ -1,3 +1,13 @@
+:root {
+    --seconds: 10;
+    --mycolor1: #0b132b;
+    --mycolor2: #1C2541;
+    --mycolor3: #3A506B;
+    --mycolor4: #5b88c0;
+    --mycolor5: #6fffe9;
+    --mycolor7: rgba(223, 245, 243, 0.99);
+}
+
 
 form {
     margin: 0 auto;
@@ -16,8 +26,8 @@ h1 {
 
 button {
     border: none;
-    background-color: black;
-    color: white;
+    background-color: var(--mycolor1);
+    color: var(--mycolor7);
     font-size: 16px;
     padding: 9px 15px;
     text-decoration: none;
@@ -25,7 +35,7 @@ button {
 }
 
 #greenButton {
-    background-color: green!important;
+    background-color: green !important;
 }
 
 #redButton {
@@ -36,20 +46,63 @@ button {
     background-color: blue !important;
 }
 
+#time-left {
+    background: darkblue;
+    min-width: 1px;
+    min-height: 5px;
+    max-width: 603px;
+    margin: 0 auto;
+    width: 1px;
+    /*width : var(--timeleft);*/
+    /*animation:  time 10s;*/
+}
+
+.animated {
+    animation: time 10s;
+}
+
+@keyframes time {
+    0% {
+        width: 603px;
+    }
+    60% {
+        background: darkblue
+    }
+    70% {
+        background: orange
+    }
+    80% {
+        background: red
+    }
+    100% {
+        width: 0px;
+        background: red
+    }
+}
+
+.moving {
+
+}
+
 * {
     font-family: Georgia, serif;
     text-align: center;
 }
 
 #chat {
-    background-color: gray;
+    color: var(--mycolor1) !important;
+    background-color: var(--mycolor4);
+    position: absolute;
+    right: 100px;
+    top: 40px;
     float: right;
-    border: black;
+    border: var(--mycolor1);
+    height: 60%;
 
 }
 
 #messages {
-    height: 200px;
+    height: 350px;
     overflow-y: scroll;
 }
 
@@ -73,7 +126,7 @@ canvas {
 
 player {
 
- }
+}
 
 #players-list {
 
@@ -83,22 +136,144 @@ discret {
     font-size: smaller;
 }
 
-#nochat {
-    margin-right: 250px;
+#pictionary {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    /*animation: SlideOutRight 1s;*/
 }
 
-info {
+.game.in {
+    animation: SlideInLeft 0.5s;
+}
 
+.game.out {
+    animation: SlideOutRight 0.5s;
+}
+
+.main.in {
+    animation: SlideInRight 0.5s;
+}
+
+.main.out {
+    animation: SlideOutLeft 0.5s;
+}
+
+#petitbac {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+#welcomepage {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+@keyframes SlideInLeft {
+    0% {
+        /*transform: rotate(-45deg);*/
+        left: -2000px;
+        opacity: 0;
+    }
+    100% {
+        /*transform: rotate(0deg);*/
+        left: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes SlideOutRight {
+    0% {
+        /*transform: rotate(0deg);*/
+        left: 0;
+        opacity: 0;
+    }
+    100% {
+        /*transform: rotate(45deg);*/
+        left: -2000px;
+        opacity: 1;
+    }
+}
+
+@keyframes SlideInRight {
+    0% {
+        /*transform: rotate(45deg);*/
+        right: -2000px;
+        opacity: 0;
+    }
+    100% {
+        /*transform: rotate(0deg);*/
+        right: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes SlideOutLeft {
+    0% {
+        /*transform: rotate(0deg);*/
+        right: 0;
+        opacity: 0;
+    }
+    100% {
+        /*transform: rotate(45deg);*/
+        right: -2000px;
+        opacity: 1;
+    }
+
+}
+
+body.white {
+    background: var(--mycolor7);
+    font-family: Georgia, serif;
+    text-align: center;
+    color: var(--mycolor1);
 }
 
 body.dark {
     font-family: Georgia, serif;
     text-align: center;
-    background: black;
-    color: white;
+    background: var(--mycolor1);
+    color: var(--mycolor7);
 }
 
-.dark button{
-    background-color:white;
-    color: black;
+.dark button {
+    background-color: var(--mycolor7);
+    color: var(--mycolor1);
 }
+
+h1 {
+    /*font-size: 72px;*/
+    background: linear-gradient(to left, var(--mycolor1),var(--mycolor3),var(--mycolor4), var(--mycolor7));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes getLittle {
+    0% {
+        font-size: 5em
+    }
+    100% {
+        font-size: 2em
+    }
+}
+
+@keyframes getBig {
+    0% {
+        font-size: 2em
+    }
+    100% {
+        font-size: 5em
+    }
+}
+
+h1.little{
+    animation: getLittle 0.5s;
+    font-size: 2em;
+}
+h1.big{
+    animation: getBig 0.5s;
+    font-size: 5em;
+}
+

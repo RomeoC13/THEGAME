@@ -21,7 +21,7 @@ class Pictionary extends React.Component {
         this.timeIsUp = this.timeIsUp.bind(this);
         this.endGame = this.endGame.bind(this);
         this.leave = this.leave.bind(this);
-
+        this._loaded = false;
         this.pc = new PictionaryClient();
         this.game = new GameClient();
 
@@ -45,6 +45,8 @@ class Pictionary extends React.Component {
     };
 
     componentDidMount() {
+        this._loaded =true;
+        //document.getElementById("pictionary").classList.remove("in");
         this.pc.updateUsers(this.setNames, this.props.room);
         this.pc.emitUser(this.props.statename, this.props.room);
         this.setupBeforeUnloadListener(this.pc);
@@ -54,6 +56,8 @@ class Pictionary extends React.Component {
     }
 
     componentWillUnmount() {
+        document.getElementById("pictionary").classList.add("out");
+        this._loaded =false;
         this.pc.userLeave(this.props.statename);
     }
 
@@ -78,19 +82,23 @@ class Pictionary extends React.Component {
     }
 
     endGame(player) {
-        this.setState({gameRunning: false});
-        this.setState({info: player + " as left ! The party is over"})
+        if(this._loaded){
+            this.setState({gameRunning: false});
+            this.setState({info: player + " as left ! The party is over"})
+        }
     }
 
     firstround(data) {
         //console.log("firstround");
-        var score = [];
+        let score = [];
         this.state.names.forEach((name) => {
             score[name] = 0;
         });
-        this.setState({scores: score});
-        this.setState({gameRunning: true});
-        this.nextRound(data);
+        if(this._loaded){
+            this.setState({scores: score});
+            this.setState({gameRunning: true});
+            this.nextRound(data);
+        }
     }
 
     nextRound(data) {
@@ -99,12 +107,14 @@ class Pictionary extends React.Component {
             score[data.scoreToUpdate]++;
             this.setState({scores: score})
         }
-        this.setState({currentDrawer: data.player});
-        this.setState({currentWord: data.word});
-        if (this.props.statename === data.player) {
-            this.setState({info: "Your turn ! you have to draw : " + data.word})
-        } else {
-            this.setState({info: "Drawer is " + data.player})
+        if(this._loaded){
+            this.setState({currentDrawer: data.player});
+            this.setState({currentWord: data.word});
+            if (this.props.statename === data.player) {
+                this.setState({info: "Your turn ! you have to draw : " + data.word})
+            } else {
+                this.setState({info: "Drawer is " + data.player})
+            }
         }
     }
 
@@ -120,12 +130,15 @@ class Pictionary extends React.Component {
     }
 
     leave() {
-        this.props.closeChat();
-        this.pc.userLeave(this.props.statename, this.props.room);
-        if (this.state.gameRunning) {
-            //console.log("LEAVING");
-            this.game.stopGame(this.props.statename, this.props.room);
-        }
+        document.getElementById("pictionary").classList.add("out");
+        setTimeout(()=> {
+            this.props.closeChat();
+            this.pc.userLeave(this.props.statename, this.props.room);
+            if (this.state.gameRunning) {
+                //console.log("LEAVING");
+                this.game.stopGame(this.props.statename, this.props.room);
+            }
+        },400)
     }
 
     render() {
@@ -134,18 +147,21 @@ class Pictionary extends React.Component {
             names = this.state.names.map((m) => <player key={m}> {m} </player>);
             this.button = <button onClick={this.startGame}>Start Game !</button>;
             this.timer = "";
+            this.timerleft="";
         } else {
-            this.timer = <Timer seconds={'100'} room={this.props.room} timeIsUp={this.timeIsUp}/>;
+            this.timer = <Timer seconds={'10'} room={this.props.room} timeIsUp={this.timeIsUp}/>;
             this.button = "";
             names = this.state.names.map((m) => <player key={m}> {m} score {this.state.scores[m]} </player>);
+            this.timerleft=<div id="time-left" />;
         }
         return (
             <>
-                <ChatWindow name={this.props.statename} onQuit={this.leave} msg={this.sendMsg}
-                            room={this.props.room}/>
-                <div id="nochat">
+                <div id="pictionary" class="game in">
+                    <ChatWindow name={this.props.statename} onQuit={this.leave} msg={this.sendMsg}
+                                room={this.props.room}/>
                     {this.timer}
                     <info>{this.state.info}</info>
+                    {this.timerleft}
                     <Canvas room={this.props.room} drawer={this.state.currentDrawer} name={this.props.statename}/>
                     {this.button}
                     <div id="players-list">

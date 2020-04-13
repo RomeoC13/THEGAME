@@ -35,7 +35,7 @@ class ChatWindow extends React.Component {
     }
 
     render() {
-        const messages = this.state.messages.map((m) => <p key={this.state.messages.indexOf(m)}> {m.name}: {m.text} </p>);
+        const messages = this.state.messages.map((m) => <p key={this.state.messages.indexOf(m)}> <b> {m.name} </b>: {m.text} </p>);
         return (
             <div id="chat">
                 <div id="topchat">

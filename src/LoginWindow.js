@@ -4,7 +4,6 @@ import {InputField} from "./InputField";
 class LoginWindow extends React.Component {
     render() {
         return <div>
-            <h1>Welcome to <strong id ="name">THE GAME</strong></h1> <br/>
             <strong>{this.props.warning}</strong> <br/>
             <label>Please enter your alias </label> <br/>
             <InputField onChange={this.props.onNameChange} onSubmit={this.props.onLogin} autoFocus required/> <br/>
