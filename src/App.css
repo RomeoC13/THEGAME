@@ -101,6 +101,24 @@ button {
     border-style: solid;
 }
 
+#gameTable{
+    margin: 10px auto;
+}
+
+#gameTable td{
+    max-width: 200px;
+    padding-left: 10px;
+}
+
+#roomTable{
+    margin: 0 auto;
+}
+
+#roomTable td{
+    width: fit-content;
+    padding-left: 10px;
+}
+
 #Room {
     border-style: solid;
     border-width: thin;
@@ -119,11 +137,12 @@ player {
 
 }
 
+
 #players-list {
 
 }
 
-discret {
+.discret {
     font-size: smaller;
 }
 
@@ -230,6 +249,7 @@ body.white {
     margin: 2px !important;
     height: 40px !important;
     width: 40px !important;
+    font-weight: bold !important;
 }
 
 .DemineurButton.showed{

@@ -10,7 +10,7 @@ class Demineur extends React.Component {
         this.bombcount = this.props.bombs;
         this.show = this.show.bind(this);
         this.dc = new DemineurClient();
-        this.state = {names: [], isRunning: true}
+        this.state = {names: [], isRunning: true,info:""}
     }
 
     gennerateGrid = () => {
@@ -68,6 +68,7 @@ class Demineur extends React.Component {
 
 
     reset = () => {
+        this.setState({info : ""})
         this.gennerateGrid();
         this.bombcount = this.props.bombs;
         this.setState({isRunning: true})
@@ -133,8 +134,10 @@ class Demineur extends React.Component {
         if (this.grid[i][j].value === "*") {
             this.bombcount--;
             this.loose();
+
+        }else{
+            this.testWin();
         }
-        this.testWin();
         if (emit) {
             this.dc.emitGrid(this.grid, this.props.room);
         }
@@ -176,16 +179,27 @@ class Demineur extends React.Component {
         this.win();
     }
     win = () => {
-        alert("Win");
-        this.revealAll();
+        this.setState({info :"You won ! congrats !"})
         this.setState({isRunning: false});
+        //alert("Win");
+        this.revealAll();
     }
 
     loose = () => {
-        alert("Loose");
-        this.revealAll();
+        this.setState({info :"You loose !"})
         this.setState({isRunning: false})
+        //alert("Loose");
+        this.revealAll();
     }
+
+    leave = ()=>{
+        document.getElementById("demineur").classList.add("out");
+        setTimeout(()=> {
+            this.dc.userLeave(this.props.statename, this.props.room);
+            this.props.close();
+        },400);
+    }
+
     render = () => {
         let names = this.state.names.map((m) => <player key={m}> {m} </player>);
         let toReturn = this.grid.map((item, i) => {
@@ -196,7 +210,8 @@ class Demineur extends React.Component {
             })
             return <tr>{entry}</tr>;
         });
-        return <>
+        return <div id="demineur" class="game in">
+            <p>{this.state.info} </p>
             Bomb remaning : {this.bombcount}
             <table class="demineurGrid">
                 <tbody>
@@ -204,11 +219,12 @@ class Demineur extends React.Component {
                 </tbody>
             </table>
             <button onClick={this.reset}>Reset</button>
+            <button onClick={this.leave}>Quit</button>
             <div id="players-list">
                 <h4>Players online in room {this.props.room} </h4>
                 <p> {names} </p>
             </div>
-        </>;
+        </div>;
     }
 
 }
