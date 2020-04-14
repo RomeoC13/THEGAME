@@ -8,7 +8,9 @@ class PetitBac extends React.Component {
         super(props);
 
         this.state = {
-            names: [], info: "", scores: [],
+            names: [],
+            info: "",
+            scores: [],
             currentState : "",
             Names: [], City: [], Country: [],
             Animal: [], Food: [], Objects: [],
@@ -44,120 +46,129 @@ class PetitBac extends React.Component {
         this.SongAlreadyToken = this.SongAlreadyToken.bind(this);
     }
 
-    start() {
-        //TODO : AJOUTER LES BONS MOTS DANS LES TABLEAUX AVANT DE CHECK POUR LES AUTRES CLIENTS
-        this.checkIfNameIsValid();
-        this.checkIfCityIsValid();
-        this.checkIfCountryIsValid();
-        this.checkIfAnimalIsValid();
-        this.checkIfFoodIsValid();
-        this.checkIfObjectIsValid();
-        this.checkIfMovieIsValid();
-        this.checkIfSongIsValid();
-        this.checkIfJobIsValid();
+    start(data) {
+        console.log("test");
+        this.checkIfNameIsValid(data);
+        this.checkIfCityIsValid(data);
+        this.checkIfCountryIsValid(data);
+        this.checkIfAnimalIsValid(data);
+        this.checkIfFoodIsValid(data);
+        this.checkIfObjectIsValid(data);
+        this.checkIfMovieIsValid(data);
+        this.checkIfSongIsValid(data);
+        this.checkIfJobIsValid(data);
+
     }
 
     checkIfInputStartsWithTheCorrectLetter(input){
         return input.startsWith(this.props.letter);
     }
 
-
     checkIfNameIsValid(){
-        let score =0;
         if(this.checkIfInputStartsWithTheCorrectLetter(this.state.name)){
             if(this.NamesAlreadyToken() === false){
-                score++;
+                this.state.Names.push(this.state.name)
+                    var score = this.state.scores[this.props.name];
+                    score[this.props.name]++;
+                    this.setState({scores: score})
+                }
             }
         }
-        return score;
-    }
+
 
 
     checkIfCityIsValid(){
-        let score =0;
         if(this.checkIfInputStartsWithTheCorrectLetter(this.state.city)){
             if(this.CityAlreadyToken() === false){
-                score++;
+                this.state.City.push(this.state.city)
+                var score = this.state.scores[this.props.name];
+                score[this.props.name]++;
+                this.setState({scores: score})
             }
         }
-        return score;
     }
 
     checkIfCountryIsValid(){
-        let score =0;
         if(this.checkIfInputStartsWithTheCorrectLetter(this.state.country)){
             if(this.CountryAlreadyToken() === false){
-                score++;
+                this.state.Country.push(this.state.country)
+                var score = this.state.scores[this.props.name];
+                score[this.props.name]++;
+                this.setState({scores: score})
             }
         }
-        return score;
     }
 
     checkIfAnimalIsValid(){
-        let score =0;
         if(this.checkIfInputStartsWithTheCorrectLetter(this.state.animal)){
             if(this.AnimalAlreadyToken() === false){
-                score++;
+                this.state.Animal.push(this.state.animal)
+                var score = this.state.scores[this.props.name];
+                score[this.props.name]++;
+                this.setState({scores: score})
             }
         }
-        return score;
     }
 
     checkIfFoodIsValid(){
-        let score =0;
         if(this.checkIfInputStartsWithTheCorrectLetter(this.state.food)){
             if(this.FoodAlreadyToken() === false){
-                score++;
+                this.state.Food.push(this.state.food)
+                var score = this.state.scores[this.props.name];
+                score[this.props.name]++;
+                this.setState({scores: score})
             }
         }
-        return score;
     }
 
-    checkIfObjectIsValid(){
-        let score =0;
+    checkIfObjectIsValid(data){
         if(this.checkIfInputStartsWithTheCorrectLetter(this.state.object)){
             if(this.ObjectAlreadyToken() === false){
-                score++;
+                this.state.Objects.push(this.state.object)
+                var score = this.state.scores[this.props.name];
+                score[this.props.name]++;
+                this.setState({scores: score})
             }
         }
-        return score;
     }
 
-    checkIfMovieIsValid(){
-        let score =0;
+    checkIfMovieIsValid(data){
         if(this.checkIfInputStartsWithTheCorrectLetter(this.state.movie)){
             if(this.MovieAlreadyToken() === false){
-                score++;
+                var score = this.state.scores[this.props.name];
+                score[this.props.name]++;
+                this.setState({scores: score})
             }
         }
-        return score;
     }
 
-    checkIfSongIsValid(){
-        let score =0;
+    checkIfSongIsValid(data){
         if(this.checkIfInputStartsWithTheCorrectLetter(this.state.song)){
             if(this.SongAlreadyToken() === false){
-                score++;
+                var score = this.state.scores[this.props.name];
+                score[this.props.name]++;
+                this.setState({scores: score})
             }
         }
-        return score;
     }
 
-    checkIfJobIsValid(){
-        let score =0;
+    checkIfJobIsValid(data){
         if(this.checkIfInputStartsWithTheCorrectLetter(this.state.job)){
             if(this.JobAlreadyToken() === false){
-                score++;
+                var score = this.state.scores[this.props.name];
+                score[this.props.name]++;
+                this.setState({scores: score})
             }
         }
-        return score;
     }
 
     NamesAlreadyToken() {
         let Names = this.state.Names.values();
         for (const value of Names) {
-            if (value.toString() === this.state.name)
-                return true;
+            for (let i = 0; i < value.length; i++) {
+                if (value[i] === this.state.name)
+                    return true;
+            }
         }
         return false;
     }

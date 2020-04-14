@@ -150,7 +150,6 @@ class PetitBacClient{
     }
 
 
-
 }
 
 export {AppClient,PictionaryClient,ChatClient,TimerClient,GameClient,PetitBacClient}
