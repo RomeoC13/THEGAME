@@ -13,7 +13,7 @@ http.listen(port, () => console.log("Listening on port :", port));
 
 
 //PICTIONNARY USAGE :
-const messages = [{name: 'bot', text: 'Bienvenue ', room: "all"}];
+const messages = [{name: 'Bot', text: 'Bienvenue ', room: "all"}];
 
 //Every rooms as his own countdown, for example room "3" if created as his countdown in countdowns["3"]
 var countdowns = [];

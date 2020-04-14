@@ -1,8 +1,7 @@
 import {ChatWindow} from "./ChatWindow.js";
 import {Canvas} from "./Canvas.js";
 import {Timer} from "./Timer.js";
-import {PictionaryClient} from "./Clients";
-import {GameClient} from "./Clients";
+import {GameClient, PictionaryClient} from "./Clients";
 import React from "react";
 
 class Pictionary extends React.Component {
@@ -32,7 +31,6 @@ class Pictionary extends React.Component {
         //console.log(this.state.currentDrawer !== message.name);
         //console.log(this.state.gameRunning);
         if (this.state.currentWord === message.text && this.state.currentDrawer !== message.name && this.state.gameRunning) {
-            console.log("good  job");
             this.setState({info: "Good job, " + message.name + " ! The word was " + this.state.currentWord});
             if (this.props.statename === this.state.currentDrawer) {
                 setTimeout(() => this.game.asWin(message.name, this.state.currentDrawer, this.props.room), 2000);
@@ -151,7 +149,7 @@ class Pictionary extends React.Component {
         } else {
             this.timer = <Timer seconds={'10'} room={this.props.room} timeIsUp={this.timeIsUp}/>;
             this.button = "";
-            names = this.state.names.map((m) => <player key={m}> {m} score {this.state.scores[m]} </player>);
+            names = this.state.names.map((m) => <player key={m}> <li>{m} score {this.state.scores[m]} </li></player>);
             this.timerleft=<div id="time-left" />;
         }
         return (
