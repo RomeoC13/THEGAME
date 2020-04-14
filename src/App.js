@@ -6,6 +6,7 @@ import {PetitBacStart} from "./PetitBacStart";
 import {Room} from "./Room";
 import {AppClient} from "./Clients";
 import {Helmet} from 'react-helmet';
+import {Demineur} from "./Demineur";
 
 
 class App extends React.Component {
@@ -77,6 +78,8 @@ class App extends React.Component {
     }
 
     startChat() {
+        console.log(this.state.game);
+        console.log(this.state.room);
         if (this.state.name === undefined || this.state.name === "") {
             this.warningMessage = "Please enter a valid name";
             this.forceUpdate();
@@ -125,6 +128,7 @@ class App extends React.Component {
     }
 
     setGame(game) {
+        //console.log(game.target.value);
         if (game.target !== undefined) {
             this.setState({game: game.target.value})
         }
@@ -133,7 +137,7 @@ class App extends React.Component {
     joinRoom(room) {
         this.setState({room: room});
         this.setState({game: this.state.roomType[room]});
-        this.startChat();
+        setTimeout(() => this.startChat());
     }
 
     darkWhite = () => {
@@ -146,13 +150,13 @@ class App extends React.Component {
         let body;
         let size;
         if (this.state.current === "login") {
-            size="big";
+            size = "big";
             title = 'Welcome G@MES';
-            let rooms = this.state.roomList.map((room) => <Room key={this.state.roomList.indexOf(room)}
+            let rooms = this.state.roomList.map((room) => <td> <Room key={this.state.roomList.indexOf(room)}
                                                                 joinRoom={this.joinRoom}
                                                                 roomName={this.state.roomList.indexOf(room)}
                                                                 type={this.state.roomType[this.state.roomList.indexOf(room)]}
-                                                                userList={room}/>);
+                                                                userList={room}/> </td> );
             let orJoinaRoom = "";
             if (this.state.roomList.length !== 0) {
                 orJoinaRoom = <h4>or join a room</h4>;
@@ -162,14 +166,19 @@ class App extends React.Component {
                 <LoginWindow warning={this.warningMessage} onNameChange={this.setName} onLogin={this.startChat}
                              onRoomChange={this.setRoom} onGameChange={this.setGame}/>
                 {orJoinaRoom}
-                {rooms}
+                <table id="roomTable">
+                    {rooms}
+                </table>
             </div>;
         } else {
-            size="little";
+            size = "little";
             this.setGame({logoSize: "big"})
             title = "Room " + this.state.room + ": " + this.state.game;
             if (this.state.game === "Pictionary") {
                 content = <Pictionary statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
+            } else if (this.state.game === "Demineur") {
+                content = <Demineur height="5" width="5" bombs="4" close={this.closeChat} room={this.state.room}
+                                    statename={this.state.name}/>
             } else {
                 content =
                     <PetitBacStart statename={this.state.name} closeChat={this.closeChat} room={this.state.room}/>;
@@ -183,6 +192,7 @@ class App extends React.Component {
         return <>
             <Helmet>
                 <title>{title}</title>
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli"/>
                 {body}
             </Helmet>
             <button onClick={this.darkWhite}/>

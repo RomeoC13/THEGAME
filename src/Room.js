@@ -15,7 +15,9 @@ class Room extends React.Component {
         return <div id="Room">
             <u>Room {this.state.roomName} <br/> Game of {this.state.roomType} </u> <br/>
             {players} <br/>
-            <button onClick={() => this.props.joinRoom(this.state.roomName)}>Join them</button>
+            <button onClick={() => {
+                this.props.joinRoom(this.state.roomName);
+            }}>Join them</button>
         </div>;
     }
 }

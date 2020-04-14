@@ -45,7 +45,7 @@ var words = [
 ];
 
 //DEMINEUR USAGE :
-
+var grids=[];
 
 //PETIT BAC USAGE :
 const letterss = [{letter :'', room : "all"}];
@@ -93,9 +93,9 @@ io.on('connection', (client) => {
     //console.log("New connection");
 
     client.on("join", (data) => {
-        var name = data.user;
-        var room = data.room;
-        var type = data.type;
+        let name = data.user;
+        let room = data.room;
+        let type = data.type;
         if (typeof name != "string" || room === undefined) {
             client.disconnect();
             return;
@@ -179,14 +179,18 @@ io.on('connection', (client) => {
 
 
     client.on('leave', function (data) {
-        var name = data.user;
-        var room = data.room;
-        console.log("Joueur " + data.user + " a quitter " + data.room);
+        let name = data.user;
+        let room = data.room;
+        let type = data.type;
+        console.log("Joueur " + data.user + " a quitter " + data.room+ " de "+data.type);
 
         if (rooms.hasOwnProperty(room)) {
             var indexName = rooms[room].indexOf(name);
             rooms[room].splice(indexName, 1);
             if (rooms[room].length === 0) {
+                if(type ==="Demineur"){
+                    delete grids[room];
+                }
                 delete roomsType[room];
                 var i = rooms.indexOf(room);
                 rooms.splice(i, 1);
@@ -214,6 +218,25 @@ io.on('connection', (client) => {
         resetTimer(10, room);
     });
 
+    client.on("update-grid",function (data) {
+        let room= data.room;
+        let grid= data.grid;
+        //console.log("GRID UPDATED")
+        grids[room]=grid;
+        console.log("sync-grid")
+        io.emit("sync-grid",grids);
+    })
+
+    client.on("create-grid",function (data) {
+        let room= data.room;
+        let grid= data.grid;
+        if(!grids.hasOwnProperty(room)){
+            //console.log("GRID CREATED")
+            grids[room]=grid;
+        }
+        console.log("sync-grid")
+        io.emit("sync-grid",grids);
+    })
 
     client.on("start-game-pb", function (room) {
         let players = rooms[room];
