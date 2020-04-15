@@ -28,8 +28,6 @@ class PetitBac extends React.Component {
         this.Song = [];
         this.client = new PetitBacClient();
         this.game = new PictionaryClient();
-        this.warningMessage ="";
-        this.game = new GameClient();
         this.warningMessage = "";
 
         this.start = this.start.bind(this);
