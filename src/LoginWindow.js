@@ -16,7 +16,7 @@ class LoginWindow extends React.Component {
                 <table id="gameTable">
                     <tr>
                         <td><input type="radio" id="gameChoice1" name="game" value="Pictionary" defaultChecked/></td>
-                        <td><input type="radio" id="gameChoice1" name="game" value="PetitBac"/></td>
+                        <td><input type="radio" id="gameChoice1" name="game" value="Petit Bac"/></td>
                         <td><input type="radio" id="gameChoice1" name="game" value="Demineur"/></td>
                     </tr>
                     <tr>
