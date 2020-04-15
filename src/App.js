@@ -86,10 +86,10 @@ class App extends React.Component {
         } else if (this.nameAlreadyToken(this.state.name)) {
             this.warningMessage = "This name is already token choose another";
             this.forceUpdate();
-        } else if (this.roomAlreadyToken(this.state.room) && this.state.roomType[this.state.room] !== this.state.game) {
+        } /*else if (this.roomAlreadyToken(this.state.room) && this.state.roomType[this.state.room] !== this.state.game) {
             this.warningMessage = "This room is busy with an other game please choose another ";
             this.forceUpdate();
-        } else {
+        } */ else {
             document.getElementById("welcomepage").classList.add("out");
             setTimeout(() => {
                 this.setState({logoSize: "little"})

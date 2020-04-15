@@ -149,6 +149,20 @@ class PetitBacClient{
         socket.emit('leave', {user: user,room: room,type : "Petit Bac"})
     }
 
+    syncForm(op,room){
+        socket.on('sync-form',function(data){
+            console.log("SYNC-FORM")
+            console.log(data);
+            op(data[room])
+        })
+    }
+
+    emitForm(Names, Job, City, Country, Animal, Objects, Movie, Food, Song ,room){
+        socket.emit('update-form',{Names : Names,Job: Job, Country: Country,
+            Animal: Animal, Objects: Objects, Movie: Movie, Food: Food, Song: Song, room :room})
+    }
+
+
 }
 
 class DemineurClient {

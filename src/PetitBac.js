@@ -11,18 +11,24 @@ class PetitBac extends React.Component {
             names: [],
             info: "",
             scores: [],
-            currentState : "",
-            Names: [], City: [], Country: [],
-            Animal: [], Food: [], Objects: [],
-            Job: [], Movie: [], Song: [],
-            name :'', city :'', country:'',
-            animal:'', food :'', object: '',
-            job : '', movie :' ', song :'',
+            currentState: "",
+            name: '', city: '', country: '',
+            animal: '', food: '', object: '',
+            job: '', movie: ' ', song: '',
         };
 
+        this.Names = [];
+        this.City = [];
+        this.Country = [];
+        this.Animal = [];
+        this.Food = [];
+        this.Objects = [];
+        this.Job = [];
+        this.Movie = [];
+        this.Song = [];
         this.client = new PetitBacClient();
         this.game = new GameClient();
-        this.warningMessage ="";
+        this.warningMessage = "";
 
         this.start = this.start.bind(this);
         this.setName = this.setName.bind(this);
@@ -46,124 +52,140 @@ class PetitBac extends React.Component {
         this.SongAlreadyToken = this.SongAlreadyToken.bind(this);
     }
 
-    start(data) {
+    start() {
         console.log("test");
-        this.checkIfNameIsValid(data);
-        this.checkIfCityIsValid(data);
-        this.checkIfCountryIsValid(data);
-        this.checkIfAnimalIsValid(data);
-        this.checkIfFoodIsValid(data);
-        this.checkIfObjectIsValid(data);
-        this.checkIfMovieIsValid(data);
-        this.checkIfSongIsValid(data);
-        this.checkIfJobIsValid(data);
+        this.checkIfNameIsValid();
+        this.checkIfCityIsValid();
+        this.checkIfCountryIsValid();
+        this.checkIfAnimalIsValid();
+        this.checkIfFoodIsValid();
+        this.checkIfObjectIsValid();
+        this.checkIfMovieIsValid();
+        this.checkIfSongIsValid();
+        this.checkIfJobIsValid();
+        //alert(this.state.scores);
+    }
+
+
+    componentDidMount = () => {
+        this.client.emitUser(this.props.statename, this.props.room);
+        this.client.updateUsers(this.setNames, this.props.room);
+        this.setupBeforeUnloadListener(this.client);
+        this.client.emitForm(this.Names, this.Job, this.City, this.Country,
+            this.Animal, this.Objects, this.Movie, this.Food, this.Song, this.props.room);
 
     }
 
-    checkIfInputStartsWithTheCorrectLetter(input){
-        return input.startsWith(this.props.letter);
-    }
 
-    checkIfNameIsValid(){
-        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.name)){
-            if(this.NamesAlreadyToken() === false){
-                this.state.Names.push(this.state.name)
-                    var score = this.state.scores[this.props.name];
-                    score[this.props.name]++;
-                    this.setState({scores: score})
-                }
-            }
+    setupBeforeUnloadListener = (client) => {
+        window.addEventListener("beforeunload", (ev) => {
+            ev.preventDefault();
+            client.userLeave(this.props.statename, this.props.room);
+            return ev.returnValue = "test";
+        });
+    };
+
+    checkIfInputStartsWithTheCorrectLetter(input) {
+        let min = this.props.letter.toLowerCase();
+        let maj = this.props.letter.toUpperCase();
+        if (input.startsWith(min)) {
+            return true;
         }
-
-
-
-    checkIfCityIsValid(){
-        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.city)){
-            if(this.CityAlreadyToken() === false){
-                this.state.City.push(this.state.city)
-                var score = this.state.scores[this.props.name];
-                score[this.props.name]++;
-                this.setState({scores: score})
-            }
-        }
+        return input.startsWith(maj);
     }
 
-    checkIfCountryIsValid(){
-        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.country)){
-            if(this.CountryAlreadyToken() === false){
-                this.state.Country.push(this.state.country)
-                var score = this.state.scores[this.props.name];
-                score[this.props.name]++;
-                this.setState({scores: score})
-            }
-        }
-    }
-
-    checkIfAnimalIsValid(){
-        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.animal)){
-            if(this.AnimalAlreadyToken() === false){
-                this.state.Animal.push(this.state.animal)
-                var score = this.state.scores[this.props.name];
-                score[this.props.name]++;
-                this.setState({scores: score})
+    checkIfNameIsValid() {
+        if (this.checkIfInputStartsWithTheCorrectLetter(this.state.name)) {
+            if (this.NamesAlreadyToken() === false) {
+                this.Names.push(this.state.name);
+                let score = this.state.scores[this.props.name];
+                this.setState({scores: score + 2})
             }
         }
     }
 
-    checkIfFoodIsValid(){
-        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.food)){
-            if(this.FoodAlreadyToken() === false){
-                this.state.Food.push(this.state.food)
-                var score = this.state.scores[this.props.name];
-                score[this.props.name]++;
-                this.setState({scores: score})
+    checkIfCityIsValid() {
+        if (this.checkIfInputStartsWithTheCorrectLetter(this.state.city)) {
+            if (this.CityAlreadyToken() === false) {
+                this.City.push(this.state.city);
+                let score = this.state.scores[this.props.name];
+                this.setState({scores: score + 2})
             }
         }
     }
 
-    checkIfObjectIsValid(data){
-        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.object)){
-            if(this.ObjectAlreadyToken() === false){
-                this.state.Objects.push(this.state.object)
-                var score = this.state.scores[this.props.name];
-                score[this.props.name]++;
-                this.setState({scores: score})
+    checkIfCountryIsValid() {
+        if (this.checkIfInputStartsWithTheCorrectLetter(this.state.country)) {
+            if (this.CountryAlreadyToken() === false) {
+                this.Country.push(this.state.country);
+                let score = this.state.scores[this.props.name];
+                this.setState({scores: score + 2})
             }
         }
     }
 
-    checkIfMovieIsValid(data){
-        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.movie)){
-            if(this.MovieAlreadyToken() === false){
-                var score = this.state.scores[this.props.name];
-                score[this.props.name]++;
-                this.setState({scores: score})
+    checkIfAnimalIsValid() {
+        if (this.checkIfInputStartsWithTheCorrectLetter(this.state.animal)) {
+            if (this.AnimalAlreadyToken() === false) {
+                this.Animal.push(this.state.animal);
+                let score = this.state.scores[this.props.name];
+                this.setState({scores: score + 2})
             }
         }
     }
 
-    checkIfSongIsValid(data){
-        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.song)){
-            if(this.SongAlreadyToken() === false){
-                var score = this.state.scores[this.props.name];
-                score[this.props.name]++;
-                this.setState({scores: score})
+    checkIfFoodIsValid() {
+        if (this.checkIfInputStartsWithTheCorrectLetter(this.state.food)) {
+            if (this.FoodAlreadyToken() === false) {
+                this.Food.push(this.state.food);
+                let score = this.state.scores[this.props.name];
+                this.setState({scores: score + 2})
             }
         }
     }
 
-    checkIfJobIsValid(data){
-        if(this.checkIfInputStartsWithTheCorrectLetter(this.state.job)){
-            if(this.JobAlreadyToken() === false){
-                var score = this.state.scores[this.props.name];
-                score[this.props.name]++;
-                this.setState({scores: score})
+    checkIfObjectIsValid() {
+        if (this.checkIfInputStartsWithTheCorrectLetter(this.state.object)) {
+            if (this.ObjectAlreadyToken() === false) {
+                this.Objects.push(this.state.object);
+                let score = this.state.scores[this.props.name];
+                this.setState({scores: score + 2})
+            }
+        }
+    }
+
+    checkIfMovieIsValid() {
+        if (this.checkIfInputStartsWithTheCorrectLetter(this.state.movie)) {
+            if (this.MovieAlreadyToken() === false) {
+                this.Movie.push(this.state.movie);
+                let score = this.state.scores[this.props.name];
+                this.setState({scores: score + 2})
+            }
+        }
+    }
+
+    checkIfSongIsValid() {
+        if (this.checkIfInputStartsWithTheCorrectLetter(this.state.song)) {
+            if (this.SongAlreadyToken() === false) {
+                this.Song.push(this.state.song);
+                let score = this.state.scores[this.props.name];
+                this.setState({scores: score + 2})
+            }
+        }
+    }
+
+    checkIfJobIsValid() {
+        if (this.checkIfInputStartsWithTheCorrectLetter(this.state.job)) {
+            if (this.JobAlreadyToken() === false) {
+                this.Job.push(this.state.job)
+                let score = this.state.scores[this.props.name];
+                this.setState({scores: score + 2})
             }
         }
     }
 
     NamesAlreadyToken() {
-        let Names = this.state.Names.values();
+        let Names = this.Names.values();
         for (const value of Names) {
             for (let i = 0; i < value.length; i++) {
                 if (value[i] === this.state.name)
@@ -174,7 +196,7 @@ class PetitBac extends React.Component {
     }
 
     CityAlreadyToken() {
-        let City = this.state.City.values();
+        let City = this.City.values();
         for (const value of City) {
             for (let i = 0; i < value.length; i++) {
                 if (value[i] === this.state.city)
@@ -185,7 +207,7 @@ class PetitBac extends React.Component {
     }
 
     CountryAlreadyToken() {
-        let Country = this.state.Country.values();
+        let Country = this.Country.values();
         for (const value of Country) {
             if (value.toString() === this.state.country)
                 return true;
@@ -194,7 +216,7 @@ class PetitBac extends React.Component {
     }
 
     AnimalAlreadyToken() {
-        let Animal = this.state.Animal.values();
+        let Animal = this.Animal.values();
         for (const value of Animal) {
             for (let i = 0; i < value.length; i++) {
                 if (value[i] === this.state.animal)
@@ -205,7 +227,7 @@ class PetitBac extends React.Component {
     }
 
     FoodAlreadyToken() {
-        let Food = this.state.Food.values();
+        let Food = this.Food.values();
         for (const value of Food) {
             if (value.toString() === this.state.food)
                 return true;
@@ -214,7 +236,7 @@ class PetitBac extends React.Component {
     }
 
     ObjectAlreadyToken() {
-        let Object = this.state.Objects.values();
+        let Object = this.Objects.values();
         for (const value of Object) {
             for (let i = 0; i < value.length; i++) {
                 if (value[i] === this.state.object)
@@ -225,7 +247,7 @@ class PetitBac extends React.Component {
     }
 
     JobAlreadyToken() {
-        let Job = this.state.Job.values();
+        let Job = this.Job.values();
         for (const value of Job) {
             if (value.toString() === this.state.job)
                 return true;
@@ -234,7 +256,7 @@ class PetitBac extends React.Component {
     }
 
     MovieAlreadyToken() {
-        let Movie = this.state.Movie.values();
+        let Movie = this.Movie.values();
         for (const value of Movie) {
             if (value.toString() === this.state.movie)
                 return true;
@@ -243,7 +265,7 @@ class PetitBac extends React.Component {
     }
 
     SongAlreadyToken() {
-        let Song = this.state.Song.values();
+        let Song = this.Song.values();
         for (const value of Song) {
             if (value.toString() === this.state.song)
                 return true;
@@ -253,51 +275,61 @@ class PetitBac extends React.Component {
 
 
     setName(name) {
-        this.setState({name : name})
+        this.setState({name: name})
     }
 
     setCity(city) {
         this.setState({city: city})
     }
+
     setCountry(country) {
         this.setState({country: country})
     }
+
     setAnimal(animal) {
         this.setState({animal: animal})
     }
+
     setFood(food) {
         this.setState({food: food})
     }
+
     setObject(object) {
         this.setState({object: object})
     }
+
     setJob(job) {
         this.setState({job: job})
     }
+
     setMovie(movie) {
         this.setState({movie: movie})
     }
+
     setSong(song) {
         this.setState({song: song})
     }
 
     render() {
-        return <div>
-           <FormPB warning = {this.warningMessage}
-                   letter = {this.props.letter}
-                   room = {this.props.room}
-                   onNameChange={this.setName}
-                   onCityChange={this.setCity}
-                   onCountryChange={this.setCountry}
-                   onAnimalChange={this.setAnimal}
-                   onFoodChange={this.setFood}
-                   onObjectChange={this.setObject}
-                   onJobChange={this.setJob}
-                   onMovieChange={this.setMovie}
-                   onSongChange={this.setSong}
-                   onSubmit={this.start}
-           />
 
+        this.button = <button onClick={this.endGame}> Finish !</button>;
+        let names = this.state.names.map((m) => <player key={m}> {m} score {this.state.scores[m]} </player>);
+
+        return <div>
+            <FormPB warning={this.warningMessage}
+                    letter={this.props.letter}
+                    onNameChange={this.setName}
+                    onCityChange={this.setCity}
+                    onCountryChange={this.setCountry}
+                    onAnimalChange={this.setAnimal}
+                    onFoodChange={this.setFood}
+                    onObjectChange={this.setObject}
+                    onJobChange={this.setJob}
+                    onMovieChange={this.setMovie}
+                    onSongChange={this.setSong}
+                    onSubmit={this.start}
+            />
+            {names}
         </div>
     }
 }
