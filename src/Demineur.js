@@ -1,6 +1,6 @@
 import React from "react";
 import {Cube} from "./Cube"
-import {DemineurClient} from "./Clients";
+import {DemineurClient, PlayerListClient} from "./Clients";
 
 class Demineur extends React.Component {
     constructor(props) {
@@ -10,7 +10,17 @@ class Demineur extends React.Component {
         this.bombcount = this.props.bombs;
         this.show = this.show.bind(this);
         this.dc = new DemineurClient();
+        this.uc = new PlayerListClient(this.props.room);
         this.state = {names: [], isRunning: true,info:""}
+    }
+
+    componentDidMount = () => {
+        this.uc.emitUser(this.props.statename);
+        this.uc.updateUsers(this.setNames);
+        this.setupBeforeUnloadListener(this.dc)
+        this.dc.syncGrid(this.setGrid, this.props.room);
+        this.gennerateGrid();
+        this.dc.createGrid(this.grid, this.props.room);
     }
 
     gennerateGrid = () => {
@@ -57,8 +67,9 @@ class Demineur extends React.Component {
     }
 
     componentWillUnmount() {
-        this.dc.userLeave(this.props.statename, this.props.room);
+        this.uc.userLeave(this.props.statename);
     }
+
 
     setGrid = (grid) => {
         this.grid = grid;
@@ -73,16 +84,6 @@ class Demineur extends React.Component {
         this.bombcount = this.props.bombs;
         this.setState({isRunning: true})
         this.dc.emitGrid(this.grid, this.props.room);
-    }
-
-
-    componentDidMount = () => {
-        this.dc.emitUser(this.props.statename, this.props.room);
-        this.dc.updateUsers(this.setNames, this.props.room);
-        this.setupBeforeUnloadListener(this.dc)
-        this.dc.syncGrid(this.setGrid, this.props.room);
-        this.gennerateGrid();
-        this.dc.createGrid(this.grid, this.props.room);
     }
 
     setupBeforeUnloadListener = (dc) => {
@@ -170,9 +171,8 @@ class Demineur extends React.Component {
         for (let i = 0; i < this.props.height; i++) {
             for (let j = 0; j < this.props.width; j++) {
                 if (!this.grid[i][j].isShowed && this.grid[i][j].value !== "*") {
-                    console.log(i, j)
+                    //console.log(i, j)
                     return;
-
                 }
             }
         }
@@ -195,7 +195,7 @@ class Demineur extends React.Component {
     leave = ()=>{
         document.getElementById("demineur").classList.add("out");
         setTimeout(()=> {
-            this.dc.userLeave(this.props.statename, this.props.room);
+            this.uc.userLeave(this.props.statename);
             this.props.close();
         },400);
     }

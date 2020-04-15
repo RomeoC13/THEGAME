@@ -1,5 +1,5 @@
 import React from "react";
-import {GameClient, PetitBacClient,} from "./Clients";
+import {PetitBacClient, PictionaryClient} from "./Clients";
 import {FormPB} from "./FormPB";
 
 class PetitBac extends React.Component {
@@ -21,7 +21,7 @@ class PetitBac extends React.Component {
         };
 
         this.client = new PetitBacClient();
-        this.game = new GameClient();
+        this.game = new PictionaryClient();
         this.warningMessage ="";
 
         this.start = this.start.bind(this);

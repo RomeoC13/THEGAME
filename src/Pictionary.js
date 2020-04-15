@@ -1,7 +1,7 @@
 import {ChatWindow} from "./ChatWindow.js";
 import {Canvas} from "./Canvas.js";
 import {Timer} from "./Timer.js";
-import {GameClient, PictionaryClient} from "./Clients";
+import {PictionaryClient, PlayerListClient} from "./Clients";
 import React from "react";
 
 class Pictionary extends React.Component {
@@ -21,8 +21,8 @@ class Pictionary extends React.Component {
         this.endGame = this.endGame.bind(this);
         this.leave = this.leave.bind(this);
         this._loaded = false;
-        this.pc = new PictionaryClient();
-        this.game = new GameClient();
+        this.uc = new PlayerListClient(this.state.room)
+        this.game = new PictionaryClient();
 
     }
 
@@ -45,9 +45,9 @@ class Pictionary extends React.Component {
     componentDidMount() {
         this._loaded =true;
         //document.getElementById("pictionary").classList.remove("in");
-        this.pc.updateUsers(this.setNames, this.props.room);
-        this.pc.emitUser(this.props.statename, this.props.room);
-        this.setupBeforeUnloadListener(this.pc);
+        this.uc.updateUsers(this.setNames, this.props.room);
+        this.uc.emitUser(this.props.statename, this.props.room);
+        this.setupBeforeUnloadListener(this.uc);
         this.game.listenFirstRound(this.firstround, this.props.room);
         this.game.listenRound(this.nextRound, this.props.room);
         this.game.listenEndGame(this.endGame, this.props.room);
@@ -56,13 +56,13 @@ class Pictionary extends React.Component {
     componentWillUnmount() {
         document.getElementById("pictionary").classList.add("out");
         this._loaded =false;
-        this.pc.userLeave(this.props.statename);
+        this.uc.userLeave(this.props.statename);
     }
 
-    setupBeforeUnloadListener = (pc) => {
+    setupBeforeUnloadListener = (uc) => {
         window.addEventListener("beforeunload", (ev) => {
             ev.preventDefault();
-            pc.userLeave(this.props.statename, this.props.room);
+            uc.userLeave(this.props.statename, this.props.room);
             if (this.state.gameRunning) {
                 this.game.stopGame(this.props.statename, this.props.room);
             }
@@ -131,7 +131,7 @@ class Pictionary extends React.Component {
         document.getElementById("pictionary").classList.add("out");
         setTimeout(()=> {
             this.props.closeChat();
-            this.pc.userLeave(this.props.statename, this.props.room);
+            this.uc.userLeave(this.props.statename, this.props.room);
             if (this.state.gameRunning) {
                 //console.log("LEAVING");
                 this.game.stopGame(this.props.statename, this.props.room);

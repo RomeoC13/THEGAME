@@ -21,28 +21,6 @@ class AppClient {
 
 }
 
-class PictionaryClient {
-
-    updateUsers(op,room) {
-        socket.on('update-names', function (data) {
-            op(data[room])
-        });
-    }
-
-    emitUser(user,room) {
-        socket.emit('join', {user : user, room : room,type : "Pictionary"})
-    }
-
-    userLeave(user,room) {
-        socket.emit('leave', {user: user,room: room,type : "Pictionary"})
-    }
-
-    print(msg) {
-        socket.emit('print', msg);
-    }
-
-}
-
 class ChatClient {
 
     constructor(username) {
@@ -80,7 +58,7 @@ class TimerClient {
 
 }
 
-class GameClient {
+class PictionaryClient {
 
     startGame(room){
         socket.emit("start-game",room)
@@ -184,4 +162,32 @@ class DemineurClient {
     }
 }
 
-export {AppClient,PictionaryClient,ChatClient,TimerClient,GameClient,PetitBacClient,DemineurClient}
+class PlayerListClient{
+    constructor(room) {
+        this.room=room;
+    }
+
+    emitUser(user){
+        console.log("ROOM"+this.room+typeof this.room);
+        socket.emit('join',{user:user,room:this.room,type:"Demineur"})
+    }
+
+
+    updateUsers(op) {
+        socket.on('update-names',(data)=>{
+            op(data[this.room])
+        });
+    }
+
+    userLeave(user) {
+        socket.emit('leave', {user: user,room: this.room,type:"Demineur"})
+    }
+
+
+    print(msg) {
+        socket.emit('print', msg);
+    }
+
+}
+
+export {AppClient,PictionaryClient,ChatClient,TimerClient,PetitBacClient,DemineurClient,PlayerListClient}

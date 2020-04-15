@@ -1,6 +1,6 @@
 import React from "react";
 import {PetitBac} from "./PetitBac";
-import {GameClient, PetitBacClient} from "./Clients";
+import {PetitBacClient, PictionaryClient} from "./Clients";
 
 class PetitBacStart extends React.Component {
 
@@ -22,7 +22,7 @@ class PetitBacStart extends React.Component {
         this.leave = this.leave.bind(this);
 
         this.pbc = new PetitBacClient();
-        this.game = new GameClient();
+        this.game = new PictionaryClient();
     }
 
     setNames = (name) => {
