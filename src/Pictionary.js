@@ -45,8 +45,8 @@ class Pictionary extends React.Component {
     componentDidMount() {
         this._loaded =true;
         //document.getElementById("pictionary").classList.remove("in");
-        this.uc.updateUsers(this.setNames, this.props.room);
-        this.uc.emitUser(this.props.statename, this.props.room);
+        this.uc.updateUsers(this.setNames);
+        this.uc.emitUser(this.props.statename);
         this.setupBeforeUnloadListener(this.uc);
         this.game.listenFirstRound(this.firstround, this.props.room);
         this.game.listenRound(this.nextRound, this.props.room);
@@ -62,7 +62,7 @@ class Pictionary extends React.Component {
     setupBeforeUnloadListener = (uc) => {
         window.addEventListener("beforeunload", (ev) => {
             ev.preventDefault();
-            uc.userLeave(this.props.statename, this.props.room);
+            uc.userLeave(this.props.statename);
             if (this.state.gameRunning) {
                 this.game.stopGame(this.props.statename, this.props.room);
             }
