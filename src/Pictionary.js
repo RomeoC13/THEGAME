@@ -21,7 +21,7 @@ class Pictionary extends React.Component {
         this.endGame = this.endGame.bind(this);
         this.leave = this.leave.bind(this);
         this._loaded = false;
-        this.uc = new PlayerListClient(this.state.room)
+        this.uc = new PlayerListClient(this.props.room)
         this.game = new PictionaryClient();
 
     }
@@ -44,8 +44,8 @@ class Pictionary extends React.Component {
 
     componentDidMount() {
         this._loaded =true;
-        //document.getElementById("pictionary").classList.remove("in");
         this.uc.updateUsers(this.setNames);
+        //document.getElementById("pictionary").classList.remove("in");
         this.uc.emitUser(this.props.statename);
         this.setupBeforeUnloadListener(this.uc);
         this.game.listenFirstRound(this.firstround, this.props.room);
