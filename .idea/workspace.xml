@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1181bf25-1fda-424a-8fab-a2f46bfbae05" name="Default Changelist" comment="">
+    <list default="true" id="1181bf25-1fda-424a-8fab-a2f46bfbae05" name="Default Changelist" comment="A LOT OF VISUAL IMPROVE">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LoginWindow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/LoginWindow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pictionary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pictionary.js" afterDir="false" />
     </list>
+    <list id="8c5dd19b-3e82-496f-b9e9-f2d9f7e89f8a" name="Revert &quot;Début de PetitBac&quot;" comment="Revert &quot;Début de PetitBac&quot;&#10;&#10;This reverts commit cbf855bb" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -66,6 +70,7 @@
       <workItem from="1586438708655" duration="2929000" />
       <workItem from="1586519223572" duration="9595000" />
       <workItem from="1586544122755" duration="1918000" />
+      <workItem from="1586951960445" duration="3794000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor du Canvas avec socket">
       <created>1585246617826</created>
@@ -270,7 +275,42 @@
       <option name="project" value="LOCAL" />
       <updated>1586544427197</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="G@ames is more beautiful">
+      <created>1586871795365</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1586871795365</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Improvement to make it more comprehensive and to avoid code repetition,&#10;PictionnaryClient is now the old GameClient&#10;PlayerListClient is now the old PictionnaryClient and should be use in all game to manage Client list">
+      <created>1586961358066</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1586961358066</updated>
+    </task>
+    <task id="LOCAL-00032" summary="little fix">
+      <created>1586961664526</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1586961664526</updated>
+    </task>
+    <task id="LOCAL-00033" summary="little fix">
+      <created>1586961940367</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1586961940367</updated>
+    </task>
+    <task id="LOCAL-00034" summary="socket fixes &#10;(I don't know wtf is that but seems to work)">
+      <created>1586962639742</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1586962639742</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -289,10 +329,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="commit" />
-    <MESSAGE value="repair list of players" />
-    <MESSAGE value="making reset button working" />
-    <MESSAGE value="adding a useless for now button 'startgame'&#10;fixed a bug where StartGame button was not showed when time is up" />
     <MESSAGE value="Room system for chat, timer and playerlist" />
     <MESSAGE value="Welcome message is now general for all room" />
     <MESSAGE value="suppressing warning" />
@@ -314,7 +350,11 @@
     <MESSAGE value="Add some method to start PetitBac" />
     <MESSAGE value="Clean of the code : deletion of useless methods" />
     <MESSAGE value="fix bug letter" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bug letter" />
+    <MESSAGE value="G@ames is more beautiful" />
+    <MESSAGE value="Improvement to make it more comprehensive and to avoid code repetition,&#10;PictionnaryClient is now the old GameClient&#10;PlayerListClient is now the old PictionnaryClient and should be use in all game to manage Client list" />
+    <MESSAGE value="little fix" />
+    <MESSAGE value="socket fixes &#10;(I don't know wtf is that but seems to work)" />
+    <option name="LAST_COMMIT_MESSAGE" value="socket fixes &#10;(I don't know wtf is that but seems to work)" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -327,11 +367,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="729" y="323" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1585666283722" />
-    <state x="393" y="12" width="1098" height="810" key="CommitChangelistDialog2" timestamp="1586544425475">
-      <screen x="0" y="0" width="1536" height="834" />
+    <state x="985" y="164" width="1098" height="810" key="CommitChangelistDialog2" timestamp="1586962639214">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="393" y="12" width="1098" height="810" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1586544425475" />
-    <state x="491" y="15" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1585766185013" />
+    <state x="985" y="164" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1586962639214" />
     <state width="1515" height="214" key="GridCell.Tab.0.bottom" timestamp="1586546301754">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -348,14 +388,14 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1515" height="214" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1586546301754" />
-    <state x="184" y="86" key="MergeDialog" timestamp="1585765414929">
+    <state x="184" y="86" key="MergeDialog" timestamp="1586961439101">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="184" y="86" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585765414929" />
-    <state x="672" y="236" key="MultipleFileMergeDialog" timestamp="1585765414934">
+    <state x="184" y="86" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586961439101" />
+    <state x="672" y="236" width="389" height="264" key="MultipleFileMergeDialog" timestamp="1586961439105">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="672" y="236" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585765414934" />
+    <state x="672" y="236" width="389" height="264" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586961439105" />
     <state x="750" y="231" key="RollbackChangesDialog" timestamp="1585575139815">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -364,24 +404,24 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="277" y="60" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1586438925625" />
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1586544432491">
-      <screen x="0" y="0" width="1536" height="834" />
+    <state x="451" y="187" key="Vcs.Push.Dialog.v2" timestamp="1586961666521">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1586544432491" />
-    <state x="451" y="187" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1585766188304" />
-    <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586546130824">
-      <screen x="0" y="0" width="1536" height="834" />
+    <state x="451" y="187" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1586961666521" />
+    <state x="723" y="416" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586961575863">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1586546130824" />
-    <state x="723" y="416" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1586103299050" />
+    <state x="723" y="416" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1586961575863" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1585658780785">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1585658780785" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1585666462630">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1586952517987">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1585666462630" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1586952517987" />
     <state x="682" y="432" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1585413222566">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
