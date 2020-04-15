@@ -45,18 +45,24 @@ var words = [
 ];
 
 //DEMINEUR USAGE :
-var grids=[];
+var grids = [];
 
 //PETIT BAC USAGE :
-const letterss = [{letter :'', room : "all"}];
 //POTENTIELLEMENT CHANGER
-var letters =[
-    "A", "B", "C", "D" ,"E" ,"F", "G", "H" ,"I", "J" ,"K", "L", "M" ,"N" ,"O", "P" ,"Q", "R", "S" ,"T" ,"U", "V", "W" ,"X", "Y", "Z",
+var letters = [
+    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 ];
 let wordcount;
 
-
-
+var Names = [];
+var City = [];
+var Country = [];
+var Job = [];
+var Movie = [];
+var Objects = [];
+var Food = [];
+var Song = [];
+var Animal =[];
 
 //GENERAL APP USAGE :
 let onlineCount = 0;
@@ -182,14 +188,25 @@ io.on('connection', (client) => {
         let name = data.user;
         let room = data.room;
         let type = data.type;
-        console.log("Joueur " + data.user + " a quitter " + data.room+ " de "+data.type);
+        console.log("Joueur " + data.user + " a quitter " + data.room + " de " + data.type);
 
         if (rooms.hasOwnProperty(room)) {
             var indexName = rooms[room].indexOf(name);
             rooms[room].splice(indexName, 1);
             if (rooms[room].length === 0) {
-                if(type ==="Demineur"){
+                if (type === "Demineur") {
                     delete grids[room];
+                }
+                if (type === "Petit-Bac") {
+                    delete Names[room];
+                    delete City[room];
+                    delete Country[room];
+                    delete Job[room];
+                    delete Movie[room];
+                    delete Objects[room];
+                    delete Food[room];
+                    delete Song[room];
+                    delete Animal[room];
                 }
                 delete roomsType[room];
                 var i = rooms.indexOf(room);
@@ -218,6 +235,32 @@ io.on('connection', (client) => {
         resetTimer(10, room);
     });
 
+
+    client.on("update-form", function (data) {
+        let room = data.room;
+        let names = data.Names;
+        let city = data.City;
+        let country = data.Country;
+        let job = data.Job;
+        let movie = data.Movie;
+        let objects = data.Objects;
+        let food = data.Food;
+        let song = data.Song;
+        let animal = data.Animal;
+        Names[room] = names;
+        City[room] = city;
+        Country[room] = country;
+        Job[room] = job;
+        Movie[room] = movie;
+        Objects[room] = objects;
+        Food[room] = food;
+        Song[room] = song;
+        Animal[room]= animal;
+        console.log("sync-form")
+        io.emit("sync-form", {room: room, Names: Names, City: City, Country: Country, Job: Job,
+        Movie: Movie, Objects: Objects, Food: Food, Song: Song, Animal: Animal});
+    })
+
     client.on("update-grid",function (data) {
         let room= data.room;
         let grid= data.grid;
@@ -227,15 +270,15 @@ io.on('connection', (client) => {
         io.emit("sync-grid",grids);
     })
 
-    client.on("create-grid",function (data) {
-        let room= data.room;
-        let grid= data.grid;
-        if(!grids.hasOwnProperty(room)){
+    client.on("create-grid", function (data) {
+        let room = data.room;
+        let grid = data.grid;
+        if (!grids.hasOwnProperty(room)) {
             //console.log("GRID CREATED")
-            grids[room]=grid;
+            grids[room] = grid;
         }
         console.log("sync-grid")
-        io.emit("sync-grid",grids);
+        io.emit("sync-grid", grids);
     })
 
     client.on("start-game-pb", function (room) {
@@ -245,8 +288,8 @@ io.on('connection', (client) => {
         });
         let letter = newLetter();
         let firstplayer = Math.floor(Math.random() * players.length);
-        console.log('start-PetitBac', {player: players[firstplayer], letter: letter, room : room});
-        io.emit('start-PetitBac', {player: players[firstplayer],letter: letter, room : room});
+        console.log('start-PetitBac', {player: players[firstplayer], letter: letter, room: room});
+        io.emit('start-PetitBac', {player: players[firstplayer], letter: letter, room: room});
     });
 
 
