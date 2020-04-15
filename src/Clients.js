@@ -1,6 +1,7 @@
-import openSocket from 'socket.io-client';
+import io from 'socket.io-client';
 
-const socket = openSocket();
+/*const socket = openSocket();*/
+var socket = io('ws://localhost:3001', {transports: ['websocket']});
 
 class AppClient {
     updatePlayerCount(op) {
