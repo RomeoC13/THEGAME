@@ -15,7 +15,7 @@ class Demineur extends React.Component {
     }
 
     componentDidMount = () => {
-        this.uc.emitUser(this.props.statename);
+        this.dc.emitUser(this.props.statename, this.props.room);
         this.uc.updateUsers(this.setNames);
         this.setupBeforeUnloadListener(this.dc)
         this.dc.syncGrid(this.setGrid, this.props.room);
@@ -67,7 +67,7 @@ class Demineur extends React.Component {
     }
 
     componentWillUnmount() {
-        this.uc.userLeave(this.props.statename);
+        this.dc.userLeave(this.props.statename,this.props.room);
     }
 
 
@@ -195,7 +195,7 @@ class Demineur extends React.Component {
     leave = ()=>{
         document.getElementById("demineur").classList.add("out");
         setTimeout(()=> {
-            this.uc.userLeave(this.props.statename);
+            this.dc.userLeave(this.props.statename,this.props.room);
             this.props.close();
         },400);
     }
