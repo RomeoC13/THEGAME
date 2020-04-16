@@ -61,21 +61,19 @@ class TimerClient {
 
 class PictionaryClient {
 
+    emitUser(user,room) {
+        socket.emit('join', {user : user, room : room,type : "Pictionary"})
+    }
+
+    userLeave(user,room) {
+        socket.emit('leave', {user: user,room: room,type : "Pictionary"})
+    }
+
+
     startGame(room){
         socket.emit("start-game",room)
     }
 
-    startPetitBac(room){
-        socket.emit("start-game-pb",room)
-    }
-
-    listenPetitBacLetter(op,room){
-        socket.on('start-PetitBac',function (data) {
-            if(data.room === room){
-                op(data);
-            }
-        })
-    }
 
     listenFirstRound(op,room){
         socket.on('first-round',function (data) {
@@ -100,10 +98,6 @@ class PictionaryClient {
         socket.emit("loose",{drawer : drawer,room: room})
     }
 
-    stopGame(playerWhoLeft,room){
-        socket.emit("end-game",{player : playerWhoLeft, room: room});
-    }
-
     listenEndGame(op,room){
         socket.on("game-stopped",function (data) {
             if(data.room===room){
@@ -111,54 +105,63 @@ class PictionaryClient {
             }
         })
     }
+
+    stopGame(playerWhoLeft,room){
+        socket.emit("end-game",{player : playerWhoLeft, room: room});
+    }
 }
 
 class PetitBacClient{
+
     emitUser(user,room) {
         socket.emit('join', {user : user, room : room,type : "Petit Bac"})
     }
 
-    updateUsers(op,room) {
-        socket.on('update-names', function (data) {
-            op(data[room])
-        });
+    startPetitBac(room){
+        socket.emit("start-game-pb",room)
     }
+
+    listenPetitBacLetter(op,room){
+        socket.on('start-PetitBac',function (data) {
+            if(data.room === room){
+                op(data);
+            }
+        })
+    }
+
+    stopGame(playerWhoLeft,room){
+        socket.emit("end-game",{player : playerWhoLeft, room: room});
+    }
+
 
     userLeave(user,room) {
         socket.emit('leave', {user: user,room: room,type : "Petit Bac"})
     }
 
-    syncForm(op,room){
-        socket.on('sync-form',function(data){
-            console.log("SYNC-FORM")
-            console.log(data);
-            op(data[room])
-        })
-    }
 
     emitForm(Names, Job, City, Country, Animal, Objects, Movie, Food, Song ,room){
         socket.emit('update-form',{Names : Names,Job: Job, Country: Country,
             Animal: Animal, Objects: Objects, Movie: Movie, Food: Food, Song: Song, room :room})
     }
 
-
-}
-
-class DemineurClient {
-    emitUser(user,room){
-        socket.emit('join',{user:user,room:room,type:"Demineur"})
+    emitEnd(room){
+        socket.emit('end-pb-player', {room: room});
     }
 
 
-    updateUsers(op,room) {
-        socket.on('update-names', function (data) {
-            op(data[room])
-        });
+}
+
+
+class DemineurClient {
+
+    emitUser(user,room){
+        socket.emit('join',{user:user,room:room,type:"Demineur"})
     }
 
     userLeave(user,room) {
         socket.emit('leave', {user: user,room: room,type:"Demineur"})
     }
+
 
     syncGrid(op,room){
         socket.on('sync-grid',function(data){
@@ -182,22 +185,11 @@ class PlayerListClient{
         this.room=room;
     }
 
-    emitUser(user){
-        console.log("ROOM"+this.room+typeof this.room);
-        socket.emit('join',{user:user,room:this.room,type:"Demineur"})
-    }
-
-
     updateUsers(op) {
         socket.on('update-names',(data)=>{
             op(data[this.room])
         });
     }
-
-    userLeave(user) {
-        socket.emit('leave', {user: user,room: this.room,type:"Demineur"})
-    }
-
 
     print(msg) {
         socket.emit('print', msg);

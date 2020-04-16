@@ -54,6 +54,7 @@ var letters = [
 ];
 let wordcount;
 
+let playercount;
 var Names = [];
 var City = [];
 var Country = [];
@@ -69,7 +70,7 @@ let onlineCount = 0;
 let users = [];
 //Rooms Array is a 2D Array,
 // for example a room of Pictionnary with few players named "Romeo" ,"Pauline" and "Yash" in room "3" will be stored like this :
-// rooms["3"]=["Romeo","Pauline","Yash"}] and roomsType["3"]=Pictionnary
+// rooms["3"]=["Romeo","Pauline","Yash"] and roomsType["3"]=Pictionnary
 let rooms = [];
 let roomsType = [];
 
@@ -290,6 +291,14 @@ io.on('connection', (client) => {
         let firstplayer = Math.floor(Math.random() * players.length);
         console.log('start-PetitBac', {player: players[firstplayer], letter: letter, room: room});
         io.emit('start-PetitBac', {player: players[firstplayer], letter: letter, room: room});
+    });
+
+    client.on('end-pb-player', function (room) {
+        playercount++
+        console.log('a player has finished');
+        if(playercount === room.length)
+            console.log('everyone has finished');
+            io.emit('end-GamePb');
     });
 
 

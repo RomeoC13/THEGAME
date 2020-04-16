@@ -1,12 +1,11 @@
 import React from "react";
-import {PetitBacClient, PictionaryClient} from "./Clients";
+import {PetitBacClient, PlayerListClient} from "./Clients";
 import {FormPB} from "./FormPB";
 
 class PetitBac extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             names: [],
             info: "",
@@ -26,8 +25,8 @@ class PetitBac extends React.Component {
         this.Job = [];
         this.Movie = [];
         this.Song = [];
-        this.client = new PetitBacClient();
-        this.game = new PictionaryClient();
+        this.pbc = new PetitBacClient();
+        this.playerList = new PlayerListClient(this.props.room);
         this.warningMessage = "";
 
         this.start = this.start.bind(this);
@@ -53,7 +52,6 @@ class PetitBac extends React.Component {
     }
 
     start() {
-        console.log("test");
         this.checkIfNameIsValid();
         this.checkIfCityIsValid();
         this.checkIfCountryIsValid();
@@ -63,17 +61,16 @@ class PetitBac extends React.Component {
         this.checkIfMovieIsValid();
         this.checkIfSongIsValid();
         this.checkIfJobIsValid();
-        //alert(this.state.scores);
+        this.setState({currentState: "playerHasFinished"});
+        this.pbc.emitEnd(this.props.room);
     }
 
-
     componentDidMount = () => {
-        this.client.emitUser(this.props.statename, this.props.room);
-        this.client.updateUsers(this.setNames, this.props.room);
-        this.setupBeforeUnloadListener(this.client);
-        this.client.emitForm(this.Names, this.Job, this.City, this.Country,
+        this.pbc.emitUser(this.props.statename, this.props.room);
+        this.playerList.updateUsers(this.setNames);
+        this.setupBeforeUnloadListener(this.pbc);
+        this.pbc.emitForm(this.Names, this.Job, this.City, this.Country,
             this.Animal, this.Objects, this.Movie, this.Food, this.Song, this.props.room);
-
     }
 
 
@@ -312,25 +309,30 @@ class PetitBac extends React.Component {
 
     render() {
 
-        this.button = <button onClick={this.endGame}> Finish !</button>;
-        let names = this.state.names.map((m) => <player key={m}> {m} score {this.state.scores[m]} </player>);
+        if(this.state.currentState === "playerHasFinished")
+            return <div>En attente des autres joueurs !</div>
 
-        return <div>
-            <FormPB warning={this.warningMessage}
-                    letter={this.props.letter}
-                    onNameChange={this.setName}
-                    onCityChange={this.setCity}
-                    onCountryChange={this.setCountry}
-                    onAnimalChange={this.setAnimal}
-                    onFoodChange={this.setFood}
-                    onObjectChange={this.setObject}
-                    onJobChange={this.setJob}
-                    onMovieChange={this.setMovie}
-                    onSongChange={this.setSong}
-                    onSubmit={this.start}
-            />
-            {names}
-        </div>
+        else {
+            this.button = <button onClick={this.endGame}> Finish !</button>;
+            let names = this.state.names.map((m) => <player key={m}> {m} score {this.state.scores[m]} </player>);
+
+            return <div>
+                <FormPB warning={this.warningMessage}
+                        letter={this.props.letter}
+                        onNameChange={this.setName}
+                        onCityChange={this.setCity}
+                        onCountryChange={this.setCountry}
+                        onAnimalChange={this.setAnimal}
+                        onFoodChange={this.setFood}
+                        onObjectChange={this.setObject}
+                        onJobChange={this.setJob}
+                        onMovieChange={this.setMovie}
+                        onSongChange={this.setSong}
+                        onSubmit={this.start}
+                />
+                {names}
+            </div>
+        }
     }
 }
 

@@ -46,7 +46,7 @@ class Pictionary extends React.Component {
         this._loaded =true;
         this.uc.updateUsers(this.setNames);
         //document.getElementById("pictionary").classList.remove("in");
-        this.uc.emitUser(this.props.statename);
+        this.game.emitUser(this.props.statename,this.props.room);
         this.setupBeforeUnloadListener(this.uc);
         this.game.listenFirstRound(this.firstround, this.props.room);
         this.game.listenRound(this.nextRound, this.props.room);
@@ -56,13 +56,13 @@ class Pictionary extends React.Component {
     componentWillUnmount() {
         document.getElementById("pictionary").classList.add("out");
         this._loaded =false;
-        this.uc.userLeave(this.props.statename);
+        this.game.userLeave(this.props.statename, this.props.room);
     }
 
     setupBeforeUnloadListener = (uc) => {
         window.addEventListener("beforeunload", (ev) => {
             ev.preventDefault();
-            uc.userLeave(this.props.statename);
+            uc.userLeave(this.props.statename,this.props.room);
             if (this.state.gameRunning) {
                 this.game.stopGame(this.props.statename, this.props.room);
             }
@@ -131,7 +131,7 @@ class Pictionary extends React.Component {
         document.getElementById("pictionary").classList.add("out");
         setTimeout(()=> {
             this.props.closeChat();
-            this.uc.userLeave(this.props.statename, this.props.room);
+            this.game.userLeave(this.props.statename, this.props.room);
             if (this.state.gameRunning) {
                 //console.log("LEAVING");
                 this.game.stopGame(this.props.statename, this.props.room);

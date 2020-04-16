@@ -1,6 +1,6 @@
 import React from "react";
 import {PetitBac} from "./PetitBac";
-import {PetitBacClient, PictionaryClient} from "./Clients";
+import {PetitBacClient, PictionaryClient, PlayerListClient} from "./Clients";
 
 class PetitBacStart extends React.Component {
 
@@ -11,7 +11,7 @@ class PetitBacStart extends React.Component {
             info: "",
             gameRunning: false,
         };
-        this.sendMsg = this.sendMsg.bind(this);
+
         this.setNames = this.setNames.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
@@ -23,6 +23,7 @@ class PetitBacStart extends React.Component {
 
         this.pbc = new PetitBacClient();
         this.game = new PictionaryClient();
+        this.playerList = new PlayerListClient(this.props.room);
     }
 
     setNames = (name) => {
@@ -30,39 +31,24 @@ class PetitBacStart extends React.Component {
     };
 
 
-    sendMsg(message) {
-        //console.log(this.state.currentWord === message.text);
-        //console.log(this.state.currentDrawer !== message.name);
-        //console.log(this.state.gameRunning);
-        if (this.state.currentWord === message.text && this.state.currentDrawer !== message.name && this.state.gameRunning) {
-            console.log("good  job");
-            this.setState({info: "Good job, " + message.name + " ! The word was " + this.state.currentWord});
-            if (this.props.statename === this.state.currentDrawer) {
-                setTimeout(() => this.game.asWin(message.name, this.state.currentDrawer, this.props.room), 2000);
-            }
-        }
-    }
-
     componentDidMount() {
-        this.pbc.updateUsers(this.setNames, this.props.room);
+        this.playerList.updateUsers(this.setNames);
         this.pbc.emitUser(this.props.statename, this.props.room);
         this.setupBeforeUnloadListener(this.pbc);
-        this.game.listenEndGame(this.endGame, this.props.room);
-        this.game.listenPetitBacLetter(this.listenForm, this.props.room);
+        this.pbc.listenPetitBacLetter(this.listenForm, this.props.room);
     }
 
 
     componentWillUnmount() {
-        this.pbc.userLeave(this.props.statename);
+        this.pbc.userLeave(this.props.statename, this.props.room);
     }
-
 
     setupBeforeUnloadListener = (pbc) => {
         window.addEventListener("beforeunload", (ev) => {
             ev.preventDefault();
             pbc.userLeave(this.props.statename, this.props.room);
             if (this.state.gameRunning) {
-                this.game.stopGame(this.props.statename, this.props.room);
+                this.pbc.stopGame(this.props.statename, this.props.room);
             }
             return ev.returnValue = "test";
         });
@@ -74,7 +60,7 @@ class PetitBacStart extends React.Component {
             // eslint-disable-next-line no-useless-escape
             alert("You can't play Petit Bac game alone ¯\\_(ツ)_/¯, you must at least be 2 !");
         } else {
-            this.game.startPetitBac(this.props.room)
+            this.pbc.startPetitBac(this.props.room)
         }
     }
 
@@ -108,23 +94,15 @@ class PetitBacStart extends React.Component {
 
 
     leave() {
-        this.props.closeChat();
         this.pbc.userLeave(this.props.statename, this.props.room);
         if (this.state.gameRunning) {
-            this.game.stopGame(this.props.statename, this.props.room);
+            this.pbc.stopGame(this.props.statename, this.props.room);
         }
     }
 
     render() {
-        var names;
-        if (!this.state.endGame) {
-            names = this.state.names.map((m) => <player key={m}> {m} </player>);
-            this.button = <button onClick={this.endGame}> Finish !</button>;
-        } else {
-            this.button = <button onClick={this.endGame}> Finish !</button>;
-            names = this.state.names.map((m) => <player key={m}> {m} score {this.state.scores[m]} </player>);
-        }
 
+        var  names = this.state.names.map((m) => <player key={m}> {m} </player>);
         if (this.state.gameRunning === true) {
             return <div><PetitBac room ={this.props.room} letter = {this.state.currentLetter}/>
                 <div id="players-list">
@@ -134,6 +112,7 @@ class PetitBacStart extends React.Component {
             </div>
 
         }
+
         else return <div class="game in" id="petitbac">
             <div id="players-list">
                 <h4>Players online in room {this.props.room} </h4>

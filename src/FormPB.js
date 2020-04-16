@@ -7,7 +7,6 @@ class FormPB extends React.Component {
         return <div>
             {this.warningMessage}
             Letter : {this.props.letter} <br/>
-            Room : {this.props.room} <br/>
             <label>Name </label> <br/>
             <InputField onChange={this.props.onNameChange}/><br/>
             <label>City </label> <br/>
