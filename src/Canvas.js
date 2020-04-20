@@ -19,7 +19,8 @@ class Canvas extends React.Component {
             room: null,
             userList: [],
             currentX: 0,
-            currentY: 0
+            currentY: 0,
+            size: 2,
         };
         this.whiteboard = React.createRef();
 
@@ -85,8 +86,9 @@ class Canvas extends React.Component {
         context.beginPath();
         context.moveTo(x0, y0);
         context.lineTo(x1, y1);
+        context.lineJoin = context.lineCap = 'round';
         context.strokeStyle = color;
-        context.lineWidth = 2;
+        context.lineWidth = this.state.size;
 
         context.stroke();
         context.closePath();
@@ -141,7 +143,7 @@ class Canvas extends React.Component {
         if (!this.state.drawing) {
             return;
         }
-        if(this.props.name === this.props.drawer || this.props.drawer === ""){
+        if (this.props.name === this.props.drawer || this.props.drawer === "") {
             this.drawLine(x, y, this.state.currentX, this.state.currentY, this.state.currentColor, true);
             this.setState({currentX: x, currentY: y});
         }
@@ -168,16 +170,55 @@ class Canvas extends React.Component {
         this.setState({currentColor: color})
     };
 
+    setSizeBrush = (brushSize) => {
+        this.setState({size: brushSize})
+    }
+
+
     render() {
-        let buttons = "";
+        let colors = "";
         if (this.props.name === this.props.drawer || this.props.drawer === "") {
-            buttons = <>
-                <button onClick={this.clean}>Clean</button>
-                <button id="blackButton" onClick={() => this.setColor("black")}>Black</button>
-                <button id="redButton" onClick={() => this.setColor("red")}>Red</button>
-                <button id="blueButton" onClick={() => this.setColor("blue")}>Blue</button>
-                <button id="greenButton" onClick={() => this.setColor("green")}>Green</button>
-            </>
+            colors =
+                <>
+                    <button onClick={this.clean}>Clean</button>
+                    <button id="whiteButton" onClick={() => this.setColor("#ffffff")}/>
+                    <button id="blackButton" onClick={() => this.setColor("#000000")}/>
+
+                    <button id="greyButton" onClick={() => this.setColor("#908484")}/>
+                    <button id="darkGreyButton" onClick={() => this.setColor("#504f4f")}/>
+
+                    <button id="redButton" onClick={() => this.setColor("#ff0e0e")}/>
+                    <button id="darkRedButton" onClick={() => this.setColor("#8b0000")}/>
+
+                    <button id="orangeButton" onClick={() => this.setColor("#cd7f13")}/>
+                    <button id="darkOrangeButton" onClick={() => this.setColor("#ec6f03")}/>
+
+                    <button id="yellowButton" onClick={() => this.setColor("#ecec04")}/>
+                    <button id="darkYellowButton" onClick={() => this.setColor("#797510")}/>
+
+
+                    <button id="greenButton" onClick={() => this.setColor("#34ad34")}/>
+                    <button id="darkGreenButton" onClick={() => this.setColor("#134c13")}/>
+
+                    <button id="blueButton" onClick={() => this.setColor("#4185c9")}/>
+                    <button id="darkBlueButton" onClick={() => this.setColor("#202090")}/>
+
+
+                    <button id="pinkButton" onClick={() => this.setColor("#f837bf")}/>
+                    <button id="darkPinkButton" onClick={() => this.setColor("#fa0383")}/>
+
+                    <button id="purpleButton" onClick={() => this.setColor("#866779")}/>
+                    <button id="darkPurpleButton" onClick={() => this.setColor("#5c3f4e")}/>
+
+                    <button id="brownButton" onClick={() => this.setColor("#7f5230")}/>
+                    <button id="darkBrownButton" onClick={() => this.setColor("#52210a")}/>
+
+                    <div>
+                        <img src={require('./Small.png')} onClick={() => this.setSizeBrush("4")} alt=''/>
+                        <img src={require('./Medium.png')} onClick={() => this.setSizeBrush("8")} alt=''/>
+                        <img src={require('./Large.png')} onClick={() => this.setSizeBrush("12")} alt=''/>
+                    </div>
+                </>
         }
         return (
             <div>
@@ -188,7 +229,7 @@ class Canvas extends React.Component {
                     className="whiteboard"
                 />
                 <br/>
-                {buttons}
+                {colors}
             </div>
         );
     }

@@ -20,6 +20,8 @@ h1 {
     font-size: xx-large;
 }
 
+
+
 #name {
     color: #ff0000;
 }
@@ -34,16 +36,136 @@ button {
     margin: 8px;
 }
 
-#greenButton {
-    background-color: green !important;
+
+#whiteButton {
+    width: 30px;
+    height: 30px;
+    background-color: #ffffff !important;
 }
 
+#blackButton {
+    width: 30px;
+    height: 30px;
+    background-color: #000000 !important;
+}
+
+
+#greyButton {
+    width: 30px;
+    height: 30px;
+    background-color: #908484 !important;
+}
+
+
+
+#darkGreyButton {
+    width: 30px;
+    height: 30px;
+    background-color: #504f4f !important;
+}
+
+
 #redButton {
-    background-color: red !important;
+    width: 30px;
+    height: 30px;
+    background-color: #ff0e0e !important;
+}
+
+#darkRedButton {
+    width: 30px;
+    height: 30px;
+    background-color: #8b0000 !important;
+}
+
+#orangeButton {
+    width: 30px;
+    height: 30px;
+    background-color: #cd7f13 !important;
+}
+
+#darkOrangeButton {
+    width: 30px;
+    height: 30px;
+    background-color: #ec6f03 !important;
+}
+
+
+#yellowButton {
+    width: 30px;
+    height: 30px;
+    background-color: #ecec04 !important;
+}
+
+#darkYellowButton {
+    width: 30px;
+    height: 30px;
+    background-color: #797510 !important;
+}
+
+
+#greenButton {
+    width: 30px;
+    height: 30px;
+    background-color: #34ad34 !important;
+}
+
+#darkGreenButton {
+    width: 30px;
+    height: 30px;
+    background-color: #134c13 !important;
 }
 
 #blueButton {
-    background-color: blue !important;
+    width: 30px;
+    height: 30px;
+    background-color: #4185c9 !important;
+}
+
+#darkBlueButton {
+    width: 30px;
+    height: 30px;
+    background-color: #202090 !important;
+}
+
+
+#pinkButton {
+    width: 30px;
+    height: 30px;
+    background-color: #f837bf !important;
+}
+
+#darkPinkButton {
+    width: 30px;
+    height: 30px;
+    background-color: #fa0383 !important;
+}
+
+
+#purpleButton {
+    width: 30px;
+    height: 30px;
+    background-color: #866779 !important;
+}
+
+#darkPurpleButton {
+    width: 30px;
+    height: 30px;
+    background-color: #5c3f4e !important;
+}
+
+
+
+#brownButton {
+    width: 30px;
+    height: 30px;
+    background-color: #7f5230 !important;
+}
+
+
+#darkBrownButton {
+    width: 30px;
+    height: 30px;
+    background-color: #52210a !important;
 }
 
 #time-left {

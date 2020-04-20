@@ -248,18 +248,15 @@ io.on('connection', (client) => {
         let food = data.Food;
         let song = data.Song;
         let animal = data.Animal;
-        Names[room] = names;
-        City[room] = city;
-        Country[room] = country;
-        Job[room] = job;
-        Movie[room] = movie;
-        Objects[room] = objects;
-        Food[room] = food;
-        Song[room] = song;
-        Animal[room]= animal;
-        console.log("sync-form")
-        io.emit("sync-form", {room: room, Names: Names, City: City, Country: Country, Job: Job,
-        Movie: Movie, Objects: Objects, Food: Food, Song: Song, Animal: Animal});
+        Names[room].push(names);
+        City[room].push(city);
+        Country[room].push(country);
+        Animal[room].push(animal);
+        Food[room].push(food);
+        Objects[room].push(objects);
+        Job[room].push(job);
+        Movie[room].push(movie);
+        Song[room].push(song);
     })
 
     client.on("update-grid",function (data) {
@@ -288,9 +285,8 @@ io.on('connection', (client) => {
             score[player] = 0;
         });
         let letter = newLetter();
-        let firstplayer = Math.floor(Math.random() * players.length);
-        console.log('start-PetitBac', {player: players[firstplayer], letter: letter, room: room});
-        io.emit('start-PetitBac', {player: players[firstplayer], letter: letter, room: room});
+        console.log('start-PetitBac', {letter: letter, room: room});
+        io.emit('start-PetitBac', {letter: letter, room: room});
     });
 
     client.on('end-pb-player', function (room) {
@@ -309,13 +305,22 @@ io.on('connection', (client) => {
         let room = data.room;
         let players = rooms[room];
         let word = newWord();
-        lines[room] = [];
         io.emit("cleared", room);
         let indexOfNextDrawer = (players.indexOf(drawer) + 1) % (players.length);
         console.log('round-game', {players: players[indexOfNextDrawer], word: word, room: room, scoreToUpdate: winner})
         io.emit('round-game', {player: players[indexOfNextDrawer], word: word, room: room, scoreToUpdate: winner});
         resetTimer(10, room);
     });
+
+
+    client.on('win-points-pb', function (data) {
+        let winner = data.player;
+        score[winner]++;
+        let room = data.room;
+        console.log('round-game', {room: room, scoreToUpdate: winner})
+        io.emit('round-game', {room: room, scoreToUpdate: winner});
+    });
+
 
     client.on('loose', function (data) {
         let drawer = data.drawer;

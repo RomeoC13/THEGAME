@@ -117,6 +117,11 @@ class PetitBacClient{
         socket.emit('join', {user : user, room : room,type : "Petit Bac"})
     }
 
+
+    winPoints(user,room){
+        socket.emit("win-points-pb",{player : user, room: room})
+    }
+
     startPetitBac(room){
         socket.emit("start-game-pb",room)
     }
