@@ -49,6 +49,7 @@ class PetitBac extends React.Component {
         this.JobAlreadyToken = this.JobAlreadyToken.bind(this);
         this.MovieAlreadyToken = this.MovieAlreadyToken.bind(this);
         this.SongAlreadyToken = this.SongAlreadyToken.bind(this);
+        this.updateForm = this.updateForm.bind(this);
     }
 
     start() {
