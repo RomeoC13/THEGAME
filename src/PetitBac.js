@@ -62,17 +62,29 @@ class PetitBac extends React.Component {
         this.checkIfSongIsValid();
         this.checkIfJobIsValid();
         this.setState({currentState: "playerHasFinished"});
-        this.pbc.emitEnd(this.props.room);
+        this.pbc.emitForm(this.Names, this.Job, this.City, this.Country,
+            this.Animal, this.Objects, this.Movie, this.Food, this.Song, this.props.room);
     }
 
     componentDidMount = () => {
         this.pbc.emitUser(this.props.statename, this.props.room);
         this.playerList.updateUsers(this.setNames);
         this.setupBeforeUnloadListener(this.pbc);
-        this.pbc.emitForm(this.Names, this.Job, this.City, this.Country,
-            this.Animal, this.Objects, this.Movie, this.Food, this.Song, this.props.room);
+        this.pbc.listenForms(this.updateForm, this.props.room);
     }
 
+    updateForm(data){
+    this.setState({
+        Names : data.Names,
+        City : data.City,
+        Country : data.Country,
+        Animal : data.Animal,
+        Food : data.Food,
+        Objects : data.Objects,
+        Job : data.Job,
+        Movie : data.Movie,
+        Song : data.Song});
+    }
 
     setupBeforeUnloadListener = (client) => {
         window.addEventListener("beforeunload", (ev) => {

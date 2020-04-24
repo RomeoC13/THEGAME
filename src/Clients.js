@@ -117,11 +117,6 @@ class PetitBacClient{
         socket.emit('join', {user : user, room : room,type : "Petit Bac"})
     }
 
-
-    winPoints(user,room){
-        socket.emit("win-points-pb",{player : user, room: room})
-    }
-
     startPetitBac(room){
         socket.emit("start-game-pb",room)
     }
@@ -130,6 +125,14 @@ class PetitBacClient{
         socket.on('start-PetitBac',function (data) {
             if(data.room === room){
                 op(data);
+            }
+        })
+    }
+
+    listenForms(op,room){
+        socket.on("update-form",function (data) {
+            if(data.room===room){
+                op(data.player);
             }
         })
     }
@@ -143,16 +146,10 @@ class PetitBacClient{
         socket.emit('leave', {user: user,room: room,type : "Petit Bac"})
     }
 
-
     emitForm(Names, Job, City, Country, Animal, Objects, Movie, Food, Song ,room){
         socket.emit('update-form',{Names : Names,Job: Job, Country: Country,
             Animal: Animal, Objects: Objects, Movie: Movie, Food: Food, Song: Song, room :room})
     }
-
-    emitEnd(room){
-        socket.emit('end-pb-player', {room: room});
-    }
-
 
 }
 

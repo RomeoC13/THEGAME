@@ -313,15 +313,6 @@ io.on('connection', (client) => {
     });
 
 
-    client.on('win-points-pb', function (data) {
-        let winner = data.player;
-        score[winner]++;
-        let room = data.room;
-        console.log('round-game', {room: room, scoreToUpdate: winner})
-        io.emit('round-game', {room: room, scoreToUpdate: winner});
-    });
-
-
     client.on('loose', function (data) {
         let drawer = data.drawer;
         let room = data.room;
