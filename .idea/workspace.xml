@@ -26,6 +26,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1181bf25-1fda-424a-8fab-a2f46bfbae05" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,6 +105,7 @@
       <workItem from="1587128943470" duration="3826000" />
       <workItem from="1587388584249" duration="7793000" />
       <workItem from="1587823474471" duration="2095000" />
+      <workItem from="1587838488094" duration="961000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor du Canvas avec socket">
       <created>1585246617826</created>
@@ -436,10 +438,10 @@
     </state>
     <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1587816288447" />
     <state x="451" y="187" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1585766188304" />
-    <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1587041842113">
+    <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1587838655118">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1587041842113" />
+    <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1587838655118" />
     <state x="723" y="416" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1586103299050" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1585658780785">
       <screen x="0" y="0" width="1920" height="1040" />
