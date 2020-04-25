@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import {Pictionary} from "./Pictionary.js";
-import {LoginWindow} from "./LoginWindow.js";
-import {PetitBacStart} from "./PetitBacStart";
-import {Room} from "./Room";
+import {Pictionary} from "./Pictionary/Pictionary";
+import {LoginWindow} from "./WelcomePage/LoginWindow.js";
+import {PetitBacStart} from "./Petit Bac/PetitBacStart";
+import {Room} from "./WelcomePage/Room";
 import {AppClient} from "./Clients";
 import {Helmet} from 'react-helmet';
-import {Demineur} from "./Demineur";
+import {Demineur} from "./Demineur/Demineur.js";
 
 
 class App extends React.Component {
@@ -161,7 +161,7 @@ class App extends React.Component {
             if (this.state.roomList.length !== 0) {
                 orJoinaRoom = <h4>or join a room</h4>;
             }
-            content = <div id="welcomepage" class="main">
+            content = <div id="welcomepage" className="main">
                 <h4>Currently playing : {this.state.userCount} players</h4>
                 <LoginWindow warning={this.warningMessage} onNameChange={this.setName} onLogin={this.startChat}
                              onRoomChange={this.setRoom} onGameChange={this.setGame}/>
@@ -185,9 +185,9 @@ class App extends React.Component {
             }
         }
         if (!this.state.darkMode) {
-            body = <body class="white"/>;
+            body = <body className="white"/>;
         } else {
-            body = <body class="dark"/>
+            body = <body className="dark"/>
         }
         return <>
             <Helmet>
@@ -196,7 +196,7 @@ class App extends React.Component {
                 {body}
             </Helmet>
             <button onClick={this.darkWhite}/>
-            <h1 class={size}>G@mes</h1>
+            <h1 className={size}>G@mes</h1>
             {content}
         </>
     }

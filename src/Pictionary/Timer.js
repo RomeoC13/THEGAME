@@ -1,5 +1,5 @@
 import React from "react";
-import {TimerClient} from "./Clients";
+import {TimerClient} from "../Clients";
 
 
 class Timer extends React.Component {

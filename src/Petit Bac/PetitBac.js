@@ -1,5 +1,5 @@
 import React from "react";
-import {PetitBacClient, PlayerListClient} from "./Clients";
+import {PetitBacClient, PlayerListClient} from "../Clients";
 import {FormPB} from "./FormPB";
 
 class PetitBac extends React.Component {

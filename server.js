@@ -54,7 +54,6 @@ let letters = [
 ];
 let wordcount;
 
-let playercount;
 let Names = [];
 let City = [];
 let Country = [];
@@ -63,7 +62,7 @@ let Movie = [];
 let Objects = [];
 let Food = [];
 let Song = [];
-let Animal =[];
+let Animal = [];
 
 function updatePBNames() {
     console.log("update pb names")
@@ -108,8 +107,8 @@ function updatePBAnimal() {
 let onlineCount = 0;
 let users = [];
 //Rooms Array is a 2D Array,
-// for example a room of Pictionnary with few players named "Romeo" ,"Pauline" and "Yash" in room "3" will be stored like this :
-// rooms["3"]=["Romeo","Pauline","Yash"] and roomsType["3"]=Pictionnary
+// for example a room of Pictionary with few players named "Romeo" ,"Pauline" and "Yash" in room "3" will be stored like this :
+// rooms["3"]=["Romeo","Pauline","Yash"] and roomsType["3"]=Pictionary
 let rooms = [];
 let roomsType = [];
 
@@ -276,14 +275,12 @@ io.on('connection', (client) => {
     });
 
 
-
-    client.on("update-grid",function (data) {
-        let room= data.room;
-        let grid= data.grid;
+    client.on("update-grid", function (data) {
+        let room = data.room;
         //console.log("GRID UPDATED")
-        grids[room]=grid;
+        grids[room] = data.grid;
         console.log("sync-grid")
-        io.emit("sync-grid",grids);
+        io.emit("sync-grid", grids);
     })
 
     client.on("create-grid", function (data) {
@@ -340,12 +337,8 @@ io.on('connection', (client) => {
     })
 
     client.on('end-pb-player', function (data) {
-        playercount++
         console.log('a player has finished');
-        if(playercount === data.room.length) {
-            console.log('everyone has finished');
-            io.emit('end-GamePb', {room: data.room});
-        }
+        io.emit('end-GamePb', {room: data.room})
     });
 
 

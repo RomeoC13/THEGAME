@@ -180,9 +180,6 @@ class PetitBacClient{
         });
     }
 
-
-
-
     endForOnePlayer(player, room){
         socket.emit("end-pb-player", {player : player, room : room});
     }

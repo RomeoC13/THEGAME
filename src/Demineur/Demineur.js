@@ -1,6 +1,6 @@
 import React from "react";
 import {Cube} from "./Cube"
-import {DemineurClient, PlayerListClient} from "./Clients";
+import {DemineurClient, PlayerListClient} from "../Clients";
 
 class Demineur extends React.Component {
     constructor(props) {
@@ -210,10 +210,10 @@ class Demineur extends React.Component {
             })
             return <tr>{entry}</tr>;
         });
-        return <div id="demineur" class="game in">
+        return <div id="demineur" className="game in">
             <p>{this.state.info} </p>
             Bomb remaning : {this.bombcount}
-            <table class="demineurGrid">
+            <table className="demineurGrid">
                 <tbody>
                 {toReturn}
                 </tbody>

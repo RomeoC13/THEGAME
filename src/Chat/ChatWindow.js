@@ -1,6 +1,6 @@
 import React from "react";
-import {ChatClient} from "./Clients";
-import {InputField} from "./InputField";
+import {ChatClient} from "../Clients";
+import {InputField} from "../WelcomePage/InputField";
 
 class ChatWindow extends React.Component {
     constructor(props) {
@@ -16,7 +16,7 @@ class ChatWindow extends React.Component {
     }
 
     addMessages(messages) {
-        this.setState((state, props) => ({
+        this.setState((state) => ({
             messages: state.messages.concat(messages)
         }))
         this.props.msg(messages)
