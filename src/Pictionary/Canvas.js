@@ -24,6 +24,7 @@ class Canvas extends React.Component {
         };
         this.whiteboard = React.createRef();
 
+        //Clear canva
         socket.on("cleared", (room) => {
             if (room === this.props.room) {
                 this.state.whiteboard
@@ -32,6 +33,7 @@ class Canvas extends React.Component {
             }
         });
 
+        //Get drawing and add drawing
         socket.on("add-drawing", data => {
             let w = window.innerWidth;
             let h = window.innerHeight;
@@ -49,6 +51,7 @@ class Canvas extends React.Component {
 
     }
 
+    //Update lines for the drawing
     receive(data) {
         data.forEach((line) => {
             //console.log("received data", data);
@@ -66,6 +69,7 @@ class Canvas extends React.Component {
 
     }
 
+    //Listen events for receiving a drawing or draw
     componentDidMount() {
         socket.on("update-lines", (data) => this.receive(data));
         this.setState({
@@ -81,6 +85,7 @@ class Canvas extends React.Component {
 
     }
 
+    //Draw line in canva
     drawLine = (x0, y0, x1, y1, color, emit) => {
         let context = this.state.whiteboard.getContext("2d");
         context.beginPath();
@@ -109,6 +114,7 @@ class Canvas extends React.Component {
         this.setState({cleared: false});
     };
 
+    //Get current position when mouse is down
     onMouseDown = e => {
         var rect = e.target.getBoundingClientRect();
         var x = e.clientX - rect.left;
@@ -122,6 +128,7 @@ class Canvas extends React.Component {
         });
     };
 
+    //Get current position when mouse is up
     onMouseUp = e => {
         var rect = e.target.getBoundingClientRect();
         var x = e.clientX - rect.left;
@@ -136,6 +143,7 @@ class Canvas extends React.Component {
 
     };
 
+    //Get current position when mouse is moving
     onMouseMove = e => {
         var rect = e.target.getBoundingClientRect();
         var x = e.clientX - rect.left;
@@ -149,11 +157,12 @@ class Canvas extends React.Component {
         }
     };
 
-
+    //Ask clear for canva
     clean = () => {
         socket.emit("ask-clear", this.props.room)
     };
 
+    //Add delay for receiving drawing
     throttle = (callback, delay) => {
         let previousCall = new Date().getTime();
         return function () {
@@ -166,15 +175,17 @@ class Canvas extends React.Component {
         };
     };
 
+    //Set color for pen
     setColor = (color) => {
         this.setState({currentColor: color})
     };
 
+    //Set size brush for pen
     setSizeBrush = (brushSize) => {
         this.setState({size: brushSize})
     }
 
-
+    //Visual render
     render() {
         let colors = "";
         if (this.props.name === this.props.drawer || this.props.drawer === "") {

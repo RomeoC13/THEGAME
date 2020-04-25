@@ -2,6 +2,7 @@ import React from "react";
 import {InputField} from "./InputField";
 
 class LoginWindow extends React.Component {
+    //Visual render to login
     render() {
         return <div>
             <strong>{this.props.warning}</strong> <br/>

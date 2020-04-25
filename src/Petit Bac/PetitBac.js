@@ -27,7 +27,6 @@ class PetitBac extends React.Component {
         this.Song = [];
         this.pbc = new PetitBacClient();
         this.playerList = new PlayerListClient(this.props.room);
-        this.warningMessage = "";
 
         this.start = this.start.bind(this);
         this.setName = this.setName.bind(this);
@@ -102,8 +101,6 @@ class PetitBac extends React.Component {
     }
 
     //TODO : Verifier la synchro avec les autres membres pour comparer les mots sur une même liste...
-
-
     updateNamesForm = (name) => {
         this.Names = name;
     }
@@ -131,7 +128,6 @@ class PetitBac extends React.Component {
     updateSongForm = (song) => {
         this.Song = song;
     }
-
 
     endGame() {
         this.setState({currentState: "everyOneHasFinished"});

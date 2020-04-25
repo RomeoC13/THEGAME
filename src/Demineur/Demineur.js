@@ -6,7 +6,6 @@ class Demineur extends React.Component {
     constructor(props) {
         super(props);
         this.grid = []
-        //this.gennerateGrid();
         this.bombcount = this.props.bombs;
         this.show = this.show.bind(this);
         this.dc = new DemineurClient();
@@ -23,6 +22,7 @@ class Demineur extends React.Component {
         this.dc.createGrid(this.grid, this.props.room);
     }
 
+    //Generate grid with bombs and value of the nearest bombs
     gennerateGrid = () => {
         for (let i = 0; i < this.props.height; i++) {
             this.grid[i] = [];
@@ -39,11 +39,8 @@ class Demineur extends React.Component {
             }
         }
         bombs.forEach((bomb) => {
-            //console.log("NEW BOMB", bomb)
             let i = Math.floor(bomb / this.props.height);
-            //console.log(i)
             let j = bomb - (i * this.props.height);
-            //console.log(j)
             this.grid[i][j].value = "*";
         })
         for (let i = 0; i < this.props.height; i++) {
@@ -57,6 +54,7 @@ class Demineur extends React.Component {
         this.setState({names: name})
     };
 
+    //Reveal all boxes
     revealAll = () => {
         for (let i = 0; i < this.props.height; i++) {
             for (let j = 0; j < this.props.width; j++) {
@@ -77,7 +75,7 @@ class Demineur extends React.Component {
         this.forceUpdate();
     }
 
-
+    //Reset Demineur
     reset = () => {
         this.setState({info : ""})
         this.gennerateGrid();
@@ -94,6 +92,7 @@ class Demineur extends React.Component {
         });
     };
 
+    //Count bombs near the box
     countBombNear = (i, j) => {
         if (this.grid[i][j].value === "*")
             return "*";
@@ -112,6 +111,7 @@ class Demineur extends React.Component {
         return count;
     }
 
+    //Show boxes when clicked
     show = (i, j, emit) => {
         if (!this.state.isRunning)
             return;
@@ -145,6 +145,7 @@ class Demineur extends React.Component {
         this.forceUpdate();
     }
 
+    //Set a flag in the box
     flag = (i, j) => {
         if (!this.grid[i][j].isShowed) {
             this.grid[i][j].isFlagged = !this.grid[i][j].isFlagged;
@@ -154,6 +155,7 @@ class Demineur extends React.Component {
         }
     }
 
+    //Update bomb count
     updateBombCount = () => {
         let count=this.props.bombs;
         for (let i = 0; i < this.props.height; i++) {
@@ -165,6 +167,7 @@ class Demineur extends React.Component {
         this.bombcount=count;
     }
 
+    //Check if the box is a bomb and call win if it is not
     testWin = () => {
         if (!this.state.isRunning)
             return;
@@ -178,17 +181,18 @@ class Demineur extends React.Component {
         }
         this.win();
     }
+
+    //Set state and reveal all boxes
     win = () => {
         this.setState({info :"You won ! congrats !"})
         this.setState({isRunning: false});
-        //alert("Win");
         this.revealAll();
     }
 
+    //Set state and reveal all boxes
     loose = () => {
         this.setState({info :"You loose !"})
         this.setState({isRunning: false})
-        //alert("Loose");
         this.revealAll();
     }
 
@@ -200,6 +204,7 @@ class Demineur extends React.Component {
         },400);
     }
 
+    //Visual render
     render = () => {
         let names = this.state.names.map((m) => <player key={m}> {m} </player>);
         let toReturn = this.grid.map((item, i) => {

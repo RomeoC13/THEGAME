@@ -7,7 +7,6 @@ app.use(express.static('build'));
 app.use(bodyParser.json());
 
 const port = process.env.PORT || 3001;
-//io.listen(port);
 
 http.listen(port, () => console.log("Listening on port :", port));
 
@@ -48,7 +47,6 @@ let words = [
 let grids = [];
 
 //PETIT BAC USAGE :
-//POTENTIELLEMENT CHANGER
 let letters = [
     "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 ];
@@ -65,7 +63,6 @@ let Song = [];
 let Animal = [];
 
 function updatePBNames() {
-    console.log("update pb names")
     io.emit('update-pbNames', Names);
 }
 
@@ -125,17 +122,14 @@ function newWord() {
 
 function resetTimer(value, room) {
     countdowns[room] = value;
-    //console.log('Reset : timer', {countdown: value, room: room});
     io.emit('timer', {countdown: value, room: room});
 }
 
 function updateNames() {
-    //console.log('update-names', rooms);
     io.emit('update-names', rooms);
 }
 
 io.on('connection', (client) => {
-    //console.log("New connection");
 
     client.on("join", (data) => {
         let name = data.user;
@@ -146,7 +140,6 @@ io.on('connection', (client) => {
             return;
         }
         onlineCount++;
-        console.log('update-playercount', onlineCount);
         io.emit('update-playercount', onlineCount);
         if (!rooms.hasOwnProperty(room)) {
             rooms[room] = [];
@@ -157,23 +150,19 @@ io.on('connection', (client) => {
         if (!roomsType.hasOwnProperty(room)) {
             roomsType[room] = type;
         }
-        console.log('Nouveau joueur  : ' + name + " dans " + room);
         rooms[room].push(name);
         users.push(name);
         io.emit("cleared", room);
         io.emit("update-lines", lines[room]);
-        console.log('update-roomlist');
         io.emit('update-roomlist', {rooms: rooms, roomsType: roomsType})
         updateNames();
     });
 
     client.on("ask-update-playercount", () => {
-        console.log('update-playercount', onlineCount);
         io.emit('update-playercount', onlineCount);
     });
 
     client.on('ask-update-roomlist', () => {
-        console.log('update-roomlist');
         io.emit('update-roomlist', {rooms: rooms, roomsType: roomsType})
     });
 
@@ -186,23 +175,19 @@ io.on('connection', (client) => {
         var room = data.room;
         var line = {x0: x0, x1: x1, y0: y0, y1: y1, color: color, room: room}
         lines[room].push(line);
-        console.log('add-drawing', line);
         io.emit('add-drawing', line);
-        console.log('drawing on emit server on room :', room);
     });
 
     client.on('ask-clear', function (room) {
-        console.log("cleared", room);
         lines[room] = [];
         io.emit("cleared", room);
     });
 
     client.on('print', (msg) => {
-        console.log("printing : " + msg);
+        console.log("Message : " + msg);
     });
 
     client.on('set-name', (name) => {
-        console.log('set-name', name);
         client.username = name;
         client.emit('add-messages', messages)
     });
@@ -212,7 +197,6 @@ io.on('connection', (client) => {
         let room = data.room;
         const message = {name: client.username, text: text, room: room};
         messages.push(message);
-        console.log(message);
         io.emit('add-messages', [message])
     });
 
@@ -227,7 +211,6 @@ io.on('connection', (client) => {
         let name = data.user;
         let room = data.room;
         let type = data.type;
-        console.log("Joueur " + data.user + " a quitter " + data.room + " de " + data.type);
 
         if (rooms.hasOwnProperty(room)) {
             var indexName = rooms[room].indexOf(name);
@@ -253,9 +236,7 @@ io.on('connection', (client) => {
             }
             updateNames();
             onlineCount--;
-            console.log('update-roomlist');
             io.emit('update-roomlist', {rooms: rooms, roomsType: roomsType});
-            console.log('update-playercount', onlineCount);
             io.emit('update-playercount', onlineCount);
         }
     });
@@ -269,7 +250,6 @@ io.on('connection', (client) => {
         });
         let firstplayer = Math.floor(Math.random() * players.length);
         let word = newWord();
-        console.log('first-round', {player: players[firstplayer], word: word, room: room});
         io.emit('first-round', {player: players[firstplayer], word: word, room: room});
         resetTimer(10, room);
     });
@@ -277,9 +257,7 @@ io.on('connection', (client) => {
 
     client.on("update-grid", function (data) {
         let room = data.room;
-        //console.log("GRID UPDATED")
         grids[room] = data.grid;
-        console.log("sync-grid")
         io.emit("sync-grid", grids);
     })
 
@@ -287,10 +265,8 @@ io.on('connection', (client) => {
         let room = data.room;
         let grid = data.grid;
         if (!grids.hasOwnProperty(room)) {
-            //console.log("GRID CREATED")
             grids[room] = grid;
         }
-        console.log("sync-grid")
         io.emit("sync-grid", grids);
     })
 
@@ -300,7 +276,6 @@ io.on('connection', (client) => {
             score[player] = 0;
         });
         let letter = newLetter();
-        console.log('start-PetitBac', {letter: letter, room: room});
         io.emit('start-PetitBac', {letter: letter, room: room});
     });
 
@@ -315,7 +290,6 @@ io.on('connection', (client) => {
         let food = data.Food;
         let song = data.Song;
         let animal = data.Animal;
-        console.log('update-form');
         Names[room].push(names);
         City[room].push(city);
         Country[room].push(country);
@@ -337,7 +311,6 @@ io.on('connection', (client) => {
     })
 
     client.on('end-pb-player', function (data) {
-        console.log('a player has finished');
         io.emit('end-GamePb', {room: data.room})
     });
 
@@ -351,7 +324,6 @@ io.on('connection', (client) => {
         let word = newWord();
         io.emit("cleared", room);
         let indexOfNextDrawer = (players.indexOf(drawer) + 1) % (players.length);
-        console.log('round-game', {players: players[indexOfNextDrawer], word: word, room: room, scoreToUpdate: winner})
         io.emit('round-game', {player: players[indexOfNextDrawer], word: word, room: room, scoreToUpdate: winner});
         resetTimer(10, room);
     });
@@ -365,7 +337,6 @@ io.on('connection', (client) => {
         io.emit("cleared", room);
         let indexOfNextDrawer = (players.indexOf(drawer) + 1) % (players.length);
         let word = newWord();
-        console.log('round-game', {players: players[indexOfNextDrawer], word: word, room: room});
         io.emit('round-game', {player: players[indexOfNextDrawer], word: word, room: room});
         resetTimer(10, room);
     });
@@ -379,7 +350,6 @@ io.on('connection', (client) => {
                 delete score[player];
             });
         }
-        console.log("game-stopped", {player: playerWhoLeft, room: room});
         io.emit("game-stopped", {player: playerWhoLeft, room: room});
     });
 
@@ -391,7 +361,6 @@ setInterval(function () {
         if (roomCountdown > 0) {
             countdowns[room]--;
             let value = countdowns[room];
-            console.log('timer', {countdown: value, room: room});
             io.emit('timer', {countdown: value, room: room});
         }
     }

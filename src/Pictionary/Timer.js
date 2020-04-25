@@ -14,12 +14,12 @@ class Timer extends React.Component {
         this.timer.listenTimer(this.updateTime, this.props.room)
     }
 
+    //Update time
     updateTime = (data) => {
         this.setState({countdown: data.countdown});
         if(this.state.countdown === +this.props.seconds){
             let timeleft=document.getElementById("time-left");
             timeleft.classList.add("animated");
-            //console.log(timeleft.classList);
         }
         else if (this.state.countdown === 0) {
             let timeleft=document.getElementById("time-left");
@@ -32,6 +32,7 @@ class Timer extends React.Component {
         }
     };
 
+    //Ask for a reset of the timer
     callReset() {
         this.timer.callReset(this.props.seconds, this.props.room);
     }
@@ -40,10 +41,12 @@ class Timer extends React.Component {
         /*document.documentElement.style.setProperty("--timeleft",603+"px");*/
     }
 
+    //Use effect for timer
     componentDidMount = () => {
         document.documentElement.style.setProperty("--seconds",+this.props.seconds);
     }
 
+    //Visual render for timer
     render() {
         let countdown = this.state.countdown;
         const minutes = Math.floor(countdown / 60);

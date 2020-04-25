@@ -7,7 +7,7 @@ class Cube extends React.Component {
 
     }
 
-
+    //Visual render for Demineur
     render() {
         let content;
         let buttonClass;

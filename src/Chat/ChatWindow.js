@@ -15,6 +15,7 @@ class ChatWindow extends React.Component {
         this.scroll = '';
     }
 
+    //Add message in the state
     addMessages(messages) {
         this.setState((state) => ({
             messages: state.messages.concat(messages)
@@ -22,10 +23,12 @@ class ChatWindow extends React.Component {
         this.props.msg(messages)
     }
 
+    //Send message in the room
     submitMessage(text) {
         this.chat.sendMessage(text, this.props.room)
     }
 
+    //Scroll system for tchat
     componentDidMount = () => {
         document.querySelector("#messages").scrollTop=document.querySelector("#messages").scrollHeight;
     };
@@ -34,6 +37,7 @@ class ChatWindow extends React.Component {
         document.querySelector("#messages").scrollTop=document.querySelector("#messages").scrollHeight;
     }
 
+    //Visual render
     render() {
         const messages = this.state.messages.map((m) => <p key={this.state.messages.indexOf(m)}> <b> {m.name} </b>: {m.text} </p>);
         return (

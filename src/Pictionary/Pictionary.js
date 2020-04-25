@@ -26,10 +26,8 @@ class Pictionary extends React.Component {
 
     }
 
+    //Check tchat to verify the response and compare with the currentWord to guess
     sendMsg(message) {
-        //console.log(this.state.currentWord === message.text);
-        //console.log(this.state.currentDrawer !== message.name);
-        //console.log(this.state.gameRunning);
         if (this.state.currentWord === message.text && this.state.currentDrawer !== message.name && this.state.gameRunning) {
             this.setState({info: "Good job, " + message.name + " ! The word was " + this.state.currentWord});
             if (this.props.statename === this.state.currentDrawer) {
@@ -38,20 +36,22 @@ class Pictionary extends React.Component {
         }
     }
 
+    //Set names in the room
     setNames = (name) => {
         this.setState({names: name})
     };
 
+    //Listen round and event from other players
     componentDidMount() {
         this._loaded =true;
         this.uc.updateUsers(this.setNames);
-        //document.getElementById("pictionary").classList.remove("in");
         this.game.emitUser(this.props.statename,this.props.room);
         this.setupBeforeUnloadListener(this.uc);
         this.game.listenFirstRound(this.firstround, this.props.room);
         this.game.listenRound(this.nextRound, this.props.room);
         this.game.listenEndGame(this.endGame, this.props.room);
     }
+
 
     componentWillUnmount() {
         document.getElementById("pictionary").classList.add("out");
@@ -70,6 +70,7 @@ class Pictionary extends React.Component {
         });
     };
 
+    //Start the game if there are 2 players
     startGame() {
         if (this.state.names.length < 2) {
             // eslint-disable-next-line no-useless-escape
@@ -79,6 +80,7 @@ class Pictionary extends React.Component {
         }
     }
 
+    //End the game
     endGame(player) {
         if(this._loaded){
             this.setState({gameRunning: false});
@@ -86,6 +88,7 @@ class Pictionary extends React.Component {
         }
     }
 
+    //Start the first round, set score to 0 and the gameRunning to true
     firstround(data) {
         //console.log("firstround");
         let score = [];
@@ -99,6 +102,7 @@ class Pictionary extends React.Component {
         }
     }
 
+    //Update score and round
     nextRound(data) {
         if (data.hasOwnProperty("scoreToUpdate")) {
             var score = this.state.scores;
@@ -116,6 +120,7 @@ class Pictionary extends React.Component {
         }
     }
 
+    //Check the time if it is up or not
     timeIsUp() {
         if (this.state.gameRunning) {
             this.setState({info: "No one has guess the correct word ! It was " + this.state.currentWord});
@@ -127,18 +132,19 @@ class Pictionary extends React.Component {
         }
     }
 
+    //Leave the game
     leave() {
         document.getElementById("pictionary").classList.add("out");
         setTimeout(()=> {
             this.props.closeChat();
             this.game.userLeave(this.props.statename, this.props.room);
             if (this.state.gameRunning) {
-                //console.log("LEAVING");
                 this.game.stopGame(this.props.statename, this.props.room);
             }
         },400)
     }
 
+    //Visual render with score if the game is running
     render() {
         var names;
         if (!this.state.gameRunning) {

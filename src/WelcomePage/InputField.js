@@ -8,17 +8,20 @@ class InputField extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
+    //Set state if changed
     handleChange(event) {
         if (this.props.onChange) this.props.onChange(event.target.value);
         this.setState({value: event.target.value})
     }
 
+    //Set state if submitted
     handleSubmit(event) {
         if (this.props.onSubmit) this.props.onSubmit(this.state.value);
         this.setState({value: ""});
         event.preventDefault()
     }
 
+    //Visual render
     render() {
         return (<form onSubmit={this.handleSubmit}>
             <label>{this.props.label} </label>

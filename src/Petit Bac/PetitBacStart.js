@@ -1,6 +1,6 @@
 import React from "react";
 import {PetitBac} from "./PetitBac";
-import {PetitBacClient, PictionaryClient, PlayerListClient} from "../Clients";
+import {PetitBacClient, PlayerListClient} from "../Clients";
 
 class PetitBacStart extends React.Component {
 
@@ -10,6 +10,7 @@ class PetitBacStart extends React.Component {
             names: [],
             info: "",
             gameRunning: false,
+            currentLetter :"",
         };
 
         this.setNames = this.setNames.bind(this);
@@ -22,7 +23,6 @@ class PetitBacStart extends React.Component {
         this.leave = this.leave.bind(this);
 
         this.pbc = new PetitBacClient();
-        this.game = new PictionaryClient();
         this.playerList = new PlayerListClient(this.props.room);
     }
 
@@ -50,7 +50,7 @@ class PetitBacStart extends React.Component {
             if (this.state.gameRunning) {
                 this.pbc.stopGame(this.props.statename, this.props.room);
             }
-            return ev.returnValue = "test";
+            return ev.returnValue = "setupPB";
         });
     };
 
@@ -72,18 +72,7 @@ class PetitBacStart extends React.Component {
         });
         this.setState({scores: score});
         this.setState({gameRunning: true});
-        this.nextRound(data);
-    }
-
-
-    nextRound(data) {
-        if (data.hasOwnProperty("scoreToUpdate")) {
-            var score = this.state.scores;
-            score[data.scoreToUpdate]++;
-            this.setState({scores: score})
-        }
         this.setState({currentLetter: data.letter});
-        console.log('testNeXTROUND')
     }
 
 
