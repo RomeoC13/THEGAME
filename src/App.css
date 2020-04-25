@@ -21,7 +21,6 @@ h1 {
 }
 
 
-
 #name {
     color: #ff0000;
 }
@@ -37,11 +36,17 @@ button {
 }
 
 
-#whiteButton {
-    width: 30px;
-    height: 30px;
-    background-color: #ffffff !important;
+#clearButton {
+    width: 70px;
+    height: 43px;
 }
+
+
+#eraser {
+    width: 60px;
+    height: 59px;
+}
+
 
 #blackButton {
     width: 30px;
@@ -55,7 +60,6 @@ button {
     height: 30px;
     background-color: #908484 !important;
 }
-
 
 
 #darkGreyButton {
@@ -154,7 +158,6 @@ button {
 }
 
 
-
 #brownButton {
     width: 30px;
     height: 30px;
@@ -223,20 +226,20 @@ button {
     border-style: solid;
 }
 
-#gameTable{
+#gameTable {
     margin: 10px auto;
 }
 
-#gameTable td{
+#gameTable td {
     max-width: 200px;
     padding-left: 10px;
 }
 
-#roomTable{
+#roomTable {
     margin: 0 auto;
 }
 
-#roomTable td{
+#roomTable td {
     width: fit-content;
     padding-left: 10px;
 }
@@ -367,18 +370,18 @@ body.white {
     margin: 0 auto;
 }
 
-.DemineurButton{
+.DemineurButton {
     margin: 2px !important;
     height: 40px !important;
     width: 40px !important;
     font-weight: bold !important;
 }
 
-.DemineurButton.showed{
+.DemineurButton.showed {
     background: var(--mycolor4) !important;
 }
 
-.DemineurButton.notShowed{
+.DemineurButton.notShowed {
     background: var(--mycolor2) !important;
 }
 

@@ -181,7 +181,6 @@ class Canvas extends React.Component {
             colors =
                 <>
                     <button onClick={this.clean}>Clean</button>
-                    <button id="whiteButton" onClick={() => this.setColor("#ffffff")}/>
                     <button id="blackButton" onClick={() => this.setColor("#000000")}/>
 
                     <button id="greyButton" onClick={() => this.setColor("#908484")}/>
@@ -214,6 +213,7 @@ class Canvas extends React.Component {
                     <button id="darkBrownButton" onClick={() => this.setColor("#52210a")}/>
 
                     <div>
+                        <img id="eraser" src={require('./Eraser.png')} onClick={() => this.setColor("#ffffff")} alt='Eraser'/>
                         <img src={require('./Small.png')} onClick={() => this.setSizeBrush("4")} alt=''/>
                         <img src={require('./Medium.png')} onClick={() => this.setSizeBrush("8")} alt=''/>
                         <img src={require('./Large.png')} onClick={() => this.setSizeBrush("12")} alt=''/>
