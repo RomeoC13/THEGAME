@@ -8,7 +8,7 @@ class LoginWindow extends React.Component {
             <label>Please enter your alias </label> <br/>
             <InputField onChange={this.props.onNameChange} onSubmit={this.props.onLogin} autoFocus required/> <br/>
             <label>Choose your room </label> <br/>
-            <label class="discret">(default room 0)</label>
+            <label className="discret">(default room 0)</label>
             <br/>
             <input type="number" onChange={this.props.onRoomChange}/> <br/> <br/>
             <label>Choose your game </label> <br/>
@@ -22,17 +22,17 @@ class LoginWindow extends React.Component {
                     <tr>
                         <td><b>Pictionary </b> <br/>
                             <i> at least 2 players </i> <br/>
-                            <i class="discret">it's a very funny game to play with friend, one of you will have a name
+                            <i className="discret">it's a very funny game to play with friend, one of you will have a name
                                 to draw a word, all others tries to guess what is it !</i>
                         </td>
                         <td><b>PetitBac</b> <br/>
                             <i> at least 2 players</i> <br/>
-                            <i class="discret">quite hard game, a letter is randomly chosen and everyone have to find
+                            <i className="discret">quite hard game, a letter is randomly chosen and everyone have to find
                                 words that starts with it</i>
                         </td>
                         <td><b>Demineur</b> <br/>
                             <i> at least 1 player</i> <br/>
-                            <i class="discret">a very old and known game, you start with a grid of bloc and some are
+                            <i className="discret">a very old and known game, you start with a grid of bloc and some are
                                 trapped with bomb, your mission avoid them </i>
                         </td>
                     </tr>

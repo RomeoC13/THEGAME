@@ -1,5 +1,5 @@
 import React from "react";
-import {InputField} from "./InputField";
+import {InputField} from "../WelcomePage/InputField";
 
 class FormPB extends React.Component {
     render() {

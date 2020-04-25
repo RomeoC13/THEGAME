@@ -1,6 +1,6 @@
 import React from "react";
 import {PetitBac} from "./PetitBac";
-import {PetitBacClient, PictionaryClient, PlayerListClient} from "./Clients";
+import {PetitBacClient, PictionaryClient, PlayerListClient} from "../Clients";
 
 class PetitBacStart extends React.Component {
 
@@ -116,7 +116,7 @@ class PetitBacStart extends React.Component {
             </div>
 
         }
-        else return <div class="game in" id="petitbac">
+        else return <div className="game in" id="petitbac">
             <div id="players-list">
                 <h4>Players online in room {this.props.room} </h4>
                 <p> {names} </p>

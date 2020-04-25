@@ -1,7 +1,7 @@
-import {ChatWindow} from "./ChatWindow.js";
+import {ChatWindow} from "../Chat/ChatWindow.js";
 import {Canvas} from "./Canvas.js";
 import {Timer} from "./Timer.js";
-import {PictionaryClient, PlayerListClient} from "./Clients";
+import {PictionaryClient, PlayerListClient} from "../Clients";
 import React from "react";
 
 class Pictionary extends React.Component {
@@ -73,7 +73,7 @@ class Pictionary extends React.Component {
     startGame() {
         if (this.state.names.length < 2) {
             // eslint-disable-next-line no-useless-escape
-            alert("You can't play Pictionnary game alone ¯\\_(ツ)_/¯, you must at least be 2 !");
+            alert("You can't play Pictionary game alone ¯\\_(ツ)_/¯, you must at least be 2 !");
         } else {
             this.game.startGame(this.props.room)
         }
@@ -154,7 +154,7 @@ class Pictionary extends React.Component {
         }
         return (
             <>
-                <div id="pictionary" class="game in">
+                <div id="pictionary" className="game in">
                     <ChatWindow name={this.props.statename} onQuit={this.leave} msg={this.sendMsg}
                                 room={this.props.room}/>
                     {this.timer}
