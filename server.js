@@ -16,11 +16,11 @@ http.listen(port, () => console.log("Listening on port :", port));
 const messages = [{name: 'Bot', text: 'Bienvenue ', room: "all"}];
 
 //Every rooms as his own countdown, for example room "3" if created as his countdown in countdowns["3"]
-var countdowns = [];
+let countdowns = [];
 //Every rooms as his own lines storage, for example room "3" line's if created are stored in lines["3"]
 let lines = [];
 let score = [];
-var words = [
+let words = [
     "storage", "virus", "restaurant", "college", "debt",
     "passenger", "leader", "energy", "tongue", "lady",
     "boyfriend", "sister", "recipe", "speech", "protection",
@@ -45,25 +45,64 @@ var words = [
 ];
 
 //DEMINEUR USAGE :
-var grids = [];
+let grids = [];
 
 //PETIT BAC USAGE :
 //POTENTIELLEMENT CHANGER
-var letters = [
+let letters = [
     "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 ];
 let wordcount;
 
 let playercount;
-var Names = [];
-var City = [];
-var Country = [];
-var Job = [];
-var Movie = [];
-var Objects = [];
-var Food = [];
-var Song = [];
-var Animal =[];
+let Names = [];
+let City = [];
+let Country = [];
+let Job = [];
+let Movie = [];
+let Objects = [];
+let Food = [];
+let Song = [];
+let Animal =[];
+
+function updatePBNames() {
+    console.log("update pb names")
+    io.emit('update-pbNames', Names);
+}
+
+function updatePBCity() {
+    io.emit('update-pbCity', City);
+}
+
+function updatePBCountry() {
+    io.emit('update-pbCountry', Country);
+}
+
+function updatePBJob() {
+    io.emit('update-pbJob', Job);
+}
+
+function updatePBMovie() {
+    io.emit('update-pbMovie', Movie);
+}
+
+function updatePBObjects() {
+    io.emit('update-pbObjects', Objects);
+}
+
+function updatePBFood() {
+    io.emit('update-pbFood', Food);
+}
+
+function updatePBSong() {
+    io.emit('update-pbSong', Song);
+}
+
+
+function updatePBAnimal() {
+    io.emit('update-pbAnimal', Animal);
+}
+
 
 //GENERAL APP USAGE :
 let onlineCount = 0;
@@ -237,27 +276,6 @@ io.on('connection', (client) => {
     });
 
 
-    client.on("update-form", function (data) {
-        let room = data.room;
-        let names = data.Names;
-        let city = data.City;
-        let country = data.Country;
-        let job = data.Job;
-        let movie = data.Movie;
-        let objects = data.Objects;
-        let food = data.Food;
-        let song = data.Song;
-        let animal = data.Animal;
-        Names[room].push(names);
-        City[room].push(city);
-        Country[room].push(country);
-        Animal[room].push(animal);
-        Food[room].push(food);
-        Objects[room].push(objects);
-        Job[room].push(job);
-        Movie[room].push(movie);
-        Song[room].push(song);
-    })
 
     client.on("update-grid",function (data) {
         let room= data.room;
@@ -289,12 +307,45 @@ io.on('connection', (client) => {
         io.emit('start-PetitBac', {letter: letter, room: room});
     });
 
-    client.on('end-pb-player', function (room) {
+    client.on('update-form', function (data) {
+        let room = data.room;
+        let names = data.Names;
+        let city = data.City;
+        let country = data.Country;
+        let job = data.Job;
+        let movie = data.Movie;
+        let objects = data.Objects;
+        let food = data.Food;
+        let song = data.Song;
+        let animal = data.Animal;
+        console.log('update-form');
+        Names[room].push(names);
+        City[room].push(city);
+        Country[room].push(country);
+        Animal[room].push(animal);
+        Food[room].push(food);
+        Objects[room].push(objects);
+        Job[room].push(job);
+        Movie[room].push(movie);
+        Song[room].push(song);
+        updatePBNames();
+        updatePBAnimal();
+        updatePBCity();
+        updatePBCountry();
+        updatePBFood();
+        updatePBJob();
+        updatePBObjects();
+        updatePBMovie();
+        updatePBSong();
+    })
+
+    client.on('end-pb-player', function (data) {
         playercount++
         console.log('a player has finished');
-        if(playercount === room.length)
+        if(playercount === data.room.length) {
             console.log('everyone has finished');
-            io.emit('end-GamePb');
+            io.emit('end-GamePb', {room: data.room});
+        }
     });
 
 

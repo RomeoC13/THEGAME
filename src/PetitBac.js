@@ -8,9 +8,9 @@ class PetitBac extends React.Component {
         super(props);
         this.state = {
             names: [],
-            info: "",
             scores: [],
             currentState: "",
+
             name: '', city: '', country: '',
             animal: '', food: '', object: '',
             job: '', movie: ' ', song: '',
@@ -49,10 +49,23 @@ class PetitBac extends React.Component {
         this.JobAlreadyToken = this.JobAlreadyToken.bind(this);
         this.MovieAlreadyToken = this.MovieAlreadyToken.bind(this);
         this.SongAlreadyToken = this.SongAlreadyToken.bind(this);
-        this.updateForm = this.updateForm.bind(this);
+
+
+        this.updateNamesForm = this.updateNamesForm.bind(this);
+        this.updateCityForm = this.updateCityForm.bind(this);
+        this.updateCountryForm = this.updateCountryForm.bind(this);
+        this.updateAnimalForm = this.updateAnimalForm.bind(this);
+        this.updateFoodForm = this.updateFoodForm.bind(this);
+        this.updateJobForm = this.updateJobForm.bind(this);
+        this.updateMoviesForm = this.updateMoviesForm.bind(this);
+        this.updateObjectsForm = this.updateObjectsForm.bind(this);
+        this.updateSongForm = this.updateSongForm.bind(this);
+
+        this.endGame = this.endGame.bind(this);
     }
 
     start() {
+
         this.checkIfNameIsValid();
         this.checkIfCityIsValid();
         this.checkIfCountryIsValid();
@@ -62,29 +75,66 @@ class PetitBac extends React.Component {
         this.checkIfMovieIsValid();
         this.checkIfSongIsValid();
         this.checkIfJobIsValid();
-        this.setState({currentState: "playerHasFinished"});
+        //TODO : Verifier l'émission du formulaire pour la synchro
         this.pbc.emitForm(this.Names, this.Job, this.City, this.Country,
             this.Animal, this.Objects, this.Movie, this.Food, this.Song, this.props.room);
+
+        this.pbc.endForOnePlayer(this.props.statename, this.props.room);
+        this.setState({currentState: "playerHasFinished"});
     }
 
     componentDidMount = () => {
         this.pbc.emitUser(this.props.statename, this.props.room);
         this.playerList.updateUsers(this.setNames);
         this.setupBeforeUnloadListener(this.pbc);
-        this.pbc.listenForms(this.updateForm, this.props.room);
+
+        this.pbc.updateNames(this.updateNamesForm, this.props.room);
+        this.pbc.updateCity(this.updateCityForm, this.props.room);
+        this.pbc.updateCountry(this.updateCountryForm, this.props.room);
+        this.pbc.updateAnimal(this.updateAnimalForm, this.props.room);
+        this.pbc.updateFood(this.updateFoodForm, this.props.room);
+        this.pbc.updateJob(this.updateJobForm, this.props.room);
+        this.pbc.updateMovie(this.updateMoviesForm, this.props.room);
+        this.pbc.updateObjects(this.updateObjectsForm, this.props.room);
+        this.pbc.updateSong(this.updateSongForm, this.props.room);
+
+        this.pbc.listenEndGame(this.endGame, this.props.room);
     }
 
-    updateForm(data){
-    this.setState({
-        Names : data.Names,
-        City : data.City,
-        Country : data.Country,
-        Animal : data.Animal,
-        Food : data.Food,
-        Objects : data.Objects,
-        Job : data.Job,
-        Movie : data.Movie,
-        Song : data.Song});
+    //TODO : Verifier la synchro avec les autres membres pour comparer les mots sur une même liste...
+
+
+    updateNamesForm = (name) => {
+        this.Names = name;
+    }
+    updateCityForm = (city) => {
+        this.City = city;
+    }
+    updateCountryForm = (country) => {
+        this.Country = country;
+    }
+    updateAnimalForm = (animal) => {
+        this.Animal = animal;
+    }
+    updateFoodForm = (food) => {
+        this.Food = food;
+    }
+    updateJobForm = (job) => {
+        this.Job = job;
+    }
+    updateMoviesForm = (movie) => {
+        this.Movie = movie;
+    }
+    updateObjectsForm = (object) => {
+        this.Objects = object;
+    }
+    updateSongForm = (song) => {
+        this.Song = song;
+    }
+
+
+    endGame() {
+        this.setState({currentState: "everyOneHasFinished"});
     }
 
     setupBeforeUnloadListener = (client) => {
@@ -195,89 +245,72 @@ class PetitBac extends React.Component {
     }
 
     NamesAlreadyToken() {
-        let Names = this.Names.values();
-        for (const value of Names) {
-            for (let i = 0; i < value.length; i++) {
-                if (value[i] === this.state.name)
-                    return true;
-            }
+        for (let i = 0; i < this.Names.length; i++) {
+            if (this.Names[i] === this.state.name)
+                return true;
         }
         return false;
     }
 
     CityAlreadyToken() {
-        let City = this.City.values();
-        for (const value of City) {
-            for (let i = 0; i < value.length; i++) {
-                if (value[i] === this.state.city)
-                    return true;
-            }
+        for (let i = 0; i < this.City.length; i++) {
+            if (this.City[i] === this.state.city)
+                return true;
         }
         return false;
     }
 
     CountryAlreadyToken() {
-        let Country = this.Country.values();
-        for (const value of Country) {
-            if (value.toString() === this.state.country)
+        for (let i = 0; i < this.Country.length; i++) {
+            if (this.Country[i] === this.state.country)
                 return true;
         }
         return false;
     }
 
     AnimalAlreadyToken() {
-        let Animal = this.Animal.values();
-        for (const value of Animal) {
-            for (let i = 0; i < value.length; i++) {
-                if (value[i] === this.state.animal)
-                    return true;
-            }
+        for (let i = 0; i < this.Animal.length; i++) {
+            if (this.Animal[i] === this.state.animal)
+                return true;
         }
         return false;
     }
 
     FoodAlreadyToken() {
-        let Food = this.Food.values();
-        for (const value of Food) {
-            if (value.toString() === this.state.food)
+        for (let i = 0; i < this.Food.length; i++) {
+            if (this.Food[i] === this.state.food)
                 return true;
         }
         return false;
     }
 
     ObjectAlreadyToken() {
-        let Object = this.Objects.values();
-        for (const value of Object) {
-            for (let i = 0; i < value.length; i++) {
-                if (value[i] === this.state.object)
-                    return true;
-            }
+        for (let i = 0; i < this.Objects.length; i++) {
+            if (this.Objects[i] === this.state.object)
+                return true;
         }
         return false;
     }
 
     JobAlreadyToken() {
-        let Job = this.Job.values();
-        for (const value of Job) {
-            if (value.toString() === this.state.job)
+        for (let i = 0; i < this.Job.length; i++) {
+            if (this.Job[i] === this.state.job)
                 return true;
         }
         return false;
     }
 
     MovieAlreadyToken() {
-        let Movie = this.Movie.values();
-        for (const value of Movie) {
-            if (value.toString() === this.state.movie)
+        for (let i = 0; i < this.Movie.length; i++) {
+            if (this.Movie[i] === this.state.movie)
                 return true;
         }
         return false;
     }
 
     SongAlreadyToken() {
-        let Song = this.Song.values();
-        for (const value of Song) {
-            if (value.toString() === this.state.song)
+        for (let i = 0; i < this.Song.length; i++) {
+            if (this.Song[i] === this.state.song)
                 return true;
         }
         return false;
@@ -321,11 +354,14 @@ class PetitBac extends React.Component {
     }
 
     render() {
-
-        if(this.state.currentState === "playerHasFinished")
+        if (this.state.currentState === "playerHasFinished") {
             return <div>En attente des autres joueurs !</div>
+        }
 
-        else {
+        if (this.state.currentState === "everyOneHasFinished") {
+            let names = this.state.names.map((m) => <player key={m}> {m} score {this.state.scores[m]} </player>);
+            return <div>{names}</div>
+        } else {
             this.button = <button onClick={this.endGame}> Finish !</button>;
             let names = this.state.names.map((m) => <player key={m}> {m} score {this.state.scores[m]} </player>);
 

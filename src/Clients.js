@@ -105,7 +105,6 @@ class PictionaryClient {
             }
         })
     }
-
     stopGame(playerWhoLeft,room){
         socket.emit("end-game",{player : playerWhoLeft, room: room});
     }
@@ -121,6 +120,7 @@ class PetitBacClient{
         socket.emit("start-game-pb",room)
     }
 
+    //Todo : Vérifier la synchro des formulaires entre les joueurs d'une salle
     listenPetitBacLetter(op,room){
         socket.on('start-PetitBac',function (data) {
             if(data.room === room){
@@ -129,28 +129,80 @@ class PetitBacClient{
         })
     }
 
-    listenForms(op,room){
-        socket.on("update-form",function (data) {
+    emitForm(Names, Job, City, Country, Animal, Objects, Movie, Food, Song ,room){
+        socket.emit('update-form',{Names : Names,Job: Job, Country: Country, City : City,
+            Animal: Animal, Objects: Objects, Movie: Movie, Food: Food, Song: Song, room :room})
+    }
+
+    updateNames(op,room) {
+        socket.on('update-pbNames',(data)=>{
+            op(data[room])
+        });
+    }
+    updateCity(op,room) {
+        socket.on('update-pbCity',(data)=>{
+            op(data[room])
+        });
+    }
+    updateCountry(op,room) {
+        socket.on('update-pbCountry',(data)=>{
+            op(data[room])
+        });
+    }
+    updateAnimal(op,room) {
+        socket.on('update-pbAnimal',(data)=>{
+            op(data[room])
+        });
+    }
+    updateFood(op,room) {
+        socket.on('update-pbFood',(data)=>{
+            op(data[room])
+        });
+    }
+    updateObjects(op,room) {
+        socket.on('update-pbObjects',(data)=>{
+            op(data[room])
+        });
+    }
+    updateJob(op,room) {
+        socket.on('update-pbJob',(data)=>{
+            op(data[room])
+        });
+    }
+    updateMovie(op,room) {
+        socket.on('update-pbMovie',(data)=>{
+            op(data[room])
+        });
+    }
+    updateSong(op,room) {
+        socket.on('update-pbSong',(data)=>{
+            op(data[room])
+        });
+    }
+
+
+
+
+    endForOnePlayer(player, room){
+        socket.emit("end-pb-player", {player : player, room : room});
+    }
+
+    listenEndGame(op,room){
+        socket.on("end-GamePb",function (data) {
             if(data.room===room){
-                op(data.player);
+                op();
             }
         })
     }
+
 
     stopGame(playerWhoLeft,room){
         socket.emit("end-game",{player : playerWhoLeft, room: room});
     }
 
-
     userLeave(user,room) {
         socket.emit('leave', {user: user,room: room,type : "Petit Bac"})
     }
-
-    emitForm(Names, Job, City, Country, Animal, Objects, Movie, Food, Song ,room){
-        socket.emit('update-form',{Names : Names,Job: Job, Country: Country,
-            Animal: Animal, Objects: Objects, Movie: Movie, Food: Food, Song: Song, room :room})
-    }
-
 }
 
 
