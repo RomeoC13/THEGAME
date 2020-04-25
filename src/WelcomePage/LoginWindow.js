@@ -25,7 +25,7 @@ class LoginWindow extends React.Component {
                             <i className="discret">it's a very funny game to play with friend, one of you will have a name
                                 to draw a word, all others tries to guess what is it !</i>
                         </td>
-                        <td><b>PetitBac</b> <br/>
+                        <td> <strong style={{color : "red"}}> WORK IN PROGRESS</strong>  <br/><b>PetitBac</b> <br/>
                             <i> at least 2 players</i> <br/>
                             <i className="discret">quite hard game, a letter is randomly chosen and everyone have to find
                                 words that starts with it</i>
