@@ -94,10 +94,14 @@ class PetitBacStart extends React.Component {
 
 
     leave() {
-        this.pbc.userLeave(this.props.statename, this.props.room);
-        if (this.state.gameRunning) {
-            this.pbc.stopGame(this.props.statename, this.props.room);
-        }
+        document.getElementById("petitbac").classList.add("out");
+        setTimeout(()=> {
+            this.props.closeChat();
+            this.pbc.userLeave(this.props.statename, this.props.room);
+            if (this.state.gameRunning) {
+                this.pbc.stopGame(this.props.statename, this.props.room);
+            }
+        },400);
     }
 
     render() {
@@ -112,13 +116,12 @@ class PetitBacStart extends React.Component {
             </div>
 
         }
-
         else return <div class="game in" id="petitbac">
             <div id="players-list">
                 <h4>Players online in room {this.props.room} </h4>
                 <p> {names} </p>
             </div>
-
+            <button onClick={this.leave}>Quit</button>
             <button onClick={this.startGame}>Start Playing !</button>
         </div>
     }
